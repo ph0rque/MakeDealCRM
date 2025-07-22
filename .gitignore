@@ -1,0 +1,48 @@
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Docker volumes
+db_data/
+suitecrm_uploads/
+suitecrm_cache/
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# SuiteCRM specific
+SuiteCRM/config.php
+SuiteCRM/config_override.php
+SuiteCRM/cache/*
+!SuiteCRM/cache/index.html
+SuiteCRM/upload/*
+!SuiteCRM/upload/index.html
+SuiteCRM/custom/modules/*/Ext/
+SuiteCRM/custom/application/Ext/
+SuiteCRM/custom/history/
+SuiteCRM/custom/blowfish/
+SuiteCRM/custom/modulebuilder/
+SuiteCRM/vendor/
+
+# Backup files
+*.bak
+*.backup
+*.sql
+
+# Temporary files
+*.tmp
+*.temp
+.~lock.*

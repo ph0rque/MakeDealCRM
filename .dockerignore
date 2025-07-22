@@ -1,0 +1,46 @@
+# Git files
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+docs/
+*.md
+
+# Development files
+.env
+.env.local
+.env.*.local
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker files
+docker-compose.yml
+Dockerfile
+.dockerignore
+
+# Logs
+*.log
+logs/
+
+# Cache and temporary files
+cache/*
+!cache/index.html
+upload/upgrades/temp/*
+
+# Node modules (if any)
+node_modules/
+
+# Test files
+tests/
+phpunit.xml
+.phpunit.result.cache
