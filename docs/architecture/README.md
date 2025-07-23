@@ -93,7 +93,7 @@ These documents are based on:
 - Industry best practices
 - Community contributions
 
-Last Updated: January 2025
+Last Updated: July 2025
 
 ## 📞 Further Resources
 
