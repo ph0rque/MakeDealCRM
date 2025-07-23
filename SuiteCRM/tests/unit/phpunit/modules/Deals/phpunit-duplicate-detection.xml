@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+         bootstrap="../../../../bootstrap.php"
+         colors="true"
+         verbose="true"
+         stopOnFailure="false"
+         stopOnError="false"
+         stopOnIncomplete="false"
+         stopOnSkipped="false">
+    
+    <testsuites>
+        <testsuite name="Deals Duplicate Detection Test Suite">
+            <file>./DuplicateDetectionTest.php</file>
+            <file>./CheckDuplicatesIntegrationTest.php</file>
+        </testsuite>
+    </testsuites>
+    
+    <php>
+        <!-- Set memory limit for performance tests -->
+        <ini name="memory_limit" value="256M"/>
+        
+        <!-- Set execution time for bulk data tests -->
+        <ini name="max_execution_time" value="60"/>
+        
+        <!-- Enable error reporting -->
+        <ini name="error_reporting" value="E_ALL"/>
+        <ini name="display_errors" value="1"/>
+    </php>
+    
+    <coverage>
+        <include>
+            <directory suffix=".php">../../../../../modules/Deals</directory>
+        </include>
+        <exclude>
+            <file>../../../../../modules/Deals/language/*.php</file>
+            <file>../../../../../modules/Deals/metadata/*.php</file>
+            <file>../../../../../modules/Deals/Dashlets/*.php</file>
+        </exclude>
+        <report>
+            <html outputDirectory="./coverage-report" lowUpperBound="50" highLowerBound="90"/>
+            <text outputFile="php://stdout" showUncoveredFiles="true"/>
+        </report>
+    </coverage>
+    
+    <logging>
+        <testdoxText outputFile="./test-results.txt"/>
+        <junit outputFile="./junit-results.xml"/>
+    </logging>
+</phpunit>

@@ -1,0 +1,339 @@
+/**
+ * Deals Module Custom Styles
+ */
+
+/* Duplicate Check Container */
+.duplicate-check-container {
+    background-color: #fff5f5;
+    border: 2px solid #ff6b6b;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.duplicate-check-container h3 {
+    color: #d32f2f;
+    margin-top: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.duplicate-warning {
+    margin: 15px 0;
+}
+
+.warning-text {
+    color: #d32f2f;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+/* Duplicate Table */
+.duplicate-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.duplicate-table thead {
+    background-color: #f5f5f5;
+}
+
+.duplicate-table th {
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 2px solid #ddd;
+}
+
+.duplicate-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.duplicate-table tr:hover {
+    background-color: #f9f9f9;
+}
+
+.duplicate-table a {
+    color: #0066cc;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.duplicate-table a:hover {
+    text-decoration: underline;
+}
+
+/* Duplicate Actions */
+.duplicate-actions {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.duplicate-actions button {
+    margin-left: 10px;
+}
+
+/* Loading Indicator */
+.loading-indicator {
+    text-align: center;
+    padding: 30px;
+    color: #666;
+    font-style: italic;
+}
+
+/* Confidence Score */
+.duplicate-score {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 4px;
+    color: #856404;
+    font-size: 14px;
+}
+
+/* Weighted Amount Display */
+.weighted-amount {
+    color: #666;
+    font-size: 14px;
+    font-style: italic;
+    margin-left: 10px;
+}
+
+/* Button Styles */
+.btn-sm {
+    padding: 4px 12px !important;
+    font-size: 13px !important;
+}
+
+/* Deal Detail View Enhancements */
+.detail-view-field-label {
+    font-weight: 600;
+    color: #333;
+}
+
+.detail-view-field-value {
+    color: #555;
+}
+
+/* Stage Progress Bar */
+.stage-progress-container {
+    margin: 20px 0;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.stage-progress-bar {
+    height: 30px;
+    background-color: #e0e0e0;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+}
+
+.stage-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4caf50 0%, #8bc34a 100%);
+    transition: width 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+}
+
+/* Related Records Subpanels */
+.subpanel-header {
+    background-color: #f8f9fa;
+    padding: 10px 15px;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+    color: #495057;
+}
+
+.subpanel-body {
+    padding: 15px;
+}
+
+/* Activity Timeline */
+.activity-timeline {
+    position: relative;
+    padding-left: 30px;
+}
+
+.activity-timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: #dee2e6;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -25px;
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #007bff;
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px #dee2e6;
+}
+
+.timeline-content {
+    background-color: #f8f9fa;
+    padding: 12px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Quick Actions Panel */
+.quick-actions-panel {
+    background-color: #e3f2fd;
+    border: 1px solid #90caf9;
+    border-radius: 6px;
+    padding: 15px;
+    margin: 15px 0;
+}
+
+.quick-actions-panel h4 {
+    margin-top: 0;
+    color: #1976d2;
+}
+
+.quick-action-button {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+/* List View Summary Stats */
+.deals-summary-stats {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.deals-summary-stats h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 20px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 15px;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: #007bff;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Quick Filters */
+.quick-filters {
+    background-color: #e9ecef;
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.quick-filters span {
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+.quick-filters button {
+    margin: 2px;
+}
+
+/* Report Options Dialog */
+.report-options label {
+    display: block;
+    margin: 8px 0;
+    cursor: pointer;
+}
+
+.report-options input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+/* Mass Update Dialog */
+#massUpdateStageDialog select {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .duplicate-table {
+        font-size: 14px;
+    }
+    
+    .duplicate-table th,
+    .duplicate-table td {
+        padding: 8px;
+    }
+    
+    .duplicate-actions {
+        text-align: center;
+    }
+    
+    .duplicate-actions button {
+        display: block;
+        width: 100%;
+        margin: 5px 0;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .quick-filters {
+        text-align: center;
+    }
+    
+    .quick-filters button {
+        display: inline-block;
+        margin: 5px;
+    }
+}

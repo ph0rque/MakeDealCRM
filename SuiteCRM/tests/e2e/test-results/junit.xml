@@ -1,0 +1,372 @@
+<testsuites id="" name="" tests="90" failures="0" skipped="90" errors="0" time="0.01634200000000004">
+<testsuite name="deals/deals.spec.js" timestamp="2025-07-23T19:05:48.425Z" hostname="chromium" tests="18" failures="0" skipped="18" time="0" errors="0">
+<testcase name="Deals Module Tests › Create a new deal" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Duplicate detection works" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › List view displays deals correctly" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Quick filter by stage works" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Detail view shows all information" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › At-risk status indicator displays correctly" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Edit deal updates calculations" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Mass update functionality" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Email integration - compose email" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Document attachment" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Search functionality" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Export functionality" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Related contacts management" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Activity timeline displays correctly" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Accessibility - keyboard navigation" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Performance - list view loads quickly" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Responsive design - mobile view" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deal Workflow Tests › Complete deal lifecycle" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="deals/deals.spec.js" timestamp="2025-07-23T19:05:48.425Z" hostname="firefox" tests="18" failures="0" skipped="18" time="0" errors="0">
+<testcase name="Deals Module Tests › Create a new deal" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Duplicate detection works" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › List view displays deals correctly" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Quick filter by stage works" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Detail view shows all information" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › At-risk status indicator displays correctly" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Edit deal updates calculations" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Mass update functionality" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Email integration - compose email" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Document attachment" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Search functionality" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Export functionality" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Related contacts management" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Activity timeline displays correctly" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Accessibility - keyboard navigation" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Performance - list view loads quickly" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Responsive design - mobile view" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deal Workflow Tests › Complete deal lifecycle" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="deals/deals.spec.js" timestamp="2025-07-23T19:05:48.425Z" hostname="webkit" tests="18" failures="0" skipped="18" time="0" errors="0">
+<testcase name="Deals Module Tests › Create a new deal" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Duplicate detection works" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › List view displays deals correctly" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Quick filter by stage works" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Detail view shows all information" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › At-risk status indicator displays correctly" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Edit deal updates calculations" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Mass update functionality" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Email integration - compose email" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Document attachment" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Search functionality" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Export functionality" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Related contacts management" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Activity timeline displays correctly" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Accessibility - keyboard navigation" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Performance - list view loads quickly" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Responsive design - mobile view" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deal Workflow Tests › Complete deal lifecycle" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="deals/deals.spec.js" timestamp="2025-07-23T19:05:48.425Z" hostname="Mobile Chrome" tests="18" failures="0" skipped="18" time="0" errors="0">
+<testcase name="Deals Module Tests › Create a new deal" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Duplicate detection works" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › List view displays deals correctly" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Quick filter by stage works" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Detail view shows all information" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › At-risk status indicator displays correctly" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Edit deal updates calculations" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Mass update functionality" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Email integration - compose email" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Document attachment" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Search functionality" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Export functionality" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Related contacts management" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Activity timeline displays correctly" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Accessibility - keyboard navigation" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Performance - list view loads quickly" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Responsive design - mobile view" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deal Workflow Tests › Complete deal lifecycle" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="deals/deals.spec.js" timestamp="2025-07-23T19:05:48.425Z" hostname="Mobile Safari" tests="18" failures="0" skipped="18" time="0" errors="0">
+<testcase name="Deals Module Tests › Create a new deal" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Duplicate detection works" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › List view displays deals correctly" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Quick filter by stage works" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Detail view shows all information" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › At-risk status indicator displays correctly" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Edit deal updates calculations" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Mass update functionality" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Email integration - compose email" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Document attachment" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Search functionality" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Export functionality" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Related contacts management" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Activity timeline displays correctly" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Accessibility - keyboard navigation" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Performance - list view loads quickly" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deals Module Tests › Responsive design - mobile view" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Deal Workflow Tests › Complete deal lifecycle" classname="deals/deals.spec.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+</testsuites>
