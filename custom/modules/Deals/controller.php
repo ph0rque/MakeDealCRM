@@ -18,8 +18,14 @@ class DealsController extends SugarController
      */
     public function action_index()
     {
-        // Redirect to the pipeline view as the default view for Deals
-        $this->action_pipeline();
+        // For AJAX requests, handle the redirect properly
+        if (!empty($_REQUEST['ajax_load']) || !empty($_REQUEST['ajaxLoad'])) {
+            // Load the pipeline view for AJAX
+            $this->view = 'pipeline';
+        } else {
+            // For non-AJAX, use regular redirect
+            sugar_redirect('index.php?module=Deals&action=pipeline');
+        }
     }
     
     /**
@@ -28,7 +34,7 @@ class DealsController extends SugarController
     public function action_listview()
     {
         // Redirect list view to pipeline as well
-        $this->action_pipeline();
+        $this->action_index();
     }
     
     /**

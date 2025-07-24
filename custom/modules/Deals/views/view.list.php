@@ -16,9 +16,38 @@ class DealsViewList extends OpportunitiesViewList
     {
         parent::__construct();
     }
+    
+    /**
+     * Override preDisplay to redirect to pipeline view
+     */
+    public function preDisplay()
+    {
+        // Handle AJAX navigation to pipeline view
+        echo '<script type="text/javascript">
+            if (typeof SUGAR !== "undefined" && SUGAR.ajaxUI) {
+                // Use SuiteCRM AJAX navigation
+                SUGAR.ajaxUI.go("index.php?module=Deals&action=pipeline");
+            } else {
+                // Fallback to regular redirect
+                window.location.href = "index.php?module=Deals&action=pipeline";
+            }
+        </script>';
+        
+        // Provide a loading message
+        echo '<div style="padding: 40px; text-align: center;">
+            <h3>Redirecting to Pipeline View...</h3>
+            <p>If you are not redirected automatically, <a href="index.php?module=Deals&action=pipeline">click here</a>.</p>
+        </div>';
+        
+        // Exit to prevent further processing
+        sugar_cleanup(true);
+    }
 
     public function listViewProcess()
     {
+        // This should not be reached due to preDisplay redirect
+        // But keeping the original functionality just in case
+        
         // Add export CSS and JavaScript
         $this->includeExportAssets();
         

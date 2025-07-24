@@ -1,5 +1,9 @@
 # Instructions to Make Pipeline View the Default for Deals Module
 
+## IMPORTANT: SuiteCRM AJAX Navigation Update
+
+The Deals module has been configured to work with SuiteCRM's AJAX navigation system. The module will now automatically redirect to the Pipeline view when you click on DEALS in the header.
+
 ## Steps to Apply the Changes:
 
 ### 1. Clear Cache via SuiteCRM Admin Panel
@@ -11,13 +15,14 @@
 
 ### 2. Clear Browser Cache
 1. Clear your browser cache (Ctrl+Shift+Delete or Cmd+Shift+Delete)
-2. Log out of SuiteCRM
-3. Log back in
+2. Close all browser tabs with SuiteCRM
+3. Open a new browser window
+4. Log in to SuiteCRM
 
 ### 3. Test the Pipeline View
 1. Click on the **DEALS** tab in the main navigation
 2. You should now be taken directly to the Pipeline (Kanban) view
-3. The URL should show: `index.php?module=Deals&action=pipeline`
+3. The AJAX URL will update to show the pipeline action
 
 ## What Was Changed:
 
