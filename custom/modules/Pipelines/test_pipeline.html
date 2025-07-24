@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pipeline Test View</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="views/pipeline-kanban.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div id="pipeline-container"></div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Mock data for testing
+        window.pipelineStages = [
+            {name: 'sourcing', display_name: 'Sourcing', wip_limit: 50, probability_default: 10, warning_days: 30, critical_days: 60},
+            {name: 'screening', display_name: 'Screening', wip_limit: 25, probability_default: 20, warning_days: 14, critical_days: 30},
+            {name: 'analysis_outreach', display_name: 'Analysis & Outreach', wip_limit: 15, probability_default: 30, warning_days: 21, critical_days: 45},
+            {name: 'term_sheet', display_name: 'Term Sheet', wip_limit: 10, probability_default: 50, warning_days: 30, critical_days: 60},
+            {name: 'due_diligence', display_name: 'Due Diligence', wip_limit: 8, probability_default: 70, warning_days: 45, critical_days: 90}
+        ];
+        
+        window.pipelineDeals = [
+            {
+                id: 'deal-001',
+                name: 'TechCorp Acquisition',
+                company_name: 'TechCorp Inc',
+                stage: 'sourcing',
+                deal_value: 25000000,
+                probability: 10,
+                days_in_stage: 15,
+                health_score: 75,
+                is_stale: 0,
+                assigned_user_name: 'John Smith'
+            },
+            {
+                id: 'deal-002',
+                name: 'DataSystems Merger',
+                company_name: 'DataSystems LLC',
+                stage: 'screening',
+                deal_value: 45000000,
+                probability: 20,
+                days_in_stage: 8,
+                health_score: 82,
+                is_stale: 0,
+                assigned_user_name: 'Jane Doe'
+            },
+            {
+                id: 'deal-003',
+                name: 'CloudTech Buyout',
+                company_name: 'CloudTech Solutions',
+                stage: 'analysis_outreach',
+                deal_value: 75000000,
+                probability: 30,
+                days_in_stage: 25,
+                health_score: 68,
+                is_stale: 1,
+                assigned_user_name: 'Bob Johnson'
+            },
+            {
+                id: 'deal-004',
+                name: 'AI Innovations Deal',
+                company_name: 'AI Innovations Corp',
+                stage: 'term_sheet',
+                deal_value: 150000000,
+                probability: 50,
+                days_in_stage: 12,
+                health_score: 88,
+                is_stale: 0,
+                assigned_user_name: 'Sarah Wilson'
+            },
+            {
+                id: 'deal-005',
+                name: 'FinTech Partners Acquisition',
+                company_name: 'FinTech Partners',
+                stage: 'due_diligence',
+                deal_value: 200000000,
+                probability: 70,
+                days_in_stage: 35,
+                health_score: 92,
+                is_stale: 0,
+                assigned_user_name: 'Mike Chen'
+            }
+        ];
+        
+        window.wipLimits = {
+            sourcing: 50,
+            screening: 25,
+            analysis_outreach: 15,
+            term_sheet: 10,
+            due_diligence: 8
+        };
+        
+        window.currentUser = {
+            id: 'user-001',
+            name: 'Current User'
+        };
+        
+        window.pipelinePermissions = {
+            canCreate: true,
+            canEdit: true,
+            canDelete: true,
+            canExport: true,
+            isAdmin: true
+        };
+    </script>
+    
+    <script src="views/PipelineKanbanView.js"></script>
+</body>
+</html>

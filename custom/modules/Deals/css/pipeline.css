@@ -1,0 +1,395 @@
+/**
+ * Pipeline Kanban Board Styles
+ * Responsive design with mobile support
+ */
+
+/* Container and Layout */
+.pipeline-container {
+    width: 100%;
+    height: calc(100vh - 120px);
+    display: flex;
+    flex-direction: column;
+    background-color: #f5f5f5;
+    position: relative;
+}
+
+.pipeline-header {
+    padding: 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.pipeline-header h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.pipeline-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Board Layout */
+.pipeline-board-wrapper {
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 20px;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+.pipeline-board {
+    display: flex;
+    gap: 20px;
+    min-width: fit-content;
+    height: 100%;
+}
+
+/* Stage Columns */
+.pipeline-stage {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 300px;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.2s;
+}
+
+.pipeline-stage:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.stage-header {
+    padding: 15px;
+    border-bottom: 2px solid #e0e0e0;
+    background-color: #f8f9fa;
+    border-radius: 8px 8px 0 0;
+}
+
+.stage-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.stage-stats {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #666;
+}
+
+.deal-count {
+    font-weight: bold;
+}
+
+.wip-limit-indicator {
+    margin-left: 5px;
+    padding: 2px 6px;
+    border-radius: 12px;
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    font-size: 12px;
+}
+
+.wip-limit-indicator.near-limit {
+    background-color: #fff3e0;
+    color: #ef6c00;
+}
+
+.wip-limit-indicator.over-limit {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+/* Stage Body */
+.stage-body {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    min-height: 200px;
+}
+
+.stage-body.drag-over {
+    background-color: #e3f2fd;
+    border: 2px dashed #1976d2;
+}
+
+.stage-body.wip-limit-exceeded {
+    background-color: #ffebee;
+}
+
+/* Deal Cards */
+.deal-card {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 10px;
+    cursor: move;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.deal-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
+
+.deal-card.dragging {
+    opacity: 0.5;
+    transform: rotate(2deg);
+}
+
+.deal-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 8px;
+}
+
+.deal-name {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    flex: 1;
+}
+
+.deal-name a {
+    color: #1976d2;
+    text-decoration: none;
+}
+
+.deal-name a:hover {
+    text-decoration: underline;
+}
+
+.deal-days-indicator {
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 12px;
+    background-color: #f5f5f5;
+    color: #666;
+    white-space: nowrap;
+}
+
+/* Stage Color Classes */
+.deal-card.stage-normal .deal-days-indicator {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.deal-card.stage-orange .deal-days-indicator {
+    background-color: #fff3e0;
+    color: #ef6c00;
+}
+
+.deal-card.stage-red .deal-days-indicator {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+/* Deal Card Body */
+.deal-card-body {
+    font-size: 12px;
+    color: #666;
+}
+
+.deal-card-body > div {
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.deal-card-body i {
+    margin-right: 4px;
+    width: 12px;
+    text-align: center;
+}
+
+/* Probability Bar */
+.deal-probability {
+    margin-top: 8px;
+    position: relative;
+    height: 20px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.probability-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background-color: #4caf50;
+    transition: width 0.3s;
+}
+
+.probability-text {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 11px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Empty Stage */
+.empty-stage-placeholder {
+    text-align: center;
+    padding: 40px 20px;
+    color: #999;
+}
+
+.empty-stage-placeholder i {
+    font-size: 48px;
+    color: #ddd;
+}
+
+.empty-stage-placeholder p {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+/* Drag Ghost */
+.drag-ghost {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.8;
+    transform: rotate(5deg);
+}
+
+/* Loading Overlay */
+.pipeline-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.loading-spinner {
+    text-align: center;
+}
+
+.loading-spinner i {
+    font-size: 48px;
+    color: #1976d2;
+}
+
+.loading-spinner p {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #666;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .pipeline-header {
+        padding: 15px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .pipeline-actions {
+        margin-top: 10px;
+        width: 100%;
+    }
+    
+    .pipeline-actions .btn {
+        flex: 1;
+        font-size: 12px;
+    }
+    
+    .pipeline-board-wrapper {
+        padding: 10px;
+    }
+    
+    .pipeline-stage {
+        width: 280px;
+        min-width: 280px;
+    }
+    
+    .mobile-swipe-hint {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(0,0,0,0.7);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 12px;
+        animation: fadeInOut 3s ease-in-out;
+    }
+}
+
+/* Compact View */
+.pipeline-container.compact-view .deal-card {
+    padding: 8px;
+}
+
+.pipeline-container.compact-view .deal-card-body {
+    display: none;
+}
+
+.pipeline-container.compact-view .deal-probability {
+    height: 4px;
+    margin-top: 4px;
+}
+
+.pipeline-container.compact-view .probability-text {
+    display: none;
+}
+
+/* Animations */
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    20%, 80% { opacity: 1; }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.glyphicon-spin {
+    animation: spin 1s linear infinite;
+}
+
+/* Print Styles */
+@media print {
+    .pipeline-actions,
+    .mobile-swipe-hint {
+        display: none;
+    }
+    
+    .pipeline-board-wrapper {
+        overflow: visible;
+    }
+    
+    .pipeline-board {
+        flex-wrap: wrap;
+    }
+    
+    .pipeline-stage {
+        margin-bottom: 20px;
+        break-inside: avoid;
+    }
+}
