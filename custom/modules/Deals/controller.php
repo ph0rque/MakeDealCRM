@@ -19,7 +19,16 @@ class DealsController extends SugarController
     public function action_index()
     {
         // Redirect to the pipeline view as the default view for Deals
-        sugar_redirect('index.php?module=Deals&action=pipeline');
+        $this->action_pipeline();
+    }
+    
+    /**
+     * Override list view to redirect to pipeline
+     */
+    public function action_listview()
+    {
+        // Redirect list view to pipeline as well
+        $this->action_pipeline();
     }
     
     /**
