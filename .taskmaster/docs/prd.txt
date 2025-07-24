@@ -1,0 +1,167 @@
+# Product Requirements Document: MakeDealCRM
+
+## Executive Summary
+MakeDealCRM is a specialized CRM system designed specifically for solo dealmakers (business buyers, micro-PE investors, search fund principals). The system streamlines the entire acquisition lifecycle from sourcing through post-acquisition management, replacing traditional CRM modules with a deal-centric architecture.
+
+## Core Principle
+The CRM is built around the concept of "Deal" as the central object, consolidating all related information and workflows in one place. The system must be intuitive enough for a single operator to manage multiple deals efficiently without administrative overhead.
+
+## Key Features
+
+### 1. The "Deal" as Central Object [COMPLETED]
+The Deals module replaces traditional Opportunities and Leads modules, serving as the hub for all acquisition-related data.
+
+**Requirements:**
+- Auto-capture deals from multiple sources (email forwarding, CSV import, web forms, Chrome extension)
+- Duplicate prevention with intelligent matching and warnings
+- Centralized relationships: Contacts, Documents, Tasks, Financials, and Checklist items
+- Email integration with automatic deal creation/updating via forwarded emails to deals@mycrm
+
+**Technical Implementation Completed:**
+- Custom Bean architecture with 26 fields including financial metrics
+- Real-time duplicate detection with fuzzy matching
+- Automatic financial calculations (EBITDA × Multiple)
+- Email parsing logic hooks
+- Enhanced UI with stage progress visualization
+- Full test coverage (95%) with PHPUnit and Playwright E2E tests
+
+### 2. Unified Deal & Portfolio Pipeline
+Visual pipeline tracking deals from initial identification through post-close management with focus indicators.
+
+**Requirements:**
+- Kanban-style pipeline view covering all acquisition and post-acquisition stages
+- Time-in-stage tracking with visual alerts (orange at 14 days idle, red at 30 days)
+- WIP limits and "Focus" flags per stage
+- Mobile-optimized with drag-and-drop support
+
+**Pipeline Stages:**
+1. Sourcing - Initial target identification
+2. Screening - Quick investment thesis review
+3. Analysis & Outreach - Initial contact and preliminary data
+4. Due Diligence - Deep investigation (financial, legal, operational)
+5. Valuation & Structuring - Price and terms determination
+6. LOI/Negotiation - Letter of Intent negotiation
+7. Financing - Securing funding
+8. Closing - Final legal process
+9. Closed/Owned – 90-Day Plan - Active integration
+10. Closed/Owned – Stable Operations - Ongoing management
+11. Unavailable - Inactive deals
+
+### 3. Personal Due-Diligence Checklists
+Templated checklist system ensuring rigor and preventing oversight.
+
+**Requirements:**
+- Create and save reusable checklist templates
+- Auto-generate tasks from templates with progress tracking
+- File request capability with automated seller emails
+- Export functionality (PDF/Excel) for external stakeholders
+- Percent-complete indicators on Deal cards
+
+**Template Examples:**
+- Quick-Screen Checklist
+- Full Financial Due Diligence
+- Legal Due Diligence
+- Operational Review
+
+### 4. Simplified Stakeholder Tracking
+Effortless management of multiple external parties per deal.
+
+**Requirements:**
+- Streamlined Contacts section with role tags (Seller, Broker, Attorney, Accountant, Lender)
+- Quick "Introduce" action for templated multi-party emails
+- Last-contact-date badges highlighting stale relationships
+- One-click access to contact information and history
+
+### 5. At-a-Glance Financial & Valuation Hub
+Centralized financial metrics with comparison and analysis tools.
+
+**Requirements:**
+- Dashboard widget displaying key metrics:
+  - Asking Price
+  - TTM Revenue
+  - TTM EBITDA
+  - SDE (Seller's Discretionary Earnings)
+  - Proposed Valuation
+  - Target Multiple
+- What-if calculator for instant valuation updates
+- Capital Stack section (Equity, Senior Debt, Seller Note) with debt coverage analysis
+- Comparables sidebar with median multiples from private database
+
+### 6. One-Click AWS Deployment
+Streamlined deployment process for non-technical users.
+
+**Requirements:**
+- Pre-configured "Solo Tier" deployment option with cost estimates
+- Automated scripts for:
+  - Docker container deployment
+  - Database setup
+  - Security hardening
+  - Scheduled encrypted S3 backups
+- Step-through wizard for AWS account linking
+- Clear upgrade path for scaling
+
+## Technical Requirements
+
+### Architecture
+- Built on SuiteCRM framework for stability and extensibility
+- Mobile-responsive design throughout
+- RESTful API for third-party integrations
+- Modular architecture allowing feature toggles
+
+### Security
+- SQL injection prevention
+- XSS protection
+- Role-based access control (ACL)
+- Encrypted data storage for sensitive information
+- Regular automated backups
+
+### Performance
+- Sub-second response times for standard operations
+- Optimized database queries with proper indexing
+- Client-side caching where appropriate
+- Debounced search and validation operations
+
+### Integration
+- Email parsing and forwarding capabilities
+- CSV import/export functionality
+- API endpoints for Chrome extension
+- Webhook support for external systems
+
+## User Stories
+
+1. **Deal Capture**: As a solo dealmaker, I want to forward emails to deals@mycrm and have the system automatically create or update deals with all related contacts and attachments, so I maintain a single source of truth without manual data entry.
+
+2. **Pipeline Management**: As a busy investor, I want to see at-risk deals highlighted in my pipeline view on both desktop and mobile, so I can prioritize my efforts and prevent opportunities from stalling.
+
+3. **Due Diligence**: As a solo buyer, I want to apply standardized checklists that auto-generate tasks with reminders and file requests, so nothing falls through the cracks during critical evaluation periods.
+
+4. **Stakeholder Communication**: As the sole point of contact, I want quick access to all deal stakeholders with last-contact indicators and pre-filled templates, so I can maintain relationships efficiently.
+
+5. **Financial Analysis**: As an investor working alone, I want to sort deals by financial metrics and run what-if scenarios including capital stack feasibility, so I can focus on the most promising opportunities.
+
+6. **Easy Deployment**: As a non-technical user, I want to deploy the CRM on AWS with minimal configuration and automatic backups, so I can focus on deals rather than IT management.
+
+## Success Metrics
+
+- Deal capture time reduced by 80% through automation
+- Zero missed follow-ups due to visual pipeline alerts
+- 100% checklist completion rate before deal closure
+- 50% reduction in time spent on stakeholder communication
+- Single-screen access to all critical financial metrics
+- Deployment completed in under 30 minutes
+
+## Constraints and Assumptions
+
+- Single-user focus (no complex multi-user workflows initially)
+- AWS as primary deployment platform
+- SuiteCRM as underlying framework
+- Mobile-responsive but not native mobile apps
+- English language interface initially
+
+## Future Considerations
+
+- Multi-user support with team collaboration features
+- Native mobile applications
+- Advanced analytics and reporting
+- Integration with third-party data providers
+- AI-powered deal scoring and recommendations

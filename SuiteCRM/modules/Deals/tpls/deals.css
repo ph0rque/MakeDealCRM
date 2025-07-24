@@ -2,21 +2,21 @@
  * Deals Module Custom Styles
  */
 
-/* Duplicate Check Container */
+/* Duplicate Check Container - Using SuiteCRM alert styling */
 .duplicate-check-container {
-    background-color: #fff5f5;
-    border: 2px solid #ff6b6b;
-    border-radius: 8px;
-    padding: 20px;
-    margin: 20px 0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    background-color: #F2DEDE;
+    border: 1px solid #EBCCD1;
+    border-radius: 4px;
+    padding: 15px;
+    margin: 15px 0;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.05);
 }
 
 .duplicate-check-container h3 {
-    color: #d32f2f;
+    color: #A94442;
     margin-top: 0;
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 500;
 }
 
 .duplicate-warning {
@@ -24,48 +24,54 @@
 }
 
 .warning-text {
-    color: #d32f2f;
+    color: #A94442;
     font-weight: 500;
     margin-bottom: 15px;
 }
 
-/* Duplicate Table */
+/* Duplicate Table - Using SuiteCRM table styling */
 .duplicate-table {
     width: 100%;
     border-collapse: collapse;
     margin: 15px 0;
-    background-color: white;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    background-color: #FFFFFF;
+    border: 1px solid #DDDDDD;
 }
 
 .duplicate-table thead {
-    background-color: #f5f5f5;
+    background-color: #F5F5F5;
 }
 
 .duplicate-table th {
-    padding: 12px;
+    padding: 8px 12px;
     text-align: left;
-    font-weight: 600;
-    color: #333;
-    border-bottom: 2px solid #ddd;
+    font-weight: 500;
+    color: #534D64;
+    border-bottom: 2px solid #DDDDDD;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .duplicate-table td {
-    padding: 10px 12px;
-    border-bottom: 1px solid #eee;
+    padding: 8px 12px;
+    border-bottom: 1px solid #EEEEEE;
+    font-size: 13px;
 }
 
 .duplicate-table tr:hover {
-    background-color: #f9f9f9;
+    background-color: #FAFAFA;
 }
 
 .duplicate-table a {
-    color: #0066cc;
+    color: #F08377;
     text-decoration: none;
     font-weight: 500;
 }
 
-.duplicate-table a:hover {
+.duplicate-table a:hover,
+.duplicate-table a:focus {
+    color: #534D64;
     text-decoration: underline;
 }
 
@@ -106,10 +112,14 @@
     margin-left: 10px;
 }
 
-/* Button Styles */
+/* Button Styles - Match SuiteCRM theme */
 .btn-sm {
-    padding: 4px 12px !important;
-    font-size: 13px !important;
+    padding: 6px 12px !important;
+    font-size: 12px !important;
+    border-radius: 3px !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 400;
 }
 
 /* Deal Detail View Enhancements */
@@ -122,31 +132,33 @@
     color: #555;
 }
 
-/* Stage Progress Bar */
+/* Stage Progress Bar - Using SuiteCRM colors */
 .stage-progress-container {
     margin: 20px 0;
-    background-color: #f5f5f5;
-    border-radius: 8px;
+    background-color: #F5F5F5;
+    border-radius: 4px;
     padding: 15px;
+    border: 1px solid #DDDDDD;
 }
 
 .stage-progress-bar {
-    height: 30px;
-    background-color: #e0e0e0;
-    border-radius: 15px;
+    height: 24px;
+    background-color: #E0E0E0;
+    border-radius: 12px;
     overflow: hidden;
     position: relative;
 }
 
 .stage-progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #4caf50 0%, #8bc34a 100%);
+    background: linear-gradient(90deg, #F08377 0%, #ED6C5F 100%);
     transition: width 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    font-weight: 600;
+    color: #FFFFFF;
+    font-weight: 500;
+    font-size: 12px;
 }
 
 /* Related Records Subpanels */
@@ -222,20 +234,24 @@
     margin-bottom: 10px;
 }
 
-/* List View Summary Stats */
+/* List View Summary Stats - Using SuiteCRM panel styling */
 .deals-summary-stats {
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
-    border-radius: 8px;
+    background-color: #FFFFFF;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
     padding: 20px;
     margin-bottom: 20px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.05);
 }
 
 .deals-summary-stats h3 {
     margin-top: 0;
     margin-bottom: 20px;
-    color: #333;
-    font-size: 20px;
+    color: #534D64;
+    font-size: 18px;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .stats-grid {
@@ -247,31 +263,33 @@
 .stat-item {
     text-align: center;
     padding: 15px;
-    background-color: white;
-    border-radius: 6px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: #FAFAFA;
+    border-radius: 4px;
+    border: 1px solid #E0E0E0;
 }
 
 .stat-value {
     font-size: 28px;
-    font-weight: 700;
-    color: #007bff;
+    font-weight: 300;
+    color: #F08377;
     margin-bottom: 5px;
 }
 
 .stat-label {
-    font-size: 14px;
-    color: #6c757d;
+    font-size: 12px;
+    color: #777777;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    font-weight: 500;
 }
 
-/* Quick Filters */
+/* Quick Filters - Using SuiteCRM styling */
 .quick-filters {
-    background-color: #e9ecef;
+    background-color: #F5F5F5;
     padding: 10px 15px;
-    border-radius: 6px;
+    border-radius: 4px;
     margin-bottom: 15px;
+    border: 1px solid #DDDDDD;
 }
 
 .quick-filters span {

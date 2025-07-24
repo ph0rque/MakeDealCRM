@@ -1,0 +1,115 @@
+# Task ID: 1
+# Title: Setup Unified Deal & Portfolio Pipeline Architecture
+# Status: pending
+# Dependencies: None
+# Priority: high
+# Description: Implement the visual Kanban-style pipeline system with 11 stages covering acquisition to post-close management
+# Details:
+The pipeline UI is mostly complete with drag-and-drop functionality, time tracking, and visual alerts already implemented. Priority focus areas are: 1) Complete Focus flags implementation for high-priority deals, 2) Fix integration with Deals module data layer, 3) Complete backend API endpoints for pipeline operations, 4) Execute pending database migrations for production deployment. The visual components and user interactions are working well, but backend data integration needs completion.
+
+# Test Strategy:
+Unit tests for pipeline state management, E2E tests for drag-and-drop functionality across devices, visual regression tests for alert styling, performance tests for large pipeline loads, integration tests for Deals module data flow
+
+# Subtasks:
+## 1. Design Database Schema for 11 Pipeline Stages [done]
+### Dependencies: None
+### Description: Create comprehensive database schema supporting 11 distinct pipeline stages with metadata tracking
+### Details:
+Design tables for pipeline_stages, stage_transitions, stage_timers, wip_limits, and focus_flags. Include fields for stage order, stage colors, alert thresholds (14/30 days), max WIP counts, and focus priority rankings. Create indexes for efficient querying of deals by stage and time-in-stage calculations.
+
+## 2. Build Core MVC Pipeline Component Structure [done]
+### Dependencies: 1.1
+### Description: Implement SuiteCRM MVC architecture for pipeline visualization module
+### Details:
+Create PipelineController for handling stage transitions and WIP validations. Build PipelineModel for data operations including stage queries and transition logging. Develop base PipelineView class with render methods for desktop and mobile layouts. Implement ViewPipeline extending SuiteCRM's SugarView for integration.
+
+## 3. Implement Drag-and-Drop Engine with Touch Support [pending]
+### Dependencies: 1.2
+### Description: Create unified drag-and-drop system supporting mouse and touch interactions
+### Details:
+Build DragDropManager class handling both mouse events (mousedown/mousemove/mouseup) and touch events (touchstart/touchmove/touchend). Implement visual drag preview, drop zone highlighting, and smooth animations. Add gesture detection for mobile pinch-to-zoom and swipe navigation. Include accessibility support with keyboard navigation.
+
+## 4. Develop Stage Transition Logic and Validation [pending]
+### Dependencies: 1.1, 1.3
+### Description: Create business logic for valid stage transitions and enforcement rules
+### Details:
+Implement StageTransitionService with rules engine for allowed transitions (e.g., can't skip Due Diligence). Add WIP limit checking before allowing drops. Create transaction-safe transition recording with rollback capability. Build audit trail for all stage movements with timestamps and user tracking.
+
+## 5. Build Time Tracking System with Alert Mechanisms [pending]
+### Dependencies: 1.4
+### Description: Implement comprehensive time-in-stage tracking with visual alert system
+### Details:
+Create TimeTracker service calculating days in current stage using stage_transitions table. Implement scheduled job for daily alert status updates. Build alert rendering system with CSS classes for normal (green), warning (orange at 14 days), and critical (red at 30 days) states. Add notification system for stage time violations.
+
+## 6. Create Visual Alert Components and Styling [done]
+### Dependencies: 1.5
+### Description: Design and implement visual indicator system for time-based alerts
+### Details:
+Build AlertIndicator React/Vue component with configurable thresholds. Create CSS animation system for pulsing/glowing effects on critical alerts. Design color-blind friendly alert palette. Implement tooltip system showing exact days in stage and next threshold. Add visual density options for different screen sizes.
+
+## 7. Implement WIP Limit Enforcement System [pending]
+### Dependencies: 1.4
+### Description: Build work-in-progress limit management with visual indicators
+### Details:
+Create WIPLimitManager validating drops against configured limits per stage. Build visual capacity indicators showing current/max deals per stage. Implement overflow handling with user prompts for limit overrides. Add administrative interface for setting and adjusting WIP limits. Create reporting for WIP limit violations.
+
+## 8. Complete Focus Flag Implementation [done]
+### Dependencies: 1.2, 1.7
+### Description: Finish priority flagging system for high-focus deals within stages
+### Details:
+Complete the FocusFlag entity implementation with stage-specific priority rankings. Finish building visual star/pin indicators for focused deals. Complete drag-to-reorder functionality within focus items. Add quick-toggle actions for focus flag assignment. Implement focus filter views showing only flagged deals across pipeline. This is a critical missing piece that needs immediate completion.
+
+## 9. Build Responsive Design System for Pipeline [pending]
+### Dependencies: 1.3, 1.6
+### Description: Create adaptive layouts for desktop, tablet, and mobile views
+### Details:
+Implement responsive grid system with collapsible stages for mobile. Create horizontal scrolling with stage locking for tablet view. Build card size variations (compact/normal/expanded) based on viewport. Add touch-optimized controls with larger hit targets. Implement progressive disclosure for deal details on smaller screens.
+
+## 10. Implement State Management Architecture [pending]
+### Dependencies: 1.2, 1.8
+### Description: Create centralized state management for pipeline data and UI state
+### Details:
+Build PipelineStore using Redux/Vuex pattern for state management. Implement optimistic updates for drag operations with rollback on failure. Create state persistence layer for user preferences (view mode, filters, sort order). Add real-time synchronization for multi-user environments. Build undo/redo functionality for stage transitions.
+
+## 11. Optimize Performance for Large Datasets [pending]
+### Dependencies: 1.10
+### Description: Implement performance optimizations for pipelines with 1000+ deals
+### Details:
+Create virtual scrolling for stages with many deals. Implement lazy loading with pagination for initial pipeline load. Build intelligent caching system for deal data and stage counts. Add database query optimization with proper indexing strategies. Implement web worker for heavy calculations (time tracking, alerts).
+
+## 12. Create Integration Testing Suite [pending]
+### Dependencies: 1.11
+### Description: Build comprehensive test suite validating all pipeline components
+### Details:
+Develop E2E tests for complete drag-drop workflows across devices. Create performance benchmarks for various deal volumes (100/1000/10000). Build visual regression tests for alert states and responsive layouts. Implement load testing for concurrent users. Add accessibility testing for keyboard navigation and screen readers.
+
+## 13. Fix Deals Module Data Integration [done]
+### Dependencies: 1.2
+### Description: Repair broken integration between pipeline UI and SuiteCRM Deals module
+### Details:
+Debug and fix the data layer connection between the pipeline visualization and the existing SuiteCRM Deals module. Ensure proper field mapping, relationship handling, and data synchronization. Fix any issues with deal card data population, stage updates reflecting in Deals records, and bi-directional data flow. This is critical for production deployment.
+
+## 14. Complete Backend API Implementation [done]
+### Dependencies: 1.1, 1.4
+### Description: Finish implementing all required API endpoints for pipeline operations
+### Details:
+Complete missing backend API endpoints for pipeline operations including stage transitions, WIP limit validation, focus flag management, and time tracking updates. Ensure proper error handling, input validation, and response formatting. Implement authentication and authorization for all endpoints. Add API documentation and testing endpoints.
+
+## 15. Execute Database Migrations for Production [pending]
+### Dependencies: 1.1, 1.14
+### Description: Run all pending database migrations and verify schema integrity
+### Details:
+Execute all pending database migrations for pipeline tables, indexes, and constraints. Verify data integrity after migrations. Create rollback scripts for safety. Test migration process in staging environment first. Document any manual data cleanup or transformation steps required.
+
+## 16. Configure Deals module to default to pipeline view [pending]
+### Dependencies: None
+### Description: Update the Deals module navigation to redirect to the Kanban pipeline view (index.php?module=Deals&action=pipeline#) instead of the default list view (ajaxui#ajaxUILoc=index.php%3Fmodule%3DDeals%26action%3Dindex). This involves updating menu links, module routing, and any references in the codebase that direct users to the Deals module.
+### Details:
+
+
+## 17. Fix and test all Kanban board control buttons [pending]
+### Dependencies: None
+### Description: Ensure all pipeline view control buttons are fully functional: Compact View toggle, Show Focused filter, stage filters, and any other UI controls. Fix any broken event handlers, state management issues, or visual feedback problems. Test across different browsers and ensure proper state persistence.
+### Details:
+
+

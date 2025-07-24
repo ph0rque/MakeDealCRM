@@ -1,0 +1,485 @@
+/**
+ * Progress Indicators for Deal Cards
+ * 
+ * Provides visual progress tracking components for checklists
+ * and task completion status in the pipeline view
+ */
+
+/* Progress Bar Component */
+.deal-progress-container {
+    margin-top: 8px;
+    position: relative;
+}
+
+.deal-progress-bar {
+    position: relative;
+    height: 6px;
+    background-color: #E0E0E0;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 4px;
+}
+
+.deal-progress-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #28a745 0%, #20c997 50%, #17a2b8 100%);
+    border-radius: 3px;
+    transition: width 0.3s ease-in-out;
+    min-width: 2px;
+}
+
+.deal-progress-fill.low-progress {
+    background: linear-gradient(90deg, #dc3545 0%, #fd7e14 100%);
+}
+
+.deal-progress-fill.medium-progress {
+    background: linear-gradient(90deg, #ffc107 0%, #fd7e14 100%);
+}
+
+.deal-progress-fill.high-progress {
+    background: linear-gradient(90deg, #28a745 0%, #20c997 100%);
+}
+
+/* Progress Text and Stats */
+.deal-progress-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 10px;
+    color: #666;
+    margin-top: 2px;
+}
+
+.deal-progress-percentage {
+    font-weight: 600;
+    color: #333;
+}
+
+.deal-progress-count {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.deal-progress-count .glyphicon {
+    font-size: 8px;
+    opacity: 0.7;
+}
+
+/* Status Badges */
+.deal-status-badges {
+    display: flex;
+    gap: 4px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+}
+
+.deal-status-badge {
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 9px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.deal-status-badge.overdue {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.deal-status-badge.due-today {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.deal-status-badge.on-track {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.deal-status-badge.completed {
+    background-color: #cce7ff;
+    color: #0056b3;
+}
+
+.deal-status-badge.blocked {
+    background-color: #e2e3e5;
+    color: #383d41;
+}
+
+/* Checklist Quick View */
+.deal-checklist-preview {
+    margin-top: 6px;
+    font-size: 10px;
+    color: #777;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.deal-checklist-icon {
+    font-size: 10px;
+    opacity: 0.7;
+}
+
+.deal-checklist-summary {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Priority Indicators */
+.deal-priority-indicator {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 4px;
+    height: 20px;
+    border-radius: 2px;
+    opacity: 0.7;
+}
+
+.deal-priority-indicator.critical {
+    background-color: #dc3545;
+    animation: pulse-critical 2s infinite;
+}
+
+.deal-priority-indicator.high {
+    background-color: #fd7e14;
+}
+
+.deal-priority-indicator.medium {
+    background-color: #ffc107;
+}
+
+.deal-priority-indicator.low {
+    background-color: #28a745;
+}
+
+/* Tooltip Components */
+.deal-progress-tooltip {
+    position: absolute;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(-5px);
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+    pointer-events: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.deal-progress-tooltip.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.deal-progress-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -4px;
+    border: 4px solid transparent;
+    border-top-color: rgba(0, 0, 0, 0.9);
+}
+
+/* Detailed Tooltip Content */
+.tooltip-checklist-breakdown {
+    min-width: 200px;
+    white-space: normal;
+}
+
+.tooltip-checklist-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 3px 0;
+    padding: 2px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tooltip-checklist-item:last-child {
+    border-bottom: none;
+}
+
+.tooltip-item-name {
+    flex: 1;
+    margin-right: 8px;
+    font-size: 10px;
+}
+
+.tooltip-item-status {
+    font-size: 9px;
+    padding: 1px 4px;
+    border-radius: 2px;
+    text-transform: uppercase;
+}
+
+.tooltip-item-status.completed {
+    background-color: #28a745;
+}
+
+.tooltip-item-status.pending {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.tooltip-item-status.overdue {
+    background-color: #dc3545;
+}
+
+/* Compact View Adaptations */
+.pipeline-container.compact-view .deal-progress-container {
+    margin-top: 4px;
+}
+
+.pipeline-container.compact-view .deal-progress-bar {
+    height: 4px;
+    margin-bottom: 2px;
+}
+
+.pipeline-container.compact-view .deal-status-badges {
+    display: none;
+}
+
+.pipeline-container.compact-view .deal-checklist-preview {
+    display: none;
+}
+
+.pipeline-container.compact-view .deal-progress-stats {
+    font-size: 9px;
+}
+
+/* Mobile Responsive Design */
+@media (max-width: 768px) {
+    .deal-progress-bar {
+        height: 8px;
+        margin-bottom: 6px;
+    }
+    
+    .deal-progress-stats {
+        font-size: 11px;
+    }
+    
+    .deal-status-badge {
+        font-size: 10px;
+        padding: 3px 7px;
+    }
+    
+    .deal-checklist-preview {
+        font-size: 11px;
+    }
+    
+    .deal-priority-indicator {
+        width: 3px;
+        height: 16px;
+        top: 6px;
+        right: 6px;
+    }
+    
+    /* Enhanced touch targets for mobile */
+    .deal-progress-container {
+        position: relative;
+        cursor: pointer;
+        padding: 4px;
+        margin: 4px -4px;
+        border-radius: 4px;
+        transition: background-color 0.2s ease;
+    }
+    
+    .deal-progress-container:active {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+}
+
+@media (max-width: 480px) {
+    .deal-progress-stats {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+    }
+    
+    .deal-status-badges {
+        justify-content: flex-start;
+    }
+    
+    .deal-status-badge {
+        font-size: 9px;
+        padding: 2px 5px;
+    }
+}
+
+/* Tablet Styles */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .deal-progress-bar {
+        height: 7px;
+    }
+    
+    .deal-progress-stats {
+        font-size: 10px;
+    }
+    
+    .deal-status-badge {
+        font-size: 9px;
+        padding: 2px 6px;
+    }
+}
+
+/* Animation Keyframes */
+@keyframes pulse-critical {
+    0%, 100% {
+        opacity: 0.7;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+}
+
+@keyframes progress-fill {
+    0% {
+        width: 0%;
+    }
+    100% {
+        width: var(--progress-width);
+    }
+}
+
+/* Loading States */
+.deal-progress-loading {
+    position: relative;
+    overflow: hidden;
+}
+
+.deal-progress-loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    animation: loading-shimmer 1.5s infinite;
+}
+
+@keyframes loading-shimmer {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+/* Focus states for accessibility */
+.deal-progress-container:focus {
+    outline: 2px solid #F08377;
+    outline-offset: 2px;
+}
+
+.deal-status-badge:focus {
+    outline: 1px solid #F08377;
+    outline-offset: 1px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .deal-progress-bar {
+        border: 1px solid #000;
+    }
+    
+    .deal-progress-fill {
+        background: #000;
+    }
+    
+    .deal-status-badge {
+        border: 1px solid #000;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .deal-progress-fill {
+        transition: none;
+    }
+    
+    .deal-priority-indicator.critical {
+        animation: none;
+    }
+    
+    .deal-progress-loading::after {
+        animation: none;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .deal-progress-bar {
+        background-color: #404040;
+    }
+    
+    .deal-progress-stats {
+        color: #ccc;
+    }
+    
+    .deal-progress-percentage {
+        color: #fff;
+    }
+    
+    .deal-status-badge.overdue {
+        background-color: #5a1a1a;
+        color: #ffb3ba;
+    }
+    
+    .deal-status-badge.due-today {
+        background-color: #4a3c00;
+        color: #fff3cd;
+    }
+    
+    .deal-status-badge.on-track {
+        background-color: #1a3a1a;
+        color: #b3ffb3;
+    }
+    
+    .deal-status-badge.completed {
+        background-color: #003366;
+        color: #b3d9ff;
+    }
+    
+    .deal-checklist-preview {
+        color: #999;
+    }
+}
+
+/* Print styles */
+@media print {
+    .deal-progress-tooltip {
+        display: none;
+    }
+    
+    .deal-priority-indicator {
+        display: none;
+    }
+    
+    .deal-progress-fill {
+        background: #000 !important;
+    }
+    
+    .deal-status-badge {
+        border: 1px solid #000;
+        background: transparent !important;
+        color: #000 !important;
+    }
+}

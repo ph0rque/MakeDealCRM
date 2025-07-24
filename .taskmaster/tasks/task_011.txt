@@ -1,0 +1,11 @@
+# Task ID: 11
+# Title: Fix Deals Module Foundation and SuiteCRM Integration
+# Status: pending
+# Dependencies: 1
+# Priority: medium
+# Description: Convert standalone Deals module to proper SuiteCRM extension with database migrations, security fixes, and UI consistency to establish critical infrastructure foundation.
+# Details:
+Convert existing standalone Deals module code to proper SuiteCRM extension architecture by implementing SuiteCRM's module framework patterns. Register module with SuiteCRM using proper manifest.php and module loader entries. Execute database migrations to create custom tables (deals, deal_stages, deal_contacts_relationships) and add custom fields to existing modules. Fix module loader entries in ModuleBuilder format and ensure proper language file loading in modules/Deals/language/. Update menu items using SuiteCRM's menu system and ensure proper ACL integration. Address security vulnerabilities by implementing prepared statements for all database queries, proper input sanitization using SuiteCRM's security classes, and XSS protection through output encoding. Make UI styling consistent with SuiteCRM core themes by using SuiteCRM's CSS framework, proper template structure, and theme inheritance. Implement proper SuiteCRM hooks and logic hooks for module integration. Ensure compatibility with SuiteCRM's existing workflow engine and reporting system.
+
+# Test Strategy:
+Verify proper module installation through SuiteCRM admin interface and module loader. Test database schema creation and field additions through direct database inspection. Validate security fixes using automated security scanning tools and manual penetration testing for SQL injection and XSS vulnerabilities. Test UI consistency across different SuiteCRM themes and browser compatibility. Verify module functionality including CRUD operations, search, and reporting integration. Test language file loading and menu item functionality. Validate proper integration with SuiteCRM's existing modules like Contacts and Accounts. Perform upgrade/downgrade testing to ensure module can be safely installed and removed.

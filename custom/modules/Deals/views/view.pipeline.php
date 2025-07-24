@@ -51,6 +51,22 @@ class DealsViewPipeline extends SugarView
         
         // Add CSS and JavaScript
         echo '<link rel="stylesheet" type="text/css" href="custom/modules/Deals/css/pipeline.css">';
+        echo '<link rel="stylesheet" type="text/css" href="custom/modules/Deals/css/pipeline-focus.css">';
+        echo '<link rel="stylesheet" type="text/css" href="custom/modules/Deals/css/wip-limits.css">';
+        echo '<link rel="stylesheet" type="text/css" href="custom/modules/Deals/css/progress-indicators.css">';
+        
+        // State Management JavaScript Files
+        echo '<script type="text/javascript" src="custom/modules/Deals/js/state-manager.js"></script>';
+        echo '<script type="text/javascript" src="custom/modules/Deals/js/pipeline-state-integration.js"></script>';
+        echo '<script type="text/javascript" src="custom/modules/Deals/js/state-debugger.js"></script>';
+        
+        // WIP Limit Management
+        echo '<script type="text/javascript" src="custom/modules/Deals/js/wip-limit-manager.js"></script>';
+        
+        // Progress Indicators JavaScript
+        echo '<script type="text/javascript" src="custom/modules/Deals/js/progress-indicators.js"></script>';
+        
+        // Original Pipeline JavaScript (enhanced with state management)
         echo '<script type="text/javascript" src="custom/modules/Deals/js/pipeline.js"></script>';
         
         // Get deals grouped by stage
@@ -88,21 +104,25 @@ class DealsViewPipeline extends SugarView
                     d.name,
                     d.amount,
                     d.sales_stage,
-                    d.pipeline_stage_c,
-                    d.stage_entered_date_c,
+                    c.pipeline_stage_c,
+                    c.stage_entered_date_c,
                     d.date_modified,
                     d.assigned_user_id,
                     CONCAT(u.first_name, ' ', u.last_name) as assigned_user_name,
                     d.account_id,
                     a.name as account_name,
-                    d.expected_close_date_c,
-                    d.probability
+                    c.expected_close_date_c,
+                    d.probability,
+                    c.focus_flag_c,
+                    c.focus_order_c,
+                    c.focus_date_c
                 FROM opportunities d
+                LEFT JOIN opportunities_cstm c ON d.id = c.id_c
                 LEFT JOIN users u ON d.assigned_user_id = u.id
                 LEFT JOIN accounts a ON d.account_id = a.id
                 WHERE d.deleted = 0
                 AND d.sales_stage NOT IN ('Closed Won', 'Closed Lost')
-                ORDER BY d.date_modified DESC";
+                ORDER BY c.focus_flag_c DESC, c.focus_order_c ASC, d.date_modified DESC";
                 
         $result = $db->query($query);
         

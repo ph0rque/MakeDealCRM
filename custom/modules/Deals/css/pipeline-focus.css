@@ -1,0 +1,122 @@
+/**
+ * Pipeline Focus Flag Styles
+ * Styles for focus/priority functionality in the pipeline view
+ */
+
+/* Focus toggle button */
+.focus-toggle-btn {
+    background: none;
+    border: none;
+    padding: 2px 6px;
+    cursor: pointer;
+    color: #ccc;
+    transition: color 0.2s;
+}
+
+.focus-toggle-btn:hover {
+    color: #f39c12;
+}
+
+.focus-toggle-btn.active {
+    color: #f39c12;
+}
+
+.focus-toggle-btn .glyphicon {
+    font-size: 14px;
+}
+
+/* Deal card actions container */
+.deal-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Focused deal card styling */
+.deal-card.focused-deal {
+    border: 2px solid #f39c12;
+    box-shadow: 0 2px 8px rgba(243, 156, 18, 0.3);
+    position: relative;
+}
+
+.deal-card.focused-deal::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #f39c12, #f1c40f);
+    border-radius: 4px;
+    opacity: 0.1;
+    z-index: -1;
+}
+
+/* Focused deal in compact view */
+.compact-view .deal-card.focused-deal {
+    border-width: 1px;
+}
+
+/* Focus filter button active state - now handled in main pipeline.css */
+/* #focus-filter-btn.active styling moved to pipeline.css for consistency */
+
+/* Reordering focused deals */
+.deal-card.focused-deal.dragging {
+    opacity: 0.8;
+    transform: rotate(2deg);
+}
+
+/* Visual separator between focused and non-focused deals */
+.stage-body .deal-card.focused-deal + .deal-card:not(.focused-deal) {
+    margin-top: 20px;
+    position: relative;
+}
+
+.stage-body .deal-card.focused-deal + .deal-card:not(.focused-deal)::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: #ddd;
+}
+
+/* Mobile view adjustments */
+.mobile-view .focus-toggle-btn {
+    padding: 4px 8px;
+}
+
+.mobile-view .focus-toggle-btn .glyphicon {
+    font-size: 16px;
+}
+
+/* Animation for focus state changes */
+.deal-card {
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Focus date tooltip */
+.focus-date-tooltip {
+    position: absolute;
+    background: #333;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-size: 11px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    z-index: 1000;
+}
+
+.focus-toggle-btn:hover + .focus-date-tooltip {
+    opacity: 1;
+}
+
+/* Drag placeholder for focused deals */
+.deal-card.focused-deal.drag-ghost {
+    border-style: dashed;
+    background: rgba(243, 156, 18, 0.1);
+}

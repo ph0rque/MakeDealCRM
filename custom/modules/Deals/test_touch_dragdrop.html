@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Touch Drag & Drop Test</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+        }
+        
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .test-board {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 20px 0;
+        }
+        
+        .test-stage {
+            min-width: 250px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .stage-header {
+            padding: 15px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .stage-body {
+            padding: 15px;
+            min-height: 200px;
+        }
+        
+        .test-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 8px;
+            cursor: move;
+            transition: all 0.2s ease;
+        }
+        
+        .test-card:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        /* Enhanced touch styles */
+        .touch-enabled .test-card {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+            touch-action: manipulation;
+        }
+        
+        .test-card.touch-hold {
+            transform: scale(0.98);
+            opacity: 0.8;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        .test-card.touch-dragging {
+            opacity: 0.4;
+            transform: scale(0.95);
+        }
+        
+        .touch-drag-clone {
+            cursor: grabbing !important;
+            touch-action: none;
+            position: fixed;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        
+        body.touch-dragging-active {
+            overflow: hidden;
+            touch-action: none;
+        }
+        
+        .stage-body.drag-over {
+            background-color: #f0f8ff;
+            border: 2px dashed #007bff;
+        }
+        
+        .drop-position-indicator {
+            height: 3px;
+            background: linear-gradient(90deg, #007bff 0%, #0056b3 100%);
+            margin: 4px 0;
+            border-radius: 2px;
+            animation: pulse 0.6s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        
+        .test-info {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .touch-debug {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            z-index: 10000;
+        }
+    </style>
+</head>
+<body class="touch-enabled">
+    <div class="test-container">
+        <div class="test-info">
+            <h1>Enhanced Touch Drag & Drop Test</h1>
+            <p><strong>Instructions:</strong></p>
+            <ul>
+                <li><strong>Desktop:</strong> Click and drag cards between stages</li>
+                <li><strong>Mobile:</strong> Touch and hold a card for 150ms, then drag</li>
+                <li><strong>Features:</strong> Visual feedback, hold detection, position indicators, auto-scroll</li>
+            </ul>
+        </div>
+        
+        <div class="test-board">
+            <div class="test-stage">
+                <div class="stage-header">
+                    <h3>To Do</h3>
+                </div>
+                <div class="stage-body droppable" data-stage="todo">
+                    <div class="test-card draggable" data-card-id="1">
+                        <strong>Task 1</strong><br>
+                        This is a test card
+                    </div>
+                    <div class="test-card draggable" data-card-id="2">
+                        <strong>Task 2</strong><br>
+                        Another test card
+                    </div>
+                    <div class="test-card draggable" data-card-id="3">
+                        <strong>Task 3</strong><br>
+                        Third test card
+                    </div>
+                </div>
+            </div>
+            
+            <div class="test-stage">
+                <div class="stage-header">
+                    <h3>In Progress</h3>
+                </div>
+                <div class="stage-body droppable" data-stage="progress">
+                    <div class="test-card draggable" data-card-id="4">
+                        <strong>Task 4</strong><br>
+                        Work in progress
+                    </div>
+                </div>
+            </div>
+            
+            <div class="test-stage">
+                <div class="stage-header">
+                    <h3>Done</h3>
+                </div>
+                <div class="stage-body droppable" data-stage="done">
+                    <div class="test-card draggable" data-card-id="5">
+                        <strong>Task 5</strong><br>
+                        Completed task
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="touch-debug" id="debug-info" style="display: none;">
+        Touch Debug Info
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Simplified version of the enhanced touch drag & drop for testing
+        var TouchDragTest = {
+            config: {
+                touchScrollThreshold: 10,
+                touchHoldDuration: 150,
+                touchFeedbackDelay: 100
+            },
+            
+            draggedElement: null,
+            touchStartX: 0,
+            touchStartY: 0,
+            touchStartTime: 0,
+            touchHoldTimer: null,
+            isDragging: false,
+            touchIdentifier: null,
+            dragClone: null,
+            lastDropTarget: null,
+            
+            init: function() {
+                var self = this;
+                
+                // Touch events
+                jQuery(document).on('touchstart', '.draggable', function(e) {
+                    self.handleTouchStart(e);
+                });
+                
+                jQuery(document).on('touchmove', function(e) {
+                    if (self.isDragging) {
+                        self.handleTouchMove(e);
+                    }
+                });
+                
+                jQuery(document).on('touchend touchcancel', function(e) {
+                    if (self.isDragging || self.touchHoldTimer) {
+                        self.handleTouchEnd(e);
+                    }
+                });
+                
+                // Mouse events for desktop
+                jQuery(document).on('dragstart', '.draggable', function(e) {
+                    self.draggedElement = e.currentTarget;
+                    jQuery(e.currentTarget).addClass('dragging');
+                });
+                
+                jQuery(document).on('dragover', '.droppable', function(e) {
+                    e.preventDefault();
+                    jQuery(e.currentTarget).addClass('drag-over');
+                });
+                
+                jQuery(document).on('dragleave', '.droppable', function(e) {
+                    jQuery(e.currentTarget).removeClass('drag-over');
+                });
+                
+                jQuery(document).on('drop', '.droppable', function(e) {
+                    e.preventDefault();
+                    var target = e.currentTarget;
+                    jQuery(target).removeClass('drag-over');
+                    
+                    if (self.draggedElement) {
+                        jQuery(target).append(self.draggedElement);
+                        jQuery(self.draggedElement).removeClass('dragging');
+                        self.draggedElement = null;
+                    }
+                });
+                
+                jQuery(document).on('dragend', '.draggable', function(e) {
+                    jQuery(e.currentTarget).removeClass('dragging');
+                });
+                
+                this.updateDebugInfo('Touch drag & drop initialized');
+            },
+            
+            handleTouchStart: function(e) {
+                var self = this;
+                var touch = e.originalEvent.touches[0];
+                
+                this.touchStartX = touch.pageX;
+                this.touchStartY = touch.pageY;
+                this.touchStartTime = Date.now();
+                this.touchIdentifier = touch.identifier;
+                this.draggedElement = e.currentTarget;
+                
+                this.updateDebugInfo('Touch start');
+                
+                this.touchHoldTimer = setTimeout(function() {
+                    if (!self.isDragging) {
+                        self.initiateTouchDrag(touch);
+                    }
+                }, this.config.touchHoldDuration);
+                
+                setTimeout(function() {
+                    if (self.touchHoldTimer && !self.isDragging) {
+                        jQuery(self.draggedElement).addClass('touch-hold');
+                    }
+                }, this.config.touchFeedbackDelay);
+            },
+            
+            initiateTouchDrag: function(touch) {
+                this.isDragging = true;
+                this.updateDebugInfo('Drag initiated');
+                
+                if (this.touchHoldTimer) {
+                    clearTimeout(this.touchHoldTimer);
+                    this.touchHoldTimer = null;
+                }
+                
+                this.createTouchDragClone();
+                jQuery(this.draggedElement).addClass('touch-dragging');
+                jQuery('body').addClass('touch-dragging-active');
+                
+                if (window.navigator && window.navigator.vibrate) {
+                    window.navigator.vibrate(50);
+                }
+                
+                this.updateDragClonePosition(touch.pageX, touch.pageY);
+            },
+            
+            createTouchDragClone: function() {
+                var original = jQuery(this.draggedElement);
+                var offset = original.offset();
+                
+                this.dragClone = original.clone()
+                    .addClass('touch-drag-clone')
+                    .css({
+                        position: 'fixed',
+                        top: offset.top,
+                        left: offset.left,
+                        width: original.outerWidth(),
+                        height: original.outerHeight(),
+                        zIndex: 9999,
+                        opacity: 0.9,
+                        transform: 'scale(1.05) rotate(2deg)',
+                        boxShadow: '0 5px 15px rgba(0,0,0,0.3)'
+                    });
+                    
+                jQuery('body').append(this.dragClone);
+            },
+            
+            handleTouchMove: function(e) {
+                var touch = this.getTouchById(e.originalEvent.touches, this.touchIdentifier);
+                if (!touch) return;
+                
+                var moveX = touch.pageX - this.touchStartX;
+                var moveY = touch.pageY - this.touchStartY;
+                var distance = Math.sqrt(moveX * moveX + moveY * moveY);
+                
+                if (!this.isDragging && distance > this.config.touchScrollThreshold) {
+                    if (this.touchHoldTimer) {
+                        clearTimeout(this.touchHoldTimer);
+                        this.touchHoldTimer = null;
+                        jQuery(this.draggedElement).removeClass('touch-hold');
+                    }
+                    
+                    var elapsed = Date.now() - this.touchStartTime;
+                    if (elapsed >= this.config.touchHoldDuration) {
+                        this.initiateTouchDrag(touch);
+                    } else {
+                        return;
+                    }
+                }
+                
+                if (this.isDragging) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    this.updateDragClonePosition(touch.pageX, touch.pageY);
+                    this.updateDropTarget(touch);
+                    this.updateDebugInfo('Dragging...');
+                }
+            },
+            
+            updateDragClonePosition: function(pageX, pageY) {
+                if (this.dragClone) {
+                    var offsetX = pageX - this.touchStartX;
+                    var offsetY = pageY - this.touchStartY;
+                    
+                    this.dragClone.css({
+                        transform: 'translate(' + offsetX + 'px, ' + offsetY + 'px) scale(1.05) rotate(2deg)'
+                    });
+                }
+            },
+            
+            updateDropTarget: function(touch) {
+                if (this.dragClone) {
+                    this.dragClone.hide();
+                }
+                
+                var elementBelow = document.elementFromPoint(touch.pageX, touch.pageY);
+                
+                if (this.dragClone) {
+                    this.dragClone.show();
+                }
+                
+                if (elementBelow) {
+                    var dropZone = jQuery(elementBelow).closest('.droppable');
+                    
+                    if (dropZone.length && dropZone[0] !== this.lastDropTarget) {
+                        jQuery('.drag-over').removeClass('drag-over');
+                        jQuery('.drop-position-indicator').remove();
+                        
+                        dropZone.addClass('drag-over');
+                        
+                        var dropPosition = this.getDropPosition(dropZone[0], touch.pageY);
+                        if (dropPosition.element) {
+                            this.showDropPositionIndicator(dropPosition.element, dropPosition.before);
+                        }
+                        
+                        this.lastDropTarget = dropZone[0];
+                        
+                        if (window.navigator && window.navigator.vibrate) {
+                            window.navigator.vibrate(20);
+                        }
+                    }
+                }
+            },
+            
+            getDropPosition: function(dropZone, pageY) {
+                var cards = jQuery(dropZone).find('.test-card:not(.touch-dragging)');
+                var result = { element: null, before: true };
+                
+                cards.each(function() {
+                    var rect = this.getBoundingClientRect();
+                    var midpoint = rect.top + rect.height / 2;
+                    
+                    if (pageY < midpoint) {
+                        result.element = this;
+                        result.before = true;
+                        return false;
+                    } else if (pageY < rect.bottom) {
+                        result.element = this;
+                        result.before = false;
+                        return false;
+                    }
+                });
+                
+                return result;
+            },
+            
+            showDropPositionIndicator: function(element, before) {
+                var indicator = jQuery('<div class="drop-position-indicator"></div>');
+                
+                if (before) {
+                    jQuery(element).before(indicator);
+                } else {
+                    jQuery(element).after(indicator);
+                }
+            },
+            
+            handleTouchEnd: function(e) {
+                this.updateDebugInfo('Touch end');
+                
+                if (this.touchHoldTimer) {
+                    clearTimeout(this.touchHoldTimer);
+                    this.touchHoldTimer = null;
+                }
+                
+                jQuery(this.draggedElement).removeClass('touch-hold');
+                
+                if (this.isDragging) {
+                    var touch = this.getTouchById(e.originalEvent.changedTouches, this.touchIdentifier);
+                    if (touch) {
+                        this.completeTouchDrag(touch);
+                    }
+                }
+                
+                this.cleanupTouchDrag();
+            },
+            
+            completeTouchDrag: function(touch) {
+                if (this.dragClone) {
+                    this.dragClone.hide();
+                }
+                
+                var elementBelow = document.elementFromPoint(touch.pageX, touch.pageY);
+                
+                if (elementBelow) {
+                    var dropZone = jQuery(elementBelow).closest('.droppable');
+                    if (dropZone.length) {
+                        var dropPosition = this.getDropPosition(dropZone[0], touch.pageY);
+                        
+                        if (dropPosition.element && !dropPosition.before) {
+                            jQuery(dropPosition.element).after(this.draggedElement);
+                        } else if (dropPosition.element) {
+                            jQuery(dropPosition.element).before(this.draggedElement);
+                        } else {
+                            dropZone.append(this.draggedElement);
+                        }
+                        
+                        this.updateDebugInfo('Card moved successfully');
+                    }
+                }
+            },
+            
+            cleanupTouchDrag: function() {
+                jQuery(this.draggedElement).removeClass('touch-dragging');
+                jQuery('body').removeClass('touch-dragging-active');
+                jQuery('.drag-over').removeClass('drag-over');
+                jQuery('.drop-position-indicator').remove();
+                
+                if (this.dragClone) {
+                    this.dragClone.remove();
+                    this.dragClone = null;
+                }
+                
+                this.isDragging = false;
+                this.touchIdentifier = null;
+                this.lastDropTarget = null;
+                this.draggedElement = null;
+            },
+            
+            getTouchById: function(touches, id) {
+                for (var i = 0; i < touches.length; i++) {
+                    if (touches[i].identifier === id) {
+                        return touches[i];
+                    }
+                }
+                return null;
+            },
+            
+            updateDebugInfo: function(message) {
+                var debug = jQuery('#debug-info');
+                if (debug.length) {
+                    debug.html('Debug: ' + message + '<br>Time: ' + new Date().toLocaleTimeString()).show();
+                    setTimeout(function() {
+                        debug.fadeOut();
+                    }, 2000);
+                }
+            }
+        };
+        
+        // Initialize when document is ready
+        jQuery(document).ready(function() {
+            TouchDragTest.init();
+        });
+    </script>
+</body>
+</html>

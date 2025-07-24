@@ -1,0 +1,61 @@
+# Task ID: 3
+# Title: Build Simplified Stakeholder Tracking Module
+# Status: pending
+# Dependencies: 1
+# Priority: medium
+# Description: Develop streamlined contact management with role-based organization and communication templates
+# Details:
+Enhance Contacts module with role tags (Seller, Broker, Attorney, Accountant, Lender). Implement quick 'Introduce' action for templated multi-party emails using SuiteCRM's email templates. Add last-contact-date badges with visual indicators for stale relationships. Create one-click access to contact information and communication history. Integrate with Deal pipeline for contextual stakeholder management.
+
+# Test Strategy:
+Unit tests for role tag functionality, integration tests for email template system, E2E tests for multi-party introductions, UI tests for contact badges and quick access features
+
+# Subtasks:
+## 1. Design and implement role tag system for contacts [pending]
+### Dependencies: None
+### Description: Create database schema and backend logic for assigning role tags (Seller, Broker, Attorney, Accountant, Lender) to contacts
+### Details:
+Modify contacts table to include role field or create separate role association table. Implement role CRUD operations in ContactsController. Create role constants and validation logic. Ensure role tags can be assigned/updated through API endpoints.
+
+## 2. Update database schema for stakeholder role relationships [pending]
+### Dependencies: 3.1
+### Description: Extend database to support stakeholder-deal relationships with role context
+### Details:
+Create junction table linking contacts, deals, and roles. Add fields for relationship metadata (date added, relationship strength, notes). Implement foreign key constraints and indexes for performance. Create migration scripts for existing data.
+
+## 3. Build email template system for multi-party introductions [pending]
+### Dependencies: 3.1
+### Description: Create customizable email templates for introducing multiple stakeholders
+### Details:
+Design email template structure supporting dynamic recipient lists. Create templates for common introduction scenarios (buyer-seller, broker introductions). Implement template variables for personalization. Build template management interface in admin panel.
+
+## 4. Implement last-contact tracking and calculation logic [pending]
+### Dependencies: 3.2
+### Description: Create backend system to track and calculate last contact dates for each stakeholder
+### Details:
+Add last_contact_date field to contacts. Create background job to update dates from email/activity records. Implement calculation logic for determining staleness thresholds. Build API endpoints for retrieving contact freshness data.
+
+## 5. Develop visual badge component for contact status [pending]
+### Dependencies: 3.4
+### Description: Create frontend components displaying contact freshness with color-coded badges
+### Details:
+Design badge component with configurable color schemes (green/yellow/red). Implement tooltip showing exact last contact date and activity type. Create responsive badge sizes for different views. Add animation for status changes.
+
+## 6. Build quick access UI elements for contact actions [pending]
+### Dependencies: 3.3, 3.5
+### Description: Create one-click interface elements for common contact operations
+### Details:
+Design floating action buttons for quick contact access. Implement click-to-call/email functionality. Create quick view modal for contact details. Build drag-and-drop interface for adding contacts to deals.
+
+## 7. Integrate communication history with contact profiles [pending]
+### Dependencies: 3.2, 3.4
+### Description: Connect email threads, calls, and activities to contact records with timeline view
+### Details:
+Create unified activity timeline component. Implement data aggregation from emails, calls, and notes. Add filtering by communication type and date range. Build conversation threading for email chains.
+
+## 8. Create Deal pipeline relationship mapping interface [pending]
+### Dependencies: 3.2, 3.6, 3.7
+### Description: Build visual interface showing stakeholder involvement across deal stages
+### Details:
+Design stakeholder grid view for pipeline stages. Implement drag-and-drop for assigning stakeholders to deals. Create role-based filtering in pipeline view. Add bulk stakeholder management actions.
+

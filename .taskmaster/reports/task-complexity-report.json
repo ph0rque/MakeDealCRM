@@ -1,0 +1,93 @@
+{
+	"meta": {
+		"generatedAt": "2025-07-24T14:34:47.282Z",
+		"tasksAnalyzed": 10,
+		"totalTasks": 10,
+		"analysisCount": 10,
+		"thresholdScore": 5,
+		"projectName": "Taskmaster",
+		"usedResearch": true
+	},
+	"complexityAnalysis": [
+		{
+			"taskId": 1,
+			"taskTitle": "Setup Unified Deal & Portfolio Pipeline Architecture",
+			"complexityScore": 9,
+			"recommendedSubtasks": 12,
+			"expansionPrompt": "Break down the pipeline architecture implementation into subtasks covering: database schema design for 11 stages, MVC component structure, drag-and-drop functionality with touch support, stage transition logic, time tracking system, visual alert mechanisms, WIP limit enforcement, Focus flag implementation, responsive design patterns, state management, and performance optimization for large datasets. Each subtask should focus on a specific technical component while maintaining integration points.",
+			"reasoning": "This is a foundational task requiring complex UI interactions (drag-and-drop), state management across 11 stages, real-time tracking, visual indicators, and mobile responsiveness. The complexity stems from integrating multiple features while maintaining performance and usability across devices."
+		},
+		{
+			"taskId": 2,
+			"taskTitle": "Implement Personal Due-Diligence Checklist System",
+			"complexityScore": 8,
+			"recommendedSubtasks": 10,
+			"expansionPrompt": "Create subtasks for: template CRUD operations and storage schema, task auto-generation engine, progress tracking algorithms, file request system with email integration, PDF/Excel export functionality, Deal card UI updates for progress indicators, SuiteCRM relationship configuration, template versioning system, checklist state management, and user permission handling for shared checklists.",
+			"reasoning": "High complexity due to template management, dynamic task generation, multiple export formats, email integration, and maintaining relationships between checklists and deals. Requires careful architecture to support reusability and scalability."
+		},
+		{
+			"taskId": 3,
+			"taskTitle": "Build Simplified Stakeholder Tracking Module",
+			"complexityScore": 6,
+			"recommendedSubtasks": 8,
+			"expansionPrompt": "Divide into subtasks for: role tag system implementation, database schema updates for stakeholder roles, email template creation for multi-party introductions, last-contact tracking logic, visual badge component development, quick access UI elements, communication history integration, and Deal pipeline relationship mapping.",
+			"reasoning": "Moderate complexity involving UI enhancements, email template system, and relationship tracking. The challenge lies in creating an intuitive interface while maintaining data integrity across related modules."
+		},
+		{
+			"taskId": 4,
+			"taskTitle": "Create Financial & Valuation Hub Dashboard",
+			"complexityScore": 8,
+			"recommendedSubtasks": 10,
+			"expansionPrompt": "Structure subtasks around: dashboard widget framework setup, financial metric calculation engine, real-time update mechanism using WebSockets or polling, what-if calculator implementation, Capital Stack component design, debt coverage analysis algorithms, comparables data integration, mobile-responsive dashboard layout, data caching strategy, and performance optimization for complex calculations.",
+			"reasoning": "High complexity due to real-time financial calculations, multiple interconnected components, and the need for accuracy in financial computations. Requires careful attention to performance and data synchronization."
+		},
+		{
+			"taskId": 5,
+			"taskTitle": "Enhance Email Integration and Auto-Processing",
+			"complexityScore": 7,
+			"recommendedSubtasks": 9,
+			"expansionPrompt": "Break down into: email parsing algorithm improvements, fuzzy matching implementation for duplicates, contact extraction using NLP/regex patterns, attachment processing pipeline, deal context recognition engine, email thread tracking system, conversation history data model, error handling and retry mechanisms, and performance optimization for bulk email processing.",
+			"reasoning": "Complex due to parsing unstructured data, implementing intelligent matching algorithms, and handling various email formats and attachments. Requires robust error handling and scalability considerations."
+		},
+		{
+			"taskId": 6,
+			"taskTitle": "Implement Advanced Search and Filtering System",
+			"complexityScore": 7,
+			"recommendedSubtasks": 9,
+			"expansionPrompt": "Create subtasks for: search index architecture design, query parser implementation, multi-criteria filter engine, saved search functionality, debounced search with auto-complete, quick filter components, search result export system, mobile search UI optimization, and search performance optimization with caching strategies.",
+			"reasoning": "Significant complexity in building a performant search system that handles multiple criteria, provides real-time suggestions, and scales well with large datasets while maintaining mobile usability."
+		},
+		{
+			"taskId": 7,
+			"taskTitle": "Build Chrome Extension for Deal Capture",
+			"complexityScore": 7,
+			"recommendedSubtasks": 9,
+			"expansionPrompt": "Organize subtasks around: Chrome extension manifest and structure setup, content script development for data extraction, background script for API communication, SuiteCRM API endpoint creation, data extraction rules for popular listing sites, extension UI/UX design, duplicate detection integration, options page for configuration, and extension security implementation.",
+			"reasoning": "Moderate to high complexity due to cross-platform development (extension + CRM), security considerations, and the need to extract data from various website structures reliably."
+		},
+		{
+			"taskId": 8,
+			"taskTitle": "Develop Mobile-Optimized Interface",
+			"complexityScore": 8,
+			"recommendedSubtasks": 10,
+			"expansionPrompt": "Structure tasks for: touch gesture implementation framework, swipe navigation for pipeline stages, mobile-specific deal card redesign, offline data synchronization system, push notification infrastructure, progressive web app setup, mobile performance optimization, battery usage optimization, responsive image loading, and cross-device testing framework.",
+			"reasoning": "High complexity due to offline functionality, push notifications, touch interactions, and the need to maintain feature parity while optimizing for mobile constraints and battery life."
+		},
+		{
+			"taskId": 9,
+			"taskTitle": "Implement Automated Backup and Security Hardening",
+			"complexityScore": 8,
+			"recommendedSubtasks": 10,
+			"expansionPrompt": "Break into subtasks covering: S3 backup automation setup with encryption, backup scheduling system, verification and restore testing procedures, XSS protection implementation, CSRF token integration, input validation framework, rate limiting middleware, brute force protection, security headers configuration, and monitoring/alerting system for backup failures and security events.",
+			"reasoning": "High complexity due to critical nature of security and backup systems, need for comprehensive testing, and integration of multiple security layers while maintaining system performance."
+		},
+		{
+			"taskId": 10,
+			"taskTitle": "Create One-Click AWS Deployment System",
+			"complexityScore": 9,
+			"recommendedSubtasks": 11,
+			"expansionPrompt": "Divide into: deployment wizard UI development, AWS SDK integration for account linking, Docker containerization of application, CloudFormation/Terraform template creation, cost estimation algorithm implementation, database migration automation, security automation scripts, health check configuration, monitoring setup automation, upgrade path documentation and scripts, and rollback mechanism implementation.",
+			"reasoning": "Very high complexity involving infrastructure as code, multiple AWS services integration, cost calculations, security automation, and ensuring reliable deployments across different environments with proper error handling."
+		}
+	]
+}

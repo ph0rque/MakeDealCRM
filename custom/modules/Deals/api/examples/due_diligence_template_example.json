@@ -1,0 +1,400 @@
+{
+  "template": {
+    "id": "template_dd_comprehensive",
+    "name": "Comprehensive Due Diligence Checklist",
+    "description": "Complete due diligence checklist for business acquisitions",
+    "category": "due_diligence",
+    "version": 1,
+    "variables": {
+      "deal_name": "string",
+      "deal_amount": "number", 
+      "account_name": "string",
+      "account_city": "string",
+      "contact_name": "string",
+      "assigned_user": "string",
+      "deal_close_date": "date",
+      "industry": "string",
+      "deal_type": "string"
+    },
+    "tasks": [
+      {
+        "id": "dd_001",
+        "name": "Initial Deal Assessment - {{deal_name}}",
+        "description": "Conduct initial assessment of {{account_name}} acquisition opportunity",
+        "category": "financial",
+        "priority": "high",
+        "instructions": "Review basic deal parameters:\n- Target: {{account_name}}\n- Deal Size: ${{deal_amount}}\n- Expected Close: {{deal_close_date}}\n- Primary Contact: {{contact_name}}",
+        "schedule": {
+          "method": "offset",
+          "offset": "+1 business day",
+          "business_days_only": true,
+          "time": "09:00"
+        },
+        "conditions": [
+          "deal_amount > 1000000"
+        ],
+        "properties": {
+          "estimated_hours": 4,
+          "requires_approval": false
+        }
+      },
+      {
+        "id": "dd_002", 
+        "name": "Financial Statements Review",
+        "description": "{{#if deal_amount >= 5000000}}Comprehensive financial analysis including 3-year audited statements{{else}}Basic financial review of last 2 years{{/if}}",
+        "category": "financial",
+        "priority": "high",
+        "instructions": "Request and review:\n{{#if deal_amount >= 5000000}}- 3 years of audited financial statements\n- Monthly financials for current year\n- Budget vs actual analysis\n- Cash flow statements{{else}}- 2 years of financial statements\n- Current YTD financials{{/if}}\n\nFor {{account_name}} located in {{account_city}}",
+        "schedule": {
+          "method": "offset",
+          "offset": "+3 business days",
+          "business_days_only": true,
+          "exclude_holidays": true,
+          "time": "10:00"
+        },
+        "dependencies": [
+          {
+            "type": "task",
+            "task_id": "dd_001",
+            "relationship": "finish_to_start",
+            "lag": 1
+          }
+        ],
+        "reminders": [
+          {
+            "offset": "-2 days",
+            "type": "email",
+            "message": "Financial statements review due in 2 days for {{deal_name}}",
+            "recipients": ["assigned_user"]
+          }
+        ],
+        "dynamic_properties": [
+          {
+            "condition": "deal_amount >= 10000000",
+            "key": "requires_external_audit",
+            "value": "true",
+            "type": "boolean"
+          },
+          {
+            "condition": "account_city in ['New York', 'Los Angeles', 'Chicago']",
+            "key": "tier_1_market",
+            "value": "true",
+            "type": "boolean"
+          }
+        ]
+      },
+      {
+        "id": "dd_003",
+        "name": "Legal Entity Structure Analysis",
+        "description": "Review corporate structure and legal entity setup for {{account_name}}",
+        "category": "legal",
+        "priority": "medium",
+        "instructions": "Analyze:\n- Corporate structure and subsidiaries\n- Ownership records and cap table\n- Board resolutions and corporate minutes\n- Material contracts and agreements\n\n{{#if industry == 'healthcare'}}Special attention to HIPAA compliance and healthcare regulations{{/if}}\n{{#if industry == 'financial'}}Review banking and financial services compliance{{/if}}",
+        "schedule": {
+          "method": "offset", 
+          "offset": "+5 business days",
+          "business_days_only": true,
+          "time": "14:00"
+        },
+        "dependencies": [
+          {
+            "type": "task",
+            "task_id": "dd_001",
+            "relationship": "finish_to_start",
+            "lag": 2
+          }
+        ],
+        "conditions": [
+          "deal_type != 'asset_purchase'"
+        ]
+      },
+      {
+        "id": "dd_004",
+        "name": "{{#if deal_amount >= 10000000}}Comprehensive{{else}}Standard{{/if}} Operational Review",
+        "description": "Operational due diligence covering key business processes and systems",
+        "category": "operational",
+        "priority": "medium", 
+        "instructions": "Review operational aspects:\n- Key management team and org chart\n- Core business processes and systems\n- IT infrastructure and security\n- Customer concentration and retention\n- Supplier relationships\n\n{{#if deal_amount >= 10000000}}\nAdditional deep-dive areas:\n- Process automation opportunities\n- Scalability analysis\n- Technology stack evaluation\n- Cybersecurity assessment{{/if}}",
+        "schedule": {
+          "method": "relative_to_field",
+          "field": "deal_close_date",
+          "offset": "-30 days",
+          "business_days_only": true,
+          "time": "09:00"
+        },
+        "dependencies": [
+          {
+            "type": "task",
+            "task_id": "dd_002",
+            "relationship": "start_to_start",
+            "lag": 3
+          }
+        ],
+        "reminders": [
+          {
+            "offset": "-5 days",
+            "type": "email", 
+            "message": "Operational review deadline approaching for {{deal_name}}",
+            "recipients": ["assigned_user"]
+          },
+          {
+            "offset": "-1 day",
+            "type": "notification",
+            "message": "Final reminder: Operational review due tomorrow"
+          }
+        ]
+      },
+      {
+        "id": "dd_005",
+        "name": "Market and Competitive Analysis",
+        "description": "Analysis of market position and competitive landscape for {{account_name}}",
+        "category": "strategic",
+        "priority": "medium",
+        "instructions": "Conduct market analysis:\n- Market size and growth trends\n- Competitive positioning\n- Market share analysis\n- Pricing strategy evaluation\n- Regulatory environment\n\n{{#if industry}}\nIndustry-specific factors for {{industry}} sector{{/if}}",
+        "schedule": {
+          "method": "offset",
+          "offset": "+7 business days", 
+          "business_days_only": true,
+          "time": "13:00"
+        },
+        "dependencies": [
+          {
+            "type": "task",
+            "task_id": "dd_004",
+            "relationship": "start_to_start",
+            "lag": 2
+          }
+        ]
+      },
+      {
+        "id": "dd_006",
+        "name": "Environmental and Regulatory Compliance",
+        "description": "Review environmental liabilities and regulatory compliance status",
+        "category": "legal",
+        "priority": "{{#if industry in ['manufacturing', 'chemical', 'energy']}}high{{else}}medium{{/if}}",
+        "instructions": "Environmental and regulatory review:\n- Environmental compliance history\n- Pending regulatory actions\n- Required licenses and permits\n- Insurance coverage adequacy\n\n{{#if industry == 'manufacturing'}}Focus on manufacturing-specific environmental concerns{{/if}}\n{{#if industry == 'healthcare'}}Healthcare regulatory compliance (FDA, CMS, etc.){{/if}}",
+        "schedule": {
+          "method": "offset",
+          "offset": "+10 business days",
+          "business_days_only": true,
+          "exclude_holidays": true,
+          "time": "10:30"
+        },
+        "dependencies": [
+          {
+            "type": "task", 
+            "task_id": "dd_003",
+            "relationship": "finish_to_start",
+            "lag": 1
+          }
+        ],
+        "conditions": [
+          "industry in ['manufacturing', 'healthcare', 'energy', 'chemical', 'construction']"
+        ]
+      },
+      {
+        "id": "dd_007",
+        "name": "HR and Employment Review",
+        "description": "Human resources and employment matters review",
+        "category": "operational",
+        "priority": "medium",
+        "instructions": "HR due diligence:\n- Employee census and compensation analysis\n- Benefits and pension obligations\n- Labor relations and union contracts\n- Key employee retention plans\n- Employment law compliance\n\n{{#if deal_amount >= 5000000}}Include executive compensation analysis and change-in-control provisions{{/if}}",
+        "schedule": {
+          "method": "offset",
+          "offset": "+8 business days",
+          "business_days_only": true,
+          "time": "11:00"
+        },
+        "dependencies": [
+          {
+            "type": "task",
+            "task_id": "dd_004", 
+            "relationship": "finish_to_start",
+            "lag": 0
+          }
+        ]
+      },
+      {
+        "id": "dd_008",
+        "name": "Tax Structure and Optimization Review",
+        "description": "Tax due diligence and structure optimization analysis",
+        "category": "financial",
+        "priority": "high",
+        "instructions": "Tax analysis including:\n- Historical tax returns and compliance\n- Current tax structure efficiency\n- Transaction tax implications\n- Post-acquisition tax optimization opportunities\n- State and local tax considerations for {{account_city}}\n\n{{#if deal_amount >= 10000000}}Include detailed tax structure modeling for optimal deal structure{{/if}}",
+        "schedule": {
+          "method": "offset",
+          "offset": "+12 business days",
+          "business_days_only": true,
+          "time": "14:30"
+        },
+        "dependencies": [
+          {
+            "type": "task",
+            "task_id": "dd_002",
+            "relationship": "finish_to_start", 
+            "lag": 3
+          },
+          {
+            "type": "task",
+            "task_id": "dd_003",
+            "relationship": "finish_to_start",
+            "lag": 1
+          }
+        ],
+        "conditions": [
+          "deal_amount >= 2000000"
+        ]
+      },
+      {
+        "id": "dd_009",
+        "name": "Insurance and Risk Assessment",
+        "description": "Comprehensive insurance coverage and risk analysis",
+        "category": "risk",
+        "priority": "medium",
+        "instructions": "Insurance and risk review:\n- Current insurance coverage analysis\n- Claims history and loss runs\n- Risk management practices\n- Directors and officers coverage\n- Transaction insurance opportunities\n\n{{#if deal_amount >= 25000000}}Consider representation and warranty insurance{{/if}}",
+        "schedule": {
+          "method": "offset",
+          "offset": "+9 business days",
+          "business_days_only": true,
+          "time": "15:00"
+        },
+        "dependencies": [
+          {
+            "type": "task",
+            "task_id": "dd_006",
+            "relationship": "start_to_start",
+            "lag": 1
+          }
+        ]
+      },
+      {
+        "id": "dd_010",
+        "name": "Due Diligence Summary and Recommendations",
+        "description": "Compile comprehensive due diligence summary with recommendations",
+        "category": "summary",
+        "priority": "high", 
+        "instructions": "Prepare final due diligence report:\n- Executive summary of key findings\n- Risk assessment and mitigation strategies\n- Valuation implications\n- Deal structure recommendations\n- Closing conditions and requirements\n\nTarget: {{account_name}}\nDeal Value: ${{deal_amount}}\nRecommended Next Steps and Timeline",
+        "schedule": {
+          "method": "relative_to_field",
+          "field": "deal_close_date",
+          "offset": "-14 days",
+          "business_days_only": true,
+          "time": "16:00"
+        },
+        "dependencies": [
+          {
+            "type": "task",
+            "task_id": "dd_002",
+            "relationship": "finish_to_start",
+            "lag": 0
+          },
+          {
+            "type": "task", 
+            "task_id": "dd_004",
+            "relationship": "finish_to_start",
+            "lag": 0
+          },
+          {
+            "type": "task",
+            "task_id": "dd_005",
+            "relationship": "finish_to_start",
+            "lag": 0
+          },
+          {
+            "type": "external_task",
+            "criteria": {
+              "category": "valuation",
+              "status": ["completed", "in_progress"]
+            },
+            "relationship": "finish_to_start",
+            "lag": 1
+          }
+        ],
+        "reminders": [
+          {
+            "offset": "-3 days", 
+            "type": "email",
+            "message": "Due diligence summary report due in 3 days for {{deal_name}}",
+            "recipients": ["assigned_user", "deal_team"]
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "estimated_total_hours": "{{#if deal_amount >= 10000000}}120{{else if deal_amount >= 5000000}}80{{else}}40{{/if}}",
+      "typical_duration_days": "{{#if deal_amount >= 10000000}}45{{else if deal_amount >= 5000000}}30{{else}}21{{/if}}",
+      "required_roles": ["financial_analyst", "legal_counsel", "operations_specialist"],
+      "compliance_frameworks": ["SOX", "GAAP", "{{#if industry == 'healthcare'}}HIPAA{{/if}}", "{{#if industry == 'financial'}}SOX, FINRA{{/if}}"]
+    }
+  },
+  "conditional_rules": [
+    {
+      "field": "deal_amount",
+      "operator": "greater_than",
+      "value": 10000000,
+      "template_ids": ["template_dd_comprehensive", "template_regulatory_deep_dive"]
+    },
+    {
+      "field": "industry", 
+      "operator": "in",
+      "value": ["healthcare", "pharmaceutical"],
+      "template_ids": ["template_healthcare_compliance", "template_fda_regulatory"]
+    },
+    {
+      "field": "deal_type",
+      "operator": "equals",
+      "value": "asset_purchase", 
+      "template_ids": ["template_asset_purchase_dd"]
+    },
+    {
+      "field": "account_country",
+      "operator": "not_equals",
+      "value": "United States",
+      "template_ids": ["template_international_dd", "template_cross_border_tax"]
+    }
+  ],
+  "usage_examples": {
+    "basic_generation": {
+      "endpoint": "POST /api/v1/Deals/tasks/generate",
+      "payload": {
+        "template_id": "template_dd_comprehensive",
+        "deal_id": "deal_12345",
+        "variables": {
+          "industry": "manufacturing",
+          "deal_type": "stock_purchase"
+        },
+        "options": {
+          "base_date_source": "now",
+          "default_assigned_user": "user_12345"
+        }
+      }
+    },
+    "conditional_generation": {
+      "endpoint": "POST /api/v1/Deals/tasks/generate/conditional", 
+      "payload": {
+        "deal_id": "deal_12345",
+        "conditions": [
+          {
+            "field": "deal_amount",
+            "operator": "greater_than", 
+            "value": 5000000,
+            "template_ids": ["template_dd_comprehensive"]
+          }
+        ],
+        "options": {
+          "time_zone": "America/New_York"
+        }
+      }
+    },
+    "preview_generation": {
+      "endpoint": "POST /api/v1/Deals/tasks/preview",
+      "payload": {
+        "template_id": "template_dd_comprehensive",
+        "deal_id": "deal_12345",
+        "variables": {
+          "industry": "healthcare"
+        }
+      }
+    }
+  }
+}

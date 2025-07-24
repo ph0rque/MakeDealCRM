@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Indicators Test</title>
+    
+    <!-- Bootstrap 3 CSS (SuiteCRM compatible) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    
+    <!-- Pipeline CSS -->
+    <link rel="stylesheet" type="text/css" href="css/pipeline.css">
+    <link rel="stylesheet" type="text/css" href="css/progress-indicators.css">
+    
+    <style>
+        body {
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test-stage {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .test-stage h3 {
+            margin-top: 0;
+            color: #534D64;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .deal-cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .deal-card {
+            width: 280px;
+            min-height: 120px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Progress Indicators Test</h1>
+        <p>This page tests the progress indicator components for deal cards.</p>
+        
+        <div class="test-stage">
+            <h3>Deal Cards with Different Progress States</h3>
+            <div class="deal-cards-container">
+                
+                <!-- High Progress Deal -->
+                <div class="deal-card stage-normal" data-deal-id="1001" data-stage="analysis_outreach">
+                    <div class="deal-card-header">
+                        <h4 class="deal-name">
+                            <a href="#" onclick="return false;">TechCorp Acquisition</a>
+                        </h4>
+                        <div class="deal-card-actions">
+                            <button class="focus-toggle-btn" title="Mark as focused">
+                                <span class="glyphicon glyphicon-star-empty"></span>
+                            </button>
+                            <div class="deal-days-indicator" title="Days in current stage">
+                                <span class="glyphicon glyphicon-time"></span> 5d
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="deal-card-body">
+                        <div class="deal-account">
+                            <span class="glyphicon glyphicon-briefcase"></span> TechCorp Industries
+                        </div>
+                        <div class="deal-amount">
+                            <span class="glyphicon glyphicon-usd"></span> 2,500,000
+                        </div>
+                        <div class="deal-assigned">
+                            <span class="glyphicon glyphicon-user"></span> John Smith
+                        </div>
+                    </div>
+                    
+                    <div class="deal-probability">
+                        <div class="probability-bar" style="width: 75%"></div>
+                        <span class="probability-text">75%</span>
+                    </div>
+                </div>
+                
+                <!-- Medium Progress Deal -->
+                <div class="deal-card stage-orange" data-deal-id="1002" data-stage="due_diligence">
+                    <div class="deal-card-header">
+                        <h4 class="deal-name">
+                            <a href="#" onclick="return false;">RetailPlus Merger</a>
+                        </h4>
+                        <div class="deal-card-actions">
+                            <button class="focus-toggle-btn active" title="Remove focus">
+                                <span class="glyphicon glyphicon-star"></span>
+                            </button>
+                            <div class="deal-days-indicator" title="Days in current stage">
+                                <span class="glyphicon glyphicon-time"></span> 18d
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="deal-card-body">
+                        <div class="deal-account">
+                            <span class="glyphicon glyphicon-briefcase"></span> RetailPlus Chain
+                        </div>
+                        <div class="deal-amount">
+                            <span class="glyphicon glyphicon-usd"></span> 5,800,000
+                        </div>
+                        <div class="deal-assigned">
+                            <span class="glyphicon glyphicon-user"></span> Sarah Johnson
+                        </div>
+                    </div>
+                    
+                    <div class="deal-probability">
+                        <div class="probability-bar" style="width: 60%"></div>
+                        <span class="probability-text">60%</span>
+                    </div>
+                </div>
+                
+                <!-- Low Progress Deal -->
+                <div class="deal-card stage-red" data-deal-id="1003" data-stage="financing">
+                    <div class="deal-card-header">
+                        <h4 class="deal-name">
+                            <a href="#" onclick="return false;">ManufactureCo Buyout</a>
+                        </h4>
+                        <div class="deal-card-actions">
+                            <button class="focus-toggle-btn" title="Mark as focused">
+                                <span class="glyphicon glyphicon-star-empty"></span>
+                            </button>
+                            <div class="deal-days-indicator" title="Days in current stage">
+                                <span class="glyphicon glyphicon-time"></span> 35d
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="deal-card-body">
+                        <div class="deal-account">
+                            <span class="glyphicon glyphicon-briefcase"></span> ManufactureCo Ltd
+                        </div>
+                        <div class="deal-amount">
+                            <span class="glyphicon glyphicon-usd"></span> 8,200,000
+                        </div>
+                        <div class="deal-assigned">
+                            <span class="glyphicon glyphicon-user"></span> Mike Davis
+                        </div>
+                    </div>
+                    
+                    <div class="deal-probability">
+                        <div class="probability-bar" style="width: 45%"></div>
+                        <span class="probability-text">45%</span>
+                    </div>
+                </div>
+                
+                <!-- Complete Progress Deal -->
+                <div class="deal-card stage-normal" data-deal-id="1004" data-stage="closing">
+                    <div class="deal-card-header">
+                        <h4 class="deal-name">
+                            <a href="#" onclick="return false;">StartupXYZ Investment</a>
+                        </h4>
+                        <div class="deal-card-actions">
+                            <button class="focus-toggle-btn active" title="Remove focus">
+                                <span class="glyphicon glyphicon-star"></span>
+                            </button>
+                            <div class="deal-days-indicator" title="Days in current stage">
+                                <span class="glyphicon glyphicon-time"></span> 3d
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="deal-card-body">
+                        <div class="deal-account">
+                            <span class="glyphicon glyphicon-briefcase"></span> StartupXYZ Inc
+                        </div>
+                        <div class="deal-amount">
+                            <span class="glyphicon glyphicon-usd"></span> 1,200,000
+                        </div>
+                        <div class="deal-assigned">
+                            <span class="glyphicon glyphicon-user"></span> Lisa Wilson
+                        </div>
+                    </div>
+                    
+                    <div class="deal-probability">
+                        <div class="probability-bar" style="width: 95%"></div>
+                        <span class="probability-text">95%</span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <div class="test-stage">
+            <h3>Mobile Responsive Test</h3>
+            <p>Resize the browser window to test mobile responsiveness of progress indicators.</p>
+            <div style="max-width: 300px;">
+                <div class="deal-card stage-normal" data-deal-id="1005" data-stage="sourcing">
+                    <div class="deal-card-header">
+                        <h4 class="deal-name">
+                            <a href="#" onclick="return false;">Mobile Test Deal</a>
+                        </h4>
+                        <div class="deal-card-actions">
+                            <button class="focus-toggle-btn" title="Mark as focused">
+                                <span class="glyphicon glyphicon-star-empty"></span>
+                            </button>
+                            <div class="deal-days-indicator" title="Days in current stage">
+                                <span class="glyphicon glyphicon-time"></span> 7d
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="deal-card-body">
+                        <div class="deal-account">
+                            <span class="glyphicon glyphicon-briefcase"></span> Mobile Test Company
+                        </div>
+                        <div class="deal-amount">
+                            <span class="glyphicon glyphicon-usd"></span> 750,000
+                        </div>
+                    </div>
+                    
+                    <div class="deal-probability">
+                        <div class="probability-bar" style="width: 30%"></div>
+                        <span class="probability-text">30%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="test-stage">
+            <h3>Test Controls</h3>
+            <button id="refreshProgress" class="btn btn-primary">Refresh Progress Data</button>
+            <button id="toggleCompact" class="btn btn-default">Toggle Compact View</button>
+            <button id="simulateUpdate" class="btn btn-info">Simulate Real-time Update</button>
+        </div>
+    </div>
+    
+    <!-- jQuery (required for SuiteCRM compatibility) -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    
+    <!-- Progress Indicators JavaScript -->
+    <script type="text/javascript" src="js/progress-indicators.js"></script>
+    
+    <script>
+        // Initialize progress indicators when page loads
+        jQuery(document).ready(function() {
+            // Initialize progress indicators
+            ProgressIndicators.init({
+                enableRealTimeUpdates: false, // Disable for testing
+                tooltipDelay: 300
+            });
+            
+            // Test controls
+            jQuery('#refreshProgress').click(function() {
+                ProgressIndicators.loadProgressData();
+            });
+            
+            jQuery('#toggleCompact').click(function() {
+                var container = jQuery('body');
+                var isCompact = container.hasClass('compact-view');
+                container.toggleClass('compact-view', !isCompact);
+                ProgressIndicators.handleCompactViewChange(!isCompact);
+                jQuery(this).text(isCompact ? 'Enable Compact View' : 'Disable Compact View');
+            });
+            
+            jQuery('#simulateUpdate').click(function() {
+                // Simulate a real-time progress update
+                var dealIds = ['1001', '1002', '1003', '1004', '1005'];
+                var randomDeal = dealIds[Math.floor(Math.random() * dealIds.length)];
+                
+                var mockProgress = ProgressIndicators.generateMockProgressData(randomDeal);
+                ProgressIndicators.updateProgressIndicator(randomDeal, mockProgress);
+                
+                alert('Simulated progress update for deal ' + randomDeal);
+            });
+        });
+    </script>
+</body>
+</html>

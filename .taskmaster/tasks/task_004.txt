@@ -1,0 +1,11 @@
+# Task ID: 4
+# Title: Create Financial & Valuation Hub Dashboard
+# Status: pending
+# Dependencies: 1
+# Priority: high
+# Description: Build centralized financial metrics display with real-time calculations and comparison tools
+# Details:
+Develop dashboard widget displaying key metrics: Asking Price, TTM Revenue, TTM EBITDA, SDE, Proposed Valuation, Target Multiple. Implement what-if calculator for instant valuation updates using JavaScript. Build Capital Stack section with Equity, Senior Debt, Seller Note components including debt coverage analysis. Create comparables sidebar with median multiples from private database. Ensure real-time updates and mobile optimization.
+
+# Test Strategy:
+Unit tests for financial calculations, integration tests for real-time updates, accuracy tests for debt coverage analysis, performance tests for dashboard load times, mobile responsiveness tests

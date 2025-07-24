@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Detailed Analysis - {DEAL_NAME}</title>
+    <style>
+        body { 
+            font-family: 'Times New Roman', serif; 
+            margin: 25px; 
+            color: #333; 
+            line-height: 1.5;
+            font-size: 12px;
+        }
+        .header { 
+            border-bottom: 2px solid #2c3e50; 
+            padding-bottom: 20px; 
+            margin-bottom: 30px; 
+        }
+        .header h1 { 
+            color: #2c3e50; 
+            margin: 0; 
+            font-size: 28px; 
+            font-weight: bold;
+        }
+        .header .details { 
+            margin-top: 15px; 
+            color: #666; 
+            font-size: 11px;
+        }
+        .toc {
+            background: #f8f9fa;
+            padding: 20px;
+            border: 1px solid #dee2e6;
+            margin-bottom: 30px;
+            page-break-after: always;
+        }
+        .toc h2 {
+            margin-top: 0;
+            color: #2c3e50;
+            font-size: 18px;
+        }
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .toc li {
+            margin-bottom: 5px;
+            padding-left: 20px;
+            position: relative;
+        }
+        .toc li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #2c3e50;
+        }
+        .section { 
+            margin-bottom: 40px; 
+            page-break-inside: avoid;
+        }
+        .section h2 { 
+            color: #2c3e50; 
+            border-bottom: 2px solid #dee2e6; 
+            padding-bottom: 10px;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        .section h3 {
+            color: #495057;
+            font-size: 16px;
+            margin: 20px 0 10px 0;
+            border-left: 4px solid #007cba;
+            padding-left: 10px;
+        }
+        .subsection {
+            margin-left: 20px;
+            margin-bottom: 25px;
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin: 20px 0;
+            font-size: 11px;
+        }
+        th, td { 
+            padding: 8px 10px; 
+            text-align: left; 
+            border: 1px solid #dee2e6; 
+            vertical-align: top;
+        }
+        th { 
+            background: #f8f9fa; 
+            font-weight: bold; 
+            color: #495057; 
+        }
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        .status-completed { 
+            color: #28a745; 
+            font-weight: bold; 
+        }
+        .status-pending { 
+            color: #ffc107; 
+            font-weight: bold; 
+        }
+        .status-overdue { 
+            color: #dc3545; 
+            font-weight: bold; 
+        }
+        .status-not-started {
+            color: #6c757d;
+            font-weight: bold;
+        }
+        .priority-high { 
+            background-color: #f8d7da; 
+            color: #721c24;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 10px;
+        }
+        .priority-medium { 
+            background-color: #fff3cd; 
+            color: #856404;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 10px;
+        }
+        .priority-low { 
+            background-color: #d1ecf1; 
+            color: #0c5460;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 10px;
+        }
+        .progress-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-left: 4px solid #007cba;
+            margin: 20px 0;
+        }
+        .progress-bar { 
+            background: #e9ecef; 
+            height: 20px; 
+            border-radius: 10px; 
+            overflow: hidden; 
+            margin: 10px 0; 
+        }
+        .progress-fill { 
+            background: #28a745; 
+            height: 100%; 
+            transition: width 0.3s ease; 
+        }
+        .risk-assessment {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .risk-high {
+            background: #f8d7da;
+            border-color: #f5c6cb;
+        }
+        .risk-medium {
+            background: #fff3cd;
+            border-color: #ffeaa7;
+        }
+        .risk-low {
+            background: #d1ecf1;
+            border-color: #bee5eb;
+        }
+        .milestone {
+            background: #e7f3ff;
+            border-left: 4px solid #007cba;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .milestone h4 {
+            margin: 0 0 10px 0;
+            color: #007cba;
+        }
+        .document-list {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        .document-list ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        .document-received {
+            color: #28a745;
+        }
+        .document-pending {
+            color: #ffc107;
+        }
+        .document-missing {
+            color: #dc3545;
+        }
+        .footer { 
+            margin-top: 50px; 
+            padding-top: 20px; 
+            border-top: 1px solid #dee2e6; 
+            text-align: center; 
+            color: #666; 
+            font-size: 10px; 
+            page-break-inside: avoid;
+        }
+        .page-break {
+            page-break-before: always;
+        }
+        .no-break {
+            page-break-inside: avoid;
+        }
+        @media print {
+            body { margin: 15px; }
+            .section { page-break-inside: avoid; }
+            .no-break { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Detailed Due Diligence Analysis</h1>
+        <div class="details">
+            <strong>Deal:</strong> {DEAL_NAME} (ID: {DEAL_ID})<br>
+            <strong>Report Generated:</strong> {EXPORT_DATE} at {EXPORT_TIME}<br>
+            <strong>Generated by:</strong> {COMPANY_NAME}<br>
+            <strong>Document Version:</strong> 1.0
+        </div>
+    </div>
+    
+    <div class="toc">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li>1. Executive Summary</li>
+            <li>2. Due Diligence Progress Overview</li>
+            <li>3. Detailed Task Analysis</li>
+            <li>4. Risk Assessment</li>
+            <li>5. Document Management</li>
+            <li>6. Milestone Tracking</li>
+            <li>7. Recommendations and Next Steps</li>
+            <li>8. Appendices</li>
+        </ul>
+    </div>
+    
+    <div class="section">
+        <h2>1. Executive Summary</h2>
+        <div class="progress-section">
+            <h3>Overall Progress</h3>
+            <p><strong>Completion Status:</strong> {PROGRESS_PERCENTAGE}% Complete</p>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: {PROGRESS_PERCENTAGE}%"></div>
+            </div>
+            <table>
+                <tr>
+                    <th>Metric</th>
+                    <th>Count</th>
+                    <th>Percentage</th>
+                    <th>Status</th>
+                </tr>
+                <tr>
+                    <td>Total Tasks</td>
+                    <td>{TOTAL_TASKS}</td>
+                    <td>100%</td>
+                    <td>Baseline</td>
+                </tr>
+                <tr>
+                    <td>Completed Tasks</td>
+                    <td>{COMPLETED_TASKS}</td>
+                    <td>{PROGRESS_PERCENTAGE}%</td>
+                    <td class="status-completed">Completed</td>
+                </tr>
+                <tr>
+                    <td>Pending Tasks</td>
+                    <td>{PENDING_TASKS}</td>
+                    <td>--</td>
+                    <td class="status-pending">In Progress</td>
+                </tr>
+                <tr>
+                    <td>Overdue Tasks</td>
+                    <td>{OVERDUE_TASKS}</td>
+                    <td>--</td>
+                    <td class="status-overdue">Critical</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    <div class="section page-break">
+        <h2>2. Due Diligence Progress Overview</h2>
+        
+        <h3>2.1 Progress by Category</h3>
+        <p>The following section provides a detailed breakdown of progress across different due diligence categories:</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Total Tasks</th>
+                    <th>Completed</th>
+                    <th>In Progress</th>
+                    <th>Not Started</th>
+                    <th>Completion %</th>
+                    <th>Risk Level</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Financial Analysis</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td><span class="priority-medium">Medium</span></td>
+                </tr>
+                <tr>
+                    <td>Legal Review</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td><span class="priority-high">High</span></td>
+                </tr>
+                <tr>
+                    <td>Technical Assessment</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td><span class="priority-low">Low</span></td>
+                </tr>
+                <tr>
+                    <td>Operational Review</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td><span class="priority-medium">Medium</span></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>2.2 Timeline Analysis</h3>
+        <div class="subsection">
+            <p><strong>Project Start Date:</strong> --</p>
+            <p><strong>Target Completion Date:</strong> --</p>
+            <p><strong>Current Phase:</strong> Due Diligence</p>
+            <p><strong>Days Elapsed:</strong> --</p>
+            <p><strong>Estimated Days Remaining:</strong> --</p>
+        </div>
+    </div>
+    
+    <div class="section page-break">
+        <h2>3. Detailed Task Analysis</h2>
+        
+        <h3>3.1 Task Breakdown</h3>
+        <p>Comprehensive listing of all due diligence tasks with detailed status information:</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Task ID</th>
+                    <th>Task Name</th>
+                    <th>Category</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Assigned To</th>
+                    <th>Due Date</th>
+                    <th>Completion %</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="9" style="text-align: center; font-style: italic; color: #666;">
+                        Task data will be populated from the checklist system (Task 2.3)
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>3.2 Critical Path Analysis</h3>
+        <div class="subsection">
+            <p>Tasks that are critical to the overall project timeline:</p>
+            <ul>
+                <li><strong>High Priority Tasks:</strong> Tasks that must be completed to proceed</li>
+                <li><strong>Dependency Analysis:</strong> Tasks that block other activities</li>
+                <li><strong>Resource Constraints:</strong> Tasks limited by available resources</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="section page-break">
+        <h2>4. Risk Assessment</h2>
+        
+        <h3>4.1 Identified Risks</h3>
+        
+        <div class="risk-assessment risk-high">
+            <h4>High Risk Items</h4>
+            <ul>
+                <li>Overdue tasks that may impact deal timeline</li>
+                <li>Missing critical documentation</li>
+                <li>Resource availability constraints</li>
+            </ul>
+        </div>
+        
+        <div class="risk-assessment risk-medium">
+            <h4>Medium Risk Items</h4>
+            <ul>
+                <li>Pending regulatory approvals</li>
+                <li>Third-party dependency delays</li>
+                <li>Technical integration challenges</li>
+            </ul>
+        </div>
+        
+        <div class="risk-assessment risk-low">
+            <h4>Low Risk Items</h4>
+            <ul>
+                <li>Administrative documentation</li>
+                <li>Standard compliance checks</li>
+                <li>Routine operational reviews</li>
+            </ul>
+        </div>
+        
+        <h3>4.2 Mitigation Strategies</h3>
+        <div class="subsection">
+            <p>Recommended actions to address identified risks:</p>
+            <ol>
+                <li><strong>Immediate Actions:</strong> Address all overdue tasks within 48 hours</li>
+                <li><strong>Resource Reallocation:</strong> Assign additional team members to critical path items</li>
+                <li><strong>Escalation Procedures:</strong> Implement escalation matrix for blocked items</li>
+                <li><strong>Contingency Planning:</strong> Develop alternative approaches for high-risk areas</li>
+            </ol>
+        </div>
+    </div>
+    
+    <div class="section page-break">
+        <h2>5. Document Management</h2>
+        
+        <h3>5.1 Document Status Overview</h3>
+        <div class="document-list">
+            <h4>Required Documents</h4>
+            <ul>
+                <li class="document-received">✓ Financial Statements (Received)</li>
+                <li class="document-pending">⏳ Legal Contracts (Pending Review)</li>
+                <li class="document-missing">✗ Technical Specifications (Missing)</li>
+                <li class="document-received">✓ Operational Procedures (Received)</li>
+            </ul>
+        </div>
+        
+        <h3>5.2 File Request Status</h3>
+        <p>Status of all outstanding file requests:</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Request ID</th>
+                    <th>Document Name</th>
+                    <th>Requested From</th>
+                    <th>Request Date</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th>Follow-up Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="7" style="text-align: center; font-style: italic; color: #666;">
+                        File request data will be populated from the file request system (Task 2.5)
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="section page-break">
+        <h2>6. Milestone Tracking</h2>
+        
+        <h3>6.1 Key Milestones</h3>
+        
+        <div class="milestone">
+            <h4>Phase 1: Initial Assessment (Completed)</h4>
+            <p><strong>Target Date:</strong> --</p>
+            <p><strong>Actual Completion:</strong> --</p>
+            <p><strong>Status:</strong> ✓ Completed</p>
+        </div>
+        
+        <div class="milestone">
+            <h4>Phase 2: Detailed Review (In Progress)</h4>
+            <p><strong>Target Date:</strong> --</p>
+            <p><strong>Progress:</strong> {PROGRESS_PERCENTAGE}%</p>
+            <p><strong>Status:</strong> 🔄 In Progress</p>
+        </div>
+        
+        <div class="milestone">
+            <h4>Phase 3: Final Approval (Pending)</h4>
+            <p><strong>Target Date:</strong> --</p>
+            <p><strong>Dependencies:</strong> Completion of Phase 2</p>
+            <p><strong>Status:</strong> ⏳ Pending</p>
+        </div>
+        
+        <h3>6.2 Milestone Dependencies</h3>
+        <div class="subsection">
+            <p>Critical dependencies between project milestones:</p>
+            <ul>
+                <li>Phase 2 completion required before Phase 3 initiation</li>
+                <li>All high-priority tasks must be resolved before final approval</li>
+                <li>External stakeholder sign-offs required at each phase</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="section page-break">
+        <h2>7. Recommendations and Next Steps</h2>
+        
+        <h3>7.1 Immediate Actions Required</h3>
+        <ol>
+            <li><strong>Address Overdue Tasks:</strong> Focus immediate attention on {OVERDUE_TASKS} overdue items</li>
+            <li><strong>Resource Allocation:</strong> Assign additional resources to critical path activities</li>
+            <li><strong>Escalation:</strong> Escalate any blocking issues to senior management</li>
+            <li><strong>Communication:</strong> Update all stakeholders on current status and timeline</li>
+        </ol>
+        
+        <h3>7.2 Medium-term Recommendations</h3>
+        <ol>
+            <li><strong>Process Improvement:</strong> Review and optimize due diligence procedures</li>
+            <li><strong>Template Enhancement:</strong> Update checklist templates based on lessons learned</li>
+            <li><strong>Team Training:</strong> Provide additional training on identified weak areas</li>
+            <li><strong>Technology Upgrades:</strong> Implement additional automation where possible</li>
+        </ol>
+        
+        <h3>7.3 Success Metrics</h3>
+        <div class="subsection">
+            <p>Key performance indicators to track project success:</p>
+            <ul>
+                <li><strong>Completion Rate:</strong> Target 95% by target date</li>
+                <li><strong>Quality Score:</strong> Maintain quality standards above 90%</li>
+                <li><strong>Timeline Adherence:</strong> Complete within approved timeline</li>
+                <li><strong>Stakeholder Satisfaction:</strong> Achieve 95% satisfaction rating</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="section page-break">
+        <h2>8. Appendices</h2>
+        
+        <h3>Appendix A: Detailed Task Logs</h3>
+        <p>Complete task history and change logs available upon request.</p>
+        
+        <h3>Appendix B: Document Repository</h3>
+        <p>All supporting documents are maintained in the secure document repository.</p>
+        
+        <h3>Appendix C: Communication Records</h3>
+        <p>Complete record of stakeholder communications and decisions.</p>
+        
+        <h3>Appendix D: Risk Register</h3>
+        <p>Detailed risk assessment and mitigation planning documentation.</p>
+    </div>
+    
+    {CHECKLIST_CONTENT}
+    {PROGRESS_CHARTS}
+    {FILE_REQUESTS}
+    {NOTES_SECTION}
+    
+    <div class="footer">
+        <strong>Document Classification: CONFIDENTIAL</strong><br>
+        Generated by {COMPANY_NAME} Due Diligence Management System<br>
+        Report Version: 1.0 | Generated: {EXPORT_DATE} at {EXPORT_TIME}<br>
+        <br>
+        This document contains confidential and proprietary information. Distribution is restricted to authorized personnel only.<br>
+        Unauthorized disclosure or reproduction is strictly prohibited and may result in legal action.
+    </div>
+</body>
+</html>

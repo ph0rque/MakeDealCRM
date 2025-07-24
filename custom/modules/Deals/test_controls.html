@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pipeline Controls Test</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/pipeline.css">
+    <link rel="stylesheet" href="css/pipeline-focus.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body { padding: 20px; background: #f5f5f5; }
+        .test-section { background: white; padding: 20px; margin-bottom: 20px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .test-section h3 { margin-top: 0; }
+        .state-info { margin-top: 10px; padding: 10px; background: #f0f0f0; border-radius: 3px; font-family: monospace; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <h1>Pipeline Control Buttons Test</h1>
+    
+    <div class="test-section">
+        <h3>Pipeline Header with Controls</h3>
+        <div class="pipeline-header">
+            <h2>Deal Pipeline</h2>
+            <div class="pipeline-actions">
+                <button class="btn btn-primary btn-sm" onclick="testRefresh()">
+                    <span class="glyphicon glyphicon-refresh"></span> Refresh
+                </button>
+                <button class="btn btn-default btn-sm" onclick="testCompactView()" id="compact-btn">
+                    <span class="glyphicon glyphicon-resize-small"></span> Compact View
+                </button>
+                <button class="btn btn-info btn-sm" onclick="testFocusFilter()" id="focus-filter-btn">
+                    <span class="glyphicon glyphicon-star"></span> <span id="focus-filter-text">Show Focused</span>
+                </button>
+            </div>
+        </div>
+        <div class="state-info" id="control-state">
+            Compact View: <span id="compact-state">false</span><br>
+            Focus Filter: <span id="focus-state">false</span><br>
+            LocalStorage compact_view: <span id="ls-compact">null</span><br>
+            LocalStorage focus_filter: <span id="ls-focus">null</span>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h3>Test Container</h3>
+        <div id="pipeline-container" class="pipeline-container" style="height: 200px;">
+            <div class="stage-body">
+                <div class="deal-card" data-deal-id="1">
+                    <div class="deal-card-header">
+                        <h4 class="deal-name">Regular Deal</h4>
+                        <div class="deal-card-actions">
+                            <button class="focus-toggle-btn">
+                                <span class="glyphicon glyphicon-star-empty"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="deal-card focused-deal" data-deal-id="2">
+                    <div class="deal-card-header">
+                        <h4 class="deal-name">Focused Deal</h4>
+                        <div class="deal-card-actions">
+                            <button class="focus-toggle-btn active">
+                                <span class="glyphicon glyphicon-star"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Test state tracking
+        var testState = {
+            compactView: false,
+            focusFilter: false
+        };
+
+        // Initialize
+        updateStateDisplay();
+
+        function testRefresh() {
+            alert('Refresh clicked - would reload board');
+            console.log('Refresh button clicked');
+        }
+
+        function testCompactView() {
+            testState.compactView = !testState.compactView;
+            var container = document.getElementById('pipeline-container');
+            var btn = document.getElementById('compact-btn');
+            
+            if (testState.compactView) {
+                container.classList.add('compact-view');
+                btn.classList.add('active');
+                localStorage.setItem('pipeline_compact_view', 'true');
+            } else {
+                container.classList.remove('compact-view');
+                btn.classList.remove('active');
+                localStorage.setItem('pipeline_compact_view', 'false');
+            }
+            
+            updateStateDisplay();
+        }
+
+        function testFocusFilter() {
+            testState.focusFilter = !testState.focusFilter;
+            var btn = document.getElementById('focus-filter-btn');
+            var btnText = document.getElementById('focus-filter-text');
+            
+            if (testState.focusFilter) {
+                btn.classList.add('active');
+                btnText.textContent = 'Show All';
+                $('.deal-card:not(.focused-deal)').fadeOut();
+                localStorage.setItem('pipeline_focus_filter', 'true');
+            } else {
+                btn.classList.remove('active');
+                btnText.textContent = 'Show Focused';
+                $('.deal-card').fadeIn();
+                localStorage.setItem('pipeline_focus_filter', 'false');
+            }
+            
+            updateStateDisplay();
+        }
+
+        function updateStateDisplay() {
+            document.getElementById('compact-state').textContent = testState.compactView;
+            document.getElementById('focus-state').textContent = testState.focusFilter;
+            document.getElementById('ls-compact').textContent = localStorage.getItem('pipeline_compact_view') || 'null';
+            document.getElementById('ls-focus').textContent = localStorage.getItem('pipeline_focus_filter') || 'null';
+        }
+
+        // Check initial localStorage values
+        var compactPref = localStorage.getItem('pipeline_compact_view');
+        if (compactPref === 'true') {
+            testState.compactView = true;
+            document.getElementById('pipeline-container').classList.add('compact-view');
+            document.getElementById('compact-btn').classList.add('active');
+        }
+
+        var focusPref = localStorage.getItem('pipeline_focus_filter');
+        if (focusPref === 'true') {
+            testState.focusFilter = true;
+            document.getElementById('focus-filter-btn').classList.add('active');
+            document.getElementById('focus-filter-text').textContent = 'Show All';
+            $('.deal-card:not(.focused-deal)').hide();
+        }
+        
+        updateStateDisplay();
+    </script>
+</body>
+</html>

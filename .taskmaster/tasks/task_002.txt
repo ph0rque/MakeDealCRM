@@ -1,0 +1,73 @@
+# Task ID: 2
+# Title: Implement Personal Due-Diligence Checklist System
+# Status: pending
+# Dependencies: 1
+# Priority: high
+# Description: Create templated checklist system with auto-task generation and progress tracking
+# Details:
+Build checklist template management system allowing creation, storage, and reuse of templates (Quick-Screen, Financial DD, Legal DD, Operational Review). Implement auto-generation of tasks from templates with progress tracking. Add file request capability with automated seller email generation. Create export functionality for PDF/Excel formats. Add percent-complete indicators on Deal cards. Use SuiteCRM's relationship system to link checklists to deals.
+
+# Test Strategy:
+Unit tests for template CRUD operations, integration tests for task auto-generation, E2E tests for file request workflow, export format validation tests, progress calculation accuracy tests
+
+# Subtasks:
+## 1. Design Template Data Model and Storage Schema [pending]
+### Dependencies: None
+### Description: Create comprehensive database schema for storing checklist templates with versioning support
+### Details:
+Design tables for checklist_templates, template_versions, template_items, and template_categories. Include fields for template metadata, version tracking, active/inactive status, and relationships to deals. Create indexes for efficient querying and implement soft delete functionality.
+
+## 2. Build Template CRUD API Endpoints [pending]
+### Dependencies: 2.1
+### Description: Implement RESTful API endpoints for creating, reading, updating, and deleting checklist templates
+### Details:
+Create endpoints for /api/checklist-templates with full CRUD operations. Implement validation for template structure, duplicate name checking, and permission verification. Add endpoints for template cloning and category management.
+
+## 3. Develop Task Auto-Generation Engine [pending]
+### Dependencies: 2.1, 2.2
+### Description: Create engine that generates checklist tasks from templates with dynamic variable substitution
+### Details:
+Build task generation service that creates checklist instances from templates. Implement variable substitution for deal-specific values, due date calculation based on deal timeline, and task dependency mapping. Add support for conditional task generation based on deal characteristics.
+
+## 4. Implement Progress Tracking Algorithms [pending]
+### Dependencies: 2.3
+### Description: Create algorithms for calculating and updating checklist progress with real-time updates
+### Details:
+Develop progress calculation service that tracks task completion percentages, weighted progress based on task priority, and milestone achievement. Implement event-driven updates that recalculate progress when tasks change. Add progress history tracking for reporting.
+
+## 5. Build File Request System with Email Integration [pending]
+### Dependencies: 2.3
+### Description: Create file request functionality with automated email generation and tracking
+### Details:
+Implement file request API that generates unique upload links, creates email templates with dynamic content, and tracks request status. Build email service integration for sending requests, reminders, and confirmations. Add file upload handling with virus scanning and storage management.
+
+## 6. Develop PDF/Excel Export Functionality [pending]
+### Dependencies: 2.4
+### Description: Create export services for generating PDF and Excel reports of checklists
+### Details:
+Build export service using libraries like PDFKit and ExcelJS. Create customizable templates for different export formats. Implement export options for complete checklists, progress reports, and file request summaries. Add branding customization and batch export capabilities.
+
+## 7. Update Deal Card UI with Progress Indicators [pending]
+### Dependencies: 2.4
+### Description: Enhance Deal card components to display checklist progress and completion status
+### Details:
+Modify Deal card React components to include progress bars, completion percentages, and status indicators. Implement real-time progress updates using WebSockets or polling. Add tooltips showing checklist breakdowns and quick access to checklist details.
+
+## 8. Configure SuiteCRM Relationship System [pending]
+### Dependencies: 2.1
+### Description: Set up database relationships and ORM mappings for checklist-deal associations
+### Details:
+Create many-to-many relationship tables for deals_checklists with metadata fields. Configure SuiteCRM's ORM for relationship management. Implement cascade operations for deal deletion and archiving. Add relationship APIs for querying checklists by deal and vice versa.
+
+## 9. Implement Template Versioning System [pending]
+### Dependencies: 2.1, 2.2
+### Description: Create version control system for checklist templates with rollback capabilities
+### Details:
+Build versioning service that tracks template changes, creates version snapshots, and enables version comparison. Implement rollback functionality and version migration for active checklists. Add audit trail for version changes and approval workflow for major updates.
+
+## 10. Develop Permission System for Shared Checklists [pending]
+### Dependencies: 2.8
+### Description: Create granular permission system for checklist access and collaboration
+### Details:
+Implement role-based access control for checklist viewing, editing, and sharing. Create permission levels for template management, task assignment, and file request creation. Add team collaboration features with activity tracking and notification system for permission changes.
+

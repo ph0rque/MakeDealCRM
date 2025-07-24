@@ -1,22 +1,32 @@
 /**
  * Pipeline Kanban Board Styles
  * Responsive design with mobile support
+ * Compatible with SuiteCRM themes (SuiteP, Suite7, etc.)
+ * 
+ * Color Palette:
+ * Primary: #F08377 (SuiteP Dawn theme primary)
+ * Secondary: #534D64 (SuiteP text color)
+ * Background: #F5F5F5 (SuiteP background)
+ * Border: #DDDDDD (SuiteP border)
+ * Success: #3C763D / #DFF0D8 (Bootstrap success)
+ * Warning: #8A6D3B / #FCF8E3 (Bootstrap warning)
+ * Danger: #A94442 / #F2DEDE (Bootstrap danger)
  */
 
-/* Container and Layout */
+/* Container and Layout - Using SuiteCRM theme styles */
 .pipeline-container {
     width: 100%;
     height: calc(100vh - 120px);
     display: flex;
     flex-direction: column;
-    background-color: #f5f5f5;
+    background-color: #F5F5F5;
     position: relative;
 }
 
 .pipeline-header {
     padding: 20px;
-    background-color: #fff;
-    border-bottom: 1px solid #ddd;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #DDDDDD;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -26,12 +36,74 @@
 .pipeline-header h2 {
     margin: 0;
     font-size: 24px;
-    color: #333;
+    color: #534D64;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
 .pipeline-actions {
     display: flex;
     gap: 10px;
+}
+
+/* Override button styles to match SuiteCRM theme */
+.pipeline-actions .btn {
+    border-radius: 3px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 8px 20px;
+    font-size: 13px;
+    transition: all 0.2s ease-in-out;
+}
+
+.pipeline-actions .btn-primary {
+    background-color: #F08377;
+    border-color: #F08377;
+    color: #FFFFFF;
+}
+
+.pipeline-actions .btn-primary:hover,
+.pipeline-actions .btn-primary:focus {
+    background-color: #ED6C5F;
+    border-color: #ED6C5F;
+}
+
+.pipeline-actions .btn-default {
+    background-color: #FFFFFF;
+    border: 1px solid #DDDDDD;
+    color: #534D64;
+}
+
+.pipeline-actions .btn-default:hover,
+.pipeline-actions .btn-default:focus {
+    background-color: #F5F5F5;
+    border-color: #CCCCCC;
+}
+
+.pipeline-actions .btn-default.active {
+    background-color: #E0E0E0;
+    border-color: #B0B0B0;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.pipeline-actions .btn-info {
+    background-color: #5BC0DE;
+    border-color: #46B8DA;
+    color: #FFFFFF;
+}
+
+.pipeline-actions .btn-info:hover,
+.pipeline-actions .btn-info:focus {
+    background-color: #31B0D5;
+    border-color: #269ABC;
+}
+
+.pipeline-actions .btn-info.active {
+    background-color: #269ABC;
+    border-color: #1B6D85;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);
 }
 
 /* Board Layout */
@@ -50,34 +122,38 @@
     height: 100%;
 }
 
-/* Stage Columns */
+/* Stage Columns - Using SuiteCRM panel styling */
 .pipeline-stage {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: #FFFFFF;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+    border: 1px solid #DDDDDD;
     width: 300px;
     min-width: 300px;
     display: flex;
     flex-direction: column;
-    transition: box-shadow 0.2s;
+    transition: all 0.2s ease-in-out;
 }
 
 .pipeline-stage:hover {
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-color: #CCCCCC;
 }
 
 .stage-header {
     padding: 15px;
-    border-bottom: 2px solid #e0e0e0;
-    background-color: #f8f9fa;
-    border-radius: 8px 8px 0 0;
+    border-bottom: 1px solid #DDDDDD;
+    background-color: #F5F5F5;
+    border-radius: 4px 4px 0 0;
 }
 
 .stage-header h3 {
     margin: 0;
-    font-size: 16px;
-    font-weight: 600;
-    color: #333;
+    font-size: 14px;
+    font-weight: 500;
+    color: #534D64;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .stage-stats {
@@ -94,19 +170,20 @@
     margin-left: 5px;
     padding: 2px 6px;
     border-radius: 12px;
-    background-color: #e8f5e9;
-    color: #2e7d32;
-    font-size: 12px;
+    background-color: #DFF0D8;
+    color: #3C763D;
+    font-size: 11px;
+    font-weight: 500;
 }
 
 .wip-limit-indicator.near-limit {
-    background-color: #fff3e0;
-    color: #ef6c00;
+    background-color: #FCF8E3;
+    color: #8A6D3B;
 }
 
 .wip-limit-indicator.over-limit {
-    background-color: #ffebee;
-    color: #c62828;
+    background-color: #F2DEDE;
+    color: #A94442;
 }
 
 /* Stage Body */
@@ -118,34 +195,36 @@
 }
 
 .stage-body.drag-over {
-    background-color: #e3f2fd;
-    border: 2px dashed #1976d2;
+    background-color: #F5F5F5;
+    border: 2px dashed #F08377;
 }
 
 .stage-body.wip-limit-exceeded {
-    background-color: #ffebee;
+    background-color: #F2DEDE;
 }
 
-/* Deal Cards */
+/* Deal Cards - Using SuiteCRM list item styling */
 .deal-card {
-    background-color: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 6px;
+    background-color: #FFFFFF;
+    border: 1px solid #E0E0E0;
+    border-radius: 3px;
     padding: 12px;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     cursor: move;
-    transition: all 0.2s;
+    transition: all 0.2s ease-in-out;
     position: relative;
 }
 
 .deal-card:hover {
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    transform: translateY(-2px);
+    background-color: #FAFAFA;
+    border-color: #D0D0D0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
 .deal-card.dragging {
-    opacity: 0.5;
+    opacity: 0.6;
     transform: rotate(2deg);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
 .deal-card-header {
@@ -163,11 +242,14 @@
 }
 
 .deal-name a {
-    color: #1976d2;
+    color: #F08377;
     text-decoration: none;
+    font-weight: 500;
 }
 
-.deal-name a:hover {
+.deal-name a:hover,
+.deal-name a:focus {
+    color: #534D64;
     text-decoration: underline;
 }
 
@@ -180,20 +262,20 @@
     white-space: nowrap;
 }
 
-/* Stage Color Classes */
+/* Stage Color Classes - Using SuiteCRM alert colors */
 .deal-card.stage-normal .deal-days-indicator {
-    background-color: #e8f5e9;
-    color: #2e7d32;
+    background-color: #DFF0D8;
+    color: #3C763D;
 }
 
 .deal-card.stage-orange .deal-days-indicator {
-    background-color: #fff3e0;
-    color: #ef6c00;
+    background-color: #FCF8E3;
+    color: #8A6D3B;
 }
 
 .deal-card.stage-red .deal-days-indicator {
-    background-color: #ffebee;
-    color: #c62828;
+    background-color: #F2DEDE;
+    color: #A94442;
 }
 
 /* Deal Card Body */
@@ -215,14 +297,15 @@
     text-align: center;
 }
 
-/* Probability Bar */
+/* Probability Bar - Using SuiteCRM colors */
 .deal-probability {
     margin-top: 8px;
     position: relative;
-    height: 20px;
-    background-color: #f5f5f5;
-    border-radius: 10px;
+    height: 16px;
+    background-color: #F5F5F5;
+    border-radius: 8px;
     overflow: hidden;
+    border: 1px solid #E0E0E0;
 }
 
 .probability-bar {
@@ -230,8 +313,8 @@
     left: 0;
     top: 0;
     height: 100%;
-    background-color: #4caf50;
-    transition: width 0.3s;
+    background: linear-gradient(90deg, #F08377 0%, #ED6C5F 100%);
+    transition: width 0.3s ease-in-out;
 }
 
 .probability-text {
@@ -244,21 +327,25 @@
     color: #333;
 }
 
-/* Empty Stage */
+/* Empty Stage - Using SuiteCRM muted styling */
 .empty-stage-placeholder {
     text-align: center;
     padding: 40px 20px;
-    color: #999;
+    color: #777777;
 }
 
-.empty-stage-placeholder i {
+.empty-stage-placeholder span {
     font-size: 48px;
-    color: #ddd;
+    color: #DDDDDD;
+    display: block;
+    margin-bottom: 10px;
 }
 
 .empty-stage-placeholder p {
     margin-top: 10px;
-    font-size: 14px;
+    font-size: 13px;
+    color: #777777;
+    font-style: italic;
 }
 
 /* Drag Ghost */
@@ -270,14 +357,14 @@
     transform: rotate(5deg);
 }
 
-/* Loading Overlay */
+/* Loading Overlay - Using SuiteCRM styling */
 .pipeline-loading {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.95);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -288,42 +375,224 @@
     text-align: center;
 }
 
-.loading-spinner i {
+.loading-spinner span {
     font-size: 48px;
-    color: #1976d2;
+    color: #F08377;
 }
 
 .loading-spinner p {
     margin-top: 10px;
-    font-size: 16px;
-    color: #666;
+    font-size: 14px;
+    color: #534D64;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-/* Mobile Styles */
-@media (max-width: 768px) {
+/* Responsive Design System */
+
+/* Tablet Styles - Portrait and Landscape */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .pipeline-container {
+        height: calc(100vh - 100px);
+    }
+    
     .pipeline-header {
-        padding: 15px;
-        flex-direction: column;
-        align-items: flex-start;
+        padding: 18px;
+        flex-direction: row;
+        align-items: center;
+    }
+    
+    .pipeline-header h2 {
+        font-size: 20px;
+        margin-right: auto;
     }
     
     .pipeline-actions {
-        margin-top: 10px;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+    
+    .pipeline-actions .btn {
+        font-size: 12px;
+        padding: 6px 16px;
+        min-width: 120px;
+    }
+    
+    .pipeline-board-wrapper {
+        padding: 15px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+    }
+    
+    .pipeline-stage {
+        width: 320px;
+        min-width: 320px;
+        margin-right: 15px;
+    }
+    
+    .stage-header {
+        padding: 12px 15px;
+    }
+    
+    .stage-header h3 {
+        font-size: 13px;
+    }
+    
+    .stage-body {
+        padding: 12px;
+        min-height: 300px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+    }
+    
+    .deal-card {
+        margin-bottom: 10px;
+        padding: 12px;
+        min-height: 80px;
+        touch-action: manipulation;
+    }
+    
+    .deal-card-header {
+        margin-bottom: 6px;
+    }
+    
+    .deal-name {
+        font-size: 13px;
+    }
+    
+    .deal-card-body {
+        font-size: 11px;
+    }
+    
+    .deal-card-actions {
+        min-width: 40px;
+        min-height: 40px;
+        gap: 6px;
+    }
+    
+    .focus-toggle-btn {
+        min-width: 40px;
+        min-height: 40px;
+        padding: 8px;
+    }
+    
+    .deal-days-indicator {
+        padding: 3px 8px;
+        font-size: 11px;
+    }
+    
+    /* Enhanced touch scrolling for tablet */
+    .pipeline-board {
+        gap: 15px;
+        padding-bottom: 10px;
+    }
+    
+    /* Auto-hide scrollbars on tablet */
+    .pipeline-board-wrapper::-webkit-scrollbar {
+        height: 6px;
+    }
+    
+    .pipeline-board-wrapper::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    
+    .pipeline-board-wrapper::-webkit-scrollbar-thumb {
+        background: rgba(0,0,0,0.3);
+        border-radius: 3px;
+    }
+    
+    .stage-body::-webkit-scrollbar {
+        width: 4px;
+    }
+    
+    .stage-body::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    
+    .stage-body::-webkit-scrollbar-thumb {
+        background: rgba(0,0,0,0.2);
+        border-radius: 2px;
+    }
+}
+
+/* Mobile Styles - Enhanced */
+@media (max-width: 768px) {
+    .pipeline-container {
+        height: calc(100vh - 60px);
+    }
+    
+    .pipeline-header {
+        padding: 12px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .pipeline-header h2 {
+        font-size: 18px;
+        margin: 0;
+    }
+    
+    .pipeline-actions {
         width: 100%;
+        gap: 8px;
+        flex-wrap: wrap;
     }
     
     .pipeline-actions .btn {
         flex: 1;
-        font-size: 12px;
+        font-size: 11px;
+        padding: 8px 12px;
+        min-height: 44px; /* Accessibility requirement */
+        min-width: 80px;
     }
     
     .pipeline-board-wrapper {
-        padding: 10px;
+        padding: 8px;
+        position: relative;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+        /* Prevent bounce scrolling on iOS */
+        overscroll-behavior-x: contain;
+    }
+    
+    .pipeline-board {
+        gap: 12px;
+        padding-bottom: 20px;
     }
     
     .pipeline-stage {
         width: 280px;
         min-width: 280px;
+        flex-shrink: 0;
+    }
+    
+    .stage-header {
+        padding: 10px 12px;
+    }
+    
+    .stage-header h3 {
+        font-size: 12px;
+    }
+    
+    .stage-stats {
+        font-size: 12px;
+    }
+    
+    .stage-body {
+        padding: 10px;
+        min-height: 200px;
+        max-height: calc(100vh - 280px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-y: contain;
+        scroll-behavior: smooth;
     }
     
     .mobile-swipe-hint {
@@ -331,12 +600,176 @@
         bottom: 20px;
         left: 50%;
         transform: translateX(-50%);
-        background-color: rgba(0,0,0,0.7);
+        background-color: rgba(0,0,0,0.8);
         color: white;
         padding: 8px 16px;
         border-radius: 20px;
         font-size: 12px;
-        animation: fadeInOut 3s ease-in-out;
+        animation: fadeInOut 4s ease-in-out;
+        pointer-events: none;
+        z-index: 100;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    
+    /* Enhanced touch-friendly spacing */
+    .deal-card {
+        margin-bottom: 12px;
+        padding: 14px;
+        min-height: 80px;
+        touch-action: manipulation;
+        cursor: grab;
+        /* Larger tap area */
+        position: relative;
+    }
+    
+    .deal-card::before {
+        content: '';
+        position: absolute;
+        top: -6px;
+        left: -6px;
+        right: -6px;
+        bottom: -6px;
+        z-index: -1;
+    }
+    
+    .deal-card-header {
+        margin-bottom: 8px;
+    }
+    
+    .deal-name {
+        font-size: 13px;
+        line-height: 1.3;
+    }
+    
+    .deal-card-body {
+        font-size: 11px;
+        line-height: 1.4;
+    }
+    
+    .deal-card-body > div {
+        margin-bottom: 6px;
+    }
+    
+    .deal-card-actions {
+        min-width: 44px; /* iOS touch target size */
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+    
+    .focus-toggle-btn {
+        min-width: 44px;
+        min-height: 44px;
+        padding: 12px;
+        border-radius: 6px;
+        touch-action: manipulation;
+    }
+    
+    .deal-days-indicator {
+        padding: 4px 8px;
+        font-size: 11px;
+        min-height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .deal-probability {
+        height: 20px;
+        margin-top: 10px;
+    }
+    
+    .probability-text {
+        font-size: 10px;
+    }
+    
+    /* Mobile scrollbar styling */
+    .pipeline-board-wrapper::-webkit-scrollbar {
+        height: 8px;
+    }
+    
+    .pipeline-board-wrapper::-webkit-scrollbar-track {
+        background: rgba(0,0,0,0.1);
+        border-radius: 4px;
+    }
+    
+    .pipeline-board-wrapper::-webkit-scrollbar-thumb {
+        background: rgba(0,0,0,0.4);
+        border-radius: 4px;
+    }
+    
+    .stage-body::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .stage-body::-webkit-scrollbar-track {
+        background: rgba(0,0,0,0.05);
+        border-radius: 3px;
+    }
+    
+    .stage-body::-webkit-scrollbar-thumb {
+        background: rgba(0,0,0,0.3);
+        border-radius: 3px;
+    }
+}
+
+/* Small Mobile Styles - Phones in portrait */
+@media (max-width: 480px) {
+    .pipeline-container {
+        height: calc(100vh - 50px);
+    }
+    
+    .pipeline-header {
+        padding: 10px;
+    }
+    
+    .pipeline-header h2 {
+        font-size: 16px;
+    }
+    
+    .pipeline-actions .btn {
+        font-size: 10px;
+        padding: 6px 8px;
+        min-width: 70px;
+    }
+    
+    .pipeline-board-wrapper {
+        padding: 6px;
+    }
+    
+    .pipeline-stage {
+        width: 260px;
+        min-width: 260px;
+    }
+    
+    .stage-body {
+        max-height: calc(100vh - 260px);
+    }
+    
+    .deal-card {
+        padding: 12px;
+        margin-bottom: 10px;
+    }
+    
+    .deal-name {
+        font-size: 12px;
+    }
+    
+    .deal-card-body {
+        font-size: 10px;
+    }
+    
+    .focus-toggle-btn {
+        min-width: 40px;
+        min-height: 40px;
+        padding: 10px;
+    }
+    
+    .deal-days-indicator {
+        font-size: 10px;
+        padding: 3px 6px;
     }
 }
 
@@ -358,6 +791,138 @@
     display: none;
 }
 
+/* Touch Support Styles */
+.touch-enabled .deal-card {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    touch-action: manipulation;
+}
+
+.deal-card.touch-hold {
+    transform: scale(0.98);
+    opacity: 0.8;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.deal-card.touch-dragging {
+    opacity: 0.4;
+    transform: scale(0.95);
+}
+
+.touch-drag-clone {
+    cursor: grabbing !important;
+    touch-action: none;
+}
+
+body.touch-dragging-active {
+    overflow: hidden;
+    touch-action: none;
+}
+
+body.touch-dragging-active * {
+    cursor: grabbing !important;
+}
+
+/* Enhanced Touch Feedback */
+.touch-active {
+    background-color: rgba(240, 131, 119, 0.1) !important;
+    transform: scale(0.98);
+    transition: all 0.1s ease;
+}
+
+.btn.btn-pressed {
+    transform: scale(0.95);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+    transition: all 0.1s ease;
+}
+
+.focus-toggle-btn.touch-active {
+    background-color: rgba(243, 156, 18, 0.2);
+    transform: scale(0.9);
+}
+
+/* Device-specific touch improvements */
+.tablet-touch .deal-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tablet-touch .deal-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.mobile-touch .deal-card {
+    transition: transform 0.15s ease;
+}
+
+.mobile-touch .deal-card:active {
+    transform: scale(0.98);
+}
+
+/* Drop Position Indicator */
+.drop-position-indicator {
+    height: 3px;
+    background: linear-gradient(90deg, #F08377 0%, #ED6C5F 100%);
+    margin: 4px 0;
+    border-radius: 2px;
+    animation: pulse 0.6s ease-in-out infinite;
+    box-shadow: 0 0 8px rgba(240, 131, 119, 0.5);
+}
+
+/* Enhanced WIP Limit Feedback */
+.stage-body.wip-limit-exceeded {
+    background-color: #F2DEDE;
+    border-color: #A94442;
+    animation: shake 0.3s ease-in-out;
+}
+
+/* Improved Drag Over State */
+.stage-body.drag-over {
+    background-color: #F0F8FF;
+    border: 2px dashed #F08377;
+    box-shadow: inset 0 0 10px rgba(240, 131, 119, 0.1);
+}
+
+/* Touch Scrolling Optimization */
+.pipeline-board-wrapper {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+}
+
+.stage-body {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+}
+
+/* Mobile Touch Feedback */
+@media (max-width: 768px) {
+    .deal-card {
+        min-height: 60px; /* Larger touch target */
+        position: relative;
+    }
+    
+    .deal-card::before {
+        content: '';
+        position: absolute;
+        top: -5px;
+        left: -5px;
+        right: -5px;
+        bottom: -5px;
+        z-index: -1;
+    }
+    
+    .touch-drag-clone {
+        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+    
+    .drop-position-indicator {
+        height: 4px;
+        margin: 6px 0;
+    }
+}
+
 /* Animations */
 @keyframes fadeInOut {
     0%, 100% { opacity: 0; }
@@ -369,14 +934,166 @@
     100% { transform: rotate(360deg); }
 }
 
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
 .glyphicon-spin {
     animation: spin 1s linear infinite;
+}
+
+/* Accessibility Improvements */
+.pipeline-container {
+    position: relative;
+}
+
+/* Focus indicators for keyboard navigation */
+.deal-card:focus,
+.focus-toggle-btn:focus,
+.pipeline-actions .btn:focus {
+    outline: 2px solid #F08377;
+    outline-offset: 2px;
+    z-index: 10;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .deal-card {
+        border-width: 2px;
+        border-color: #000;
+    }
+    
+    .pipeline-stage {
+        border-width: 2px;
+        border-color: #000;
+    }
+    
+    .deal-name a {
+        color: #000 !important;
+        text-decoration: underline;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .deal-card,
+    .pipeline-stage,
+    .focus-toggle-btn,
+    .drop-position-indicator {
+        transition: none !important;
+        animation: none !important;
+    }
+    
+    .mobile-swipe-hint {
+        animation: none;
+        opacity: 1;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .pipeline-container {
+        background-color: #1a1a1a;
+        color: #e0e0e0;
+    }
+    
+    .pipeline-header {
+        background-color: #2d2d2d;
+        border-bottom-color: #404040;
+    }
+    
+    .pipeline-stage {
+        background-color: #2d2d2d;
+        border-color: #404040;
+    }
+    
+    .stage-header {
+        background-color: #1a1a1a;
+        border-bottom-color: #404040;
+    }
+    
+    .deal-card {
+        background-color: #333333;
+        border-color: #404040;
+        color: #e0e0e0;
+    }
+    
+    .deal-card:hover {
+        background-color: #404040;
+    }
+    
+    .deal-name a {
+        color: #F08377;
+    }
+    
+    .empty-stage-placeholder {
+        color: #999999;
+    }
+}
+
+/* Screen reader improvements */
+.sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+/* Skip link for keyboard users */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: #F08377;
+    color: white;
+    padding: 8px;
+    text-decoration: none;
+    z-index: 1000;
+    border-radius: 0 0 4px 4px;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* Keyboard navigation hints */
+.keyboard-nav-hint {
+    position: absolute;
+    bottom: 60px;
+    right: 20px;
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.pipeline-container:focus-within .keyboard-nav-hint {
+    opacity: 1;
 }
 
 /* Print Styles */
 @media print {
     .pipeline-actions,
-    .mobile-swipe-hint {
+    .mobile-swipe-hint,
+    .keyboard-nav-hint,
+    .skip-link {
         display: none;
     }
     
@@ -391,5 +1108,10 @@
     .pipeline-stage {
         margin-bottom: 20px;
         break-inside: avoid;
+    }
+    
+    .deal-card {
+        box-shadow: none;
+        border: 1px solid #000;
     }
 }
