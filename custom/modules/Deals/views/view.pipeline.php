@@ -72,7 +72,17 @@ class DealsViewPipeline extends SugarView
         echo '<link rel="stylesheet" type="text/css" href="custom/modules/Deals/css/stakeholder-badges.css?v=' . $version . '">';
         
         // Load JavaScript files with async loading and minification
+        echo '<!-- DEBUG: About to load JavaScript files -->';
         $this->loadOptimizedJavaScript($version);
+        echo '<!-- DEBUG: JavaScript files loaded -->';
+        
+        // Ensure jQuery UI is available for drag and drop
+        echo '<script type="text/javascript" src="include/javascript/jquery-ui-1.12.1.min.js"></script>';
+        
+        // Add a simple test to ensure our JavaScript loading is working
+        echo '<script type="text/javascript">';
+        echo 'console.log("DEBUG: Pipeline view JavaScript section loaded");';
+        echo '</script>';
         
         // Get deals grouped by stage with caching and optimization
         $deals_by_stage = $this->getDealsByStageOptimized();
@@ -274,9 +284,9 @@ class DealsViewPipeline extends SugarView
             'pipeline.js'
         ];
 
-        // Use defer for better performance
+        // Load synchronously to ensure PipelineView is available when template runs
         foreach ($jsFiles as $file) {
-            echo '<script type="text/javascript" src="custom/modules/Deals/js/' . $file . '?v=' . $version . '" defer></script>';
+            echo '<script type="text/javascript" src="custom/modules/Deals/js/' . $file . '?v=' . $version . '"></script>';
         }
     }
 
