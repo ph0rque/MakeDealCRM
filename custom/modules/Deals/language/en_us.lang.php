@@ -162,4 +162,4 @@ $mod_strings['LBL_WORKFLOW_TRIGGERED'] = 'Workflow triggered';
 $mod_strings['LBL_STAGE_CHANGE_LOGGED'] = 'Stage change logged';
 $mod_strings['LBL_VALIDATION_PASSED'] = 'Validation passed';
 $mod_strings['LBL_VALIDATION_FAILED'] = 'Validation failed';
-EOF < /dev/null
+?>

@@ -1783,11 +1783,307 @@
             "testStrategy": ""
           }
         ]
+      },
+      {
+        "id": 22,
+        "title": "Setup Comprehensive Test Environment",
+        "description": "Establish dedicated test environment with SuiteCRM instance, test data, and monitoring tools for comprehensive Deals module testing",
+        "details": "Create isolated test environment separate from production. Install SuiteCRM with Deals module. Generate minimum 500 test deals across different stages. Setup test user accounts with various roles (admin, sales, read-only). Configure multiple browsers for cross-browser testing. Install performance monitoring tools. Create database backup procedures. Setup logging mechanisms for error tracking.",
+        "testStrategy": "Verify test environment mirrors production configuration. Validate all test accounts have correct permissions. Confirm test data covers all pipeline stages. Test backup and restore procedures. Verify monitoring tools capture performance metrics.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Setup SuiteCRM Test Instance and Infrastructure",
+            "description": "Install and configure a dedicated SuiteCRM instance for testing with proper isolation from production",
+            "dependencies": [],
+            "details": "Create isolated test server environment using Docker or VM. Install SuiteCRM 7.x/8.x matching production version. Configure Apache/Nginx, PHP 7.4+, and MySQL/MariaDB. Set up proper file permissions and SSL certificates. Configure environment variables for test mode. Install and configure Deals module with all custom fields (pipeline_stage_c, stage_entered_date_c, expected_close_date_c, deal_source_c). Ensure opportunities_cstm table is properly created and linked.",
+            "status": "pending",
+            "testStrategy": "Verify SuiteCRM installation completes without errors. Test module installation and custom field creation. Validate database tables are created correctly. Test basic CRUD operations on Deals module. Verify isolation from production environment."
+          },
+          {
+            "id": 2,
+            "title": "Generate Test Data and User Accounts",
+            "description": "Create comprehensive test dataset with 500+ deals across all pipeline stages and multiple user roles",
+            "dependencies": [
+              "22.1"
+            ],
+            "details": "Generate 500+ test deals distributed across all 11 pipeline stages (New Lead through Warranty/Compliance). Create test accounts with roles: admin (full access), sales manager (team oversight), sales rep (own deals only), read-only viewer. Set up test companies, contacts, and related records. Ensure deals have varied data including different deal sources, close dates, and monetary values. Create test scenarios for edge cases like orphaned records and invalid state transitions.",
+            "status": "pending",
+            "testStrategy": "Verify exact count of deals per pipeline stage. Test user login and permission validation for each role. Confirm relationships between deals, accounts, and contacts. Validate custom field data integrity. Test bulk operations performance with large dataset."
+          },
+          {
+            "id": 3,
+            "title": "Configure Cross-Browser Testing Environment",
+            "description": "Set up automated cross-browser testing infrastructure for comprehensive UI validation",
+            "dependencies": [
+              "22.1"
+            ],
+            "details": "Install Selenium Grid or BrowserStack for cross-browser testing. Configure test runners for Chrome (latest), Firefox (latest), Safari (latest), Edge (latest). Set up mobile emulation for iOS Safari and Android Chrome. Configure screen resolution testing for 1920x1080, 1366x768, 768x1024, and mobile viewports. Install visual regression testing tools like Percy or BackstopJS. Set up headless browser testing for CI/CD integration.",
+            "status": "pending",
+            "testStrategy": "Run sample tests across all configured browsers. Verify screenshot capture works for visual regression. Test responsive breakpoints on different resolutions. Validate touch event simulation on mobile browsers. Confirm parallel test execution capability."
+          },
+          {
+            "id": 4,
+            "title": "Implement Performance Monitoring and Logging",
+            "description": "Deploy comprehensive monitoring tools for performance metrics and error tracking",
+            "dependencies": [
+              "22.1"
+            ],
+            "details": "Install APM tools like New Relic or DataDog for application monitoring. Configure MySQL slow query logging and query analysis. Set up Apache/Nginx access and error log aggregation. Implement client-side performance monitoring for JavaScript errors and page load times. Configure custom logging for Deals module operations including pipeline movements, AJAX requests, and data validation. Set up alerts for performance degradation and error thresholds.",
+            "status": "pending",
+            "testStrategy": "Generate load on test environment and verify metrics capture. Test error logging by triggering known issues. Validate slow query identification. Confirm alert notifications work correctly. Test log rotation and retention policies."
+          },
+          {
+            "id": 5,
+            "title": "Establish Backup and Recovery Procedures",
+            "description": "Create automated backup systems and documented recovery procedures for test environment",
+            "dependencies": [
+              "22.1",
+              "22.2"
+            ],
+            "details": "Configure automated MySQL database backups every 4 hours. Set up file system backups for uploaded documents and customizations. Create backup retention policy (7 days for test environment). Document step-by-step recovery procedures. Implement backup verification scripts. Create database snapshot functionality for quick test resets between test runs. Set up backup storage with proper encryption and access controls.",
+            "status": "pending",
+            "testStrategy": "Perform full backup and restore cycle. Test point-in-time recovery scenarios. Verify backup integrity through restoration. Test quick reset functionality between test suites. Validate backup encryption and access controls."
+          }
+        ]
+      },
+      {
+        "id": 23,
+        "title": "Core Pipeline Display Functionality Testing",
+        "description": "Validate pipeline view loads correctly, displays all stages, and shows deals in appropriate stages",
+        "details": "Test pipeline view as default display when navigating to Deals module. Verify all configured pipeline stages are visible and properly labeled. Check deal cards appear in correct stages based on pipeline_stage_c field. Validate empty stages show appropriate messaging. Test stage ordering and visual hierarchy. Verify deal count indicators per stage. Test initial page load performance.",
+        "testStrategy": "Navigate to Deals module and verify pipeline displays by default. Create deals in each stage and confirm proper placement. Test with empty stages to verify messaging. Measure page load times with different deal volumes. Validate stage configuration matches database settings.",
+        "priority": "high",
+        "dependencies": [
+          22
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Test Pipeline View Default Display",
+            "description": "Verify that the pipeline view loads as the default display when navigating to the Deals module",
+            "dependencies": [],
+            "details": "Navigate to the Deals module through various entry points (main menu, quick menu, direct URL). Confirm that the pipeline view automatically loads without requiring manual view selection. Test both fresh navigation and returning to the module after visiting other sections. Verify the view parameter in the URL shows 'pipeline'. Check that the pipeline view preference is properly stored in user settings.",
+            "status": "pending",
+            "testStrategy": "Use automated browser testing to navigate to Deals module from different entry points. Assert that the URL contains action=pipeline. Verify DOM elements specific to pipeline view are present. Test with different user roles to ensure consistent behavior."
+          },
+          {
+            "id": 2,
+            "title": "Validate Pipeline Stage Configuration and Display",
+            "description": "Ensure all configured pipeline stages are visible, properly labeled, and match database configuration",
+            "dependencies": [
+              "23.1"
+            ],
+            "details": "Verify all stages defined in the pipeline_stage_c field configuration are displayed. Check stage labels match the configured values exactly. Validate stage ordering follows the defined sequence. Ensure custom stage colors and styling are applied correctly. Test with different pipeline configurations to verify dynamic stage loading. Confirm stage widths are properly calculated based on the number of stages.",
+            "status": "pending",
+            "testStrategy": "Query database for pipeline_stage_c field configuration. Compare displayed stages against database values. Use DOM inspection to verify stage count, labels, and CSS classes. Test with 3, 5, and 10 stage configurations to ensure responsive layout."
+          },
+          {
+            "id": 3,
+            "title": "Test Deal Card Placement and Stage Assignment",
+            "description": "Verify deal cards appear in the correct pipeline stages based on their pipeline_stage_c field values",
+            "dependencies": [
+              "23.2"
+            ],
+            "details": "Create test deals with different pipeline_stage_c values. Confirm each deal card appears in its assigned stage column. Validate deal information displayed on cards (name, amount, company, assigned user). Test with deals in every configured stage. Verify deals without a pipeline_stage_c value are handled appropriately. Check that deal cards maintain consistent formatting across all stages.",
+            "status": "pending",
+            "testStrategy": "Create deals programmatically with specific stage assignments. Use DOM queries to verify deal placement by checking parent container stage attributes. Compare deal counts per stage with database queries. Test edge cases like null stage values and invalid stage assignments."
+          },
+          {
+            "id": 4,
+            "title": "Validate Empty Stage Handling and Messaging",
+            "description": "Test that empty pipeline stages display appropriate messaging and maintain visual structure",
+            "dependencies": [
+              "23.2"
+            ],
+            "details": "Verify empty stages show placeholder text like 'No deals in this stage' or similar messaging. Ensure empty stages maintain their column width and don't collapse. Test that empty stages still accept drag-and-drop operations. Validate visual indicators for empty stages (lighter background, dashed borders, etc.). Check that stage headers and counts display correctly for empty stages (showing 0 deals).",
+            "status": "pending",
+            "testStrategy": "Create pipeline configuration with some empty stages. Assert placeholder messages are visible in empty columns. Test drag-and-drop functionality into empty stages. Verify CSS classes specific to empty states are applied. Screenshot comparison for visual regression testing."
+          },
+          {
+            "id": 5,
+            "title": "Performance Testing for Pipeline View Loading",
+            "description": "Measure and validate initial page load performance with various deal volumes",
+            "dependencies": [
+              "23.3"
+            ],
+            "details": "Test page load times with 0, 50, 100, 500, and 1000 deals distributed across stages. Measure time to first paint, DOM ready, and full page load. Monitor browser memory usage during load. Check for any JavaScript errors or performance warnings in console. Validate that pagination or lazy loading activates for large datasets. Test performance on different browsers and devices. Ensure AJAX calls for deal data are optimized and don't block rendering.",
+            "status": "pending",
+            "testStrategy": "Use browser performance profiling tools to measure load metrics. Create automated tests with different data volumes. Set performance benchmarks (e.g., <2s for 100 deals, <5s for 500 deals). Monitor network requests and identify bottlenecks. Test with browser throttling to simulate slower connections."
+          }
+        ]
+      },
+      {
+        "id": 24,
+        "title": "Deal CRUD Operations Testing",
+        "description": "Test complete deal creation, reading, updating, and deletion functionality from pipeline interface",
+        "details": "Test deal creation from 'Create New Deal' button in pipeline view. Validate all required fields enforcement and form validation. Test deal editing from pipeline cards and detail view. Verify deal updates reflect immediately in pipeline. Test deal deletion with proper confirmation dialogs. Validate custom fields (pipeline_stage_c, stage_entered_date_c, expected_close_date_c, deal_source_c) save correctly. Test bulk operations if implemented.",
+        "testStrategy": "Create deals with various field combinations and verify database persistence. Edit deals and confirm changes appear in pipeline. Test field validation by submitting incomplete forms. Delete deals and verify removal from pipeline and database. Validate custom field functionality and data integrity.",
+        "priority": "high",
+        "dependencies": [
+          23
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Test Deal Creation via Pipeline Interface",
+            "description": "Thoroughly test the 'Create New Deal' functionality from the pipeline view including all form validations and field requirements",
+            "dependencies": [],
+            "details": "Click 'Create New Deal' button in pipeline view and verify modal/form appears correctly. Test submission with all required fields populated (name, amount, expected_close_date_c). Test validation by attempting to submit with missing required fields. Verify error messages display appropriately. Test all custom fields including pipeline_stage_c dropdown, stage_entered_date_c date picker, and deal_source_c selection. Confirm successful creation shows success message and deal appears in correct pipeline stage. Test creation with various field combinations and edge cases.",
+            "status": "pending",
+            "testStrategy": "Create test cases for valid deal creation, missing required fields, invalid data formats, and boundary values. Verify database persistence by checking deals table. Confirm deal appears in correct pipeline stage immediately after creation."
+          },
+          {
+            "id": 2,
+            "title": "Test Deal Reading and Display Functionality",
+            "description": "Validate that deals are correctly retrieved and displayed in the pipeline interface with all associated data",
+            "dependencies": [
+              "24.1"
+            ],
+            "details": "Verify deals display correctly in pipeline cards showing key information (name, amount, expected close date). Test deal detail view by clicking on pipeline cards and confirming all fields load properly. Validate custom fields display with correct values (pipeline_stage_c, stage_entered_date_c, expected_close_date_c, deal_source_c). Test filtering and sorting functionality if implemented. Verify deals are shown in correct pipeline stages based on pipeline_stage_c value. Check deal count badges update correctly for each stage.",
+            "status": "pending",
+            "testStrategy": "Create deals with various data combinations and verify display accuracy. Test with special characters, long text values, and null fields. Validate data consistency between pipeline view and detail view."
+          },
+          {
+            "id": 3,
+            "title": "Test Deal Update Operations",
+            "description": "Test comprehensive deal editing functionality from both pipeline cards and detail view with immediate pipeline reflection",
+            "dependencies": [
+              "24.1",
+              "24.2"
+            ],
+            "details": "Test inline editing from pipeline cards if available (e.g., quick edit of amount or close date). Test full edit functionality from deal detail view. Verify all fields are editable including custom fields. Test stage changes by updating pipeline_stage_c and confirm deal moves to new stage column immediately. Validate stage_entered_date_c updates automatically when stage changes. Test concurrent editing scenarios to ensure no data loss. Verify edit history/audit trail if implemented. Confirm validation rules apply during updates.",
+            "status": "pending",
+            "testStrategy": "Edit deals with valid and invalid data to test validation. Change pipeline stages and verify immediate visual updates. Test concurrent edits by multiple users. Verify database updates occur correctly and audit fields update."
+          },
+          {
+            "id": 4,
+            "title": "Test Deal Deletion with Confirmation",
+            "description": "Validate deal deletion functionality including proper confirmation dialogs and complete removal from system",
+            "dependencies": [
+              "24.1",
+              "24.2"
+            ],
+            "details": "Test delete functionality from pipeline view (if delete option exists on cards). Test deletion from deal detail view. Verify confirmation dialog appears with clear warning message before deletion. Test canceling deletion and confirm deal remains unchanged. Test confirming deletion and verify deal is removed from pipeline immediately. Check database to confirm soft delete (deleted=1) or hard delete based on implementation. Test deletion permissions if role-based access is implemented. Verify related records handling (contacts, activities) during deletion.",
+            "status": "pending",
+            "testStrategy": "Attempt to delete deals and verify confirmation process. Test both cancellation and confirmation paths. Verify deal removal from UI and database. Test cascading effects on related records."
+          },
+          {
+            "id": 5,
+            "title": "Test Bulk Operations and Custom Field Integrity",
+            "description": "Validate bulk deal operations if implemented and ensure custom field data integrity throughout all CRUD operations",
+            "dependencies": [
+              "24.1",
+              "24.2",
+              "24.3",
+              "24.4"
+            ],
+            "details": "Test bulk selection of deals using checkboxes if available. Test bulk update operations (e.g., mass stage change, bulk assign). Test bulk delete with proper confirmation for multiple deals. Validate custom fields maintain data integrity through all operations. Test special characters and SQL injection attempts in custom fields. Verify date field formatting for stage_entered_date_c and expected_close_date_c. Test dropdown values for pipeline_stage_c and deal_source_c remain consistent. Validate field-level permissions if implemented.",
+            "status": "pending",
+            "testStrategy": "Perform bulk operations on multiple deals simultaneously. Test edge cases with custom fields including null values, special characters, and maximum lengths. Verify data consistency after bulk operations."
+          }
+        ]
+      },
+      {
+        "id": 25,
+        "title": "Stage Transition and History Testing",
+        "description": "Validate manual stage changes, automatic stage updates, and comprehensive stage history tracking",
+        "details": "Test manual stage changes from deal detail view and verify pipeline updates. Validate stage_entered_date_c field updates when stages change. Test audit trail functionality for stage transitions. Verify user tracking in stage history. Test stage change workflows and automation triggers. Validate data consistency during stage transitions. Test concurrent stage changes by multiple users.",
+        "testStrategy": "Change deal stages multiple times and verify complete history tracking. Check timestamps and user attribution in audit logs. Test stage changes by different users simultaneously. Verify workflow triggers execute on stage transitions. Validate database consistency after stage changes.",
+        "priority": "high",
+        "dependencies": [
+          24
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 26,
+        "title": "Search and Filter Integration Testing",
+        "description": "Test global search functionality and pipeline filtering capabilities across all deal attributes",
+        "details": "Test global search integration with deal names, account names, and pipeline stages. Implement and test pipeline view filtering by assigned user, date ranges, and amount ranges. Validate filter combinations work correctly. Test search performance with large datasets. Verify search results accuracy and relevance. Test filter persistence across sessions. Implement advanced search capabilities for custom fields.",
+        "testStrategy": "Search for deals using various criteria and verify result accuracy. Test filter combinations and verify pipeline updates correctly. Measure search performance with different dataset sizes. Validate search indexing includes all relevant fields. Test filter reset and clear functionality.",
+        "priority": "medium",
+        "dependencies": [
+          24
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 27,
+        "title": "Data Integrity and Custom Fields Validation",
+        "description": "Comprehensive testing of custom fields functionality and database consistency across all operations",
+        "details": "Validate pipeline_stage_c field synchronization with opportunities table. Test stage_entered_date_c automatic updates on stage changes. Verify expected_close_date_c functionality and validation. Test deal_source_c dropdown options and data integrity. Check opportunities_cstm table synchronization. Test cascade operations and referential integrity. Validate no orphaned records created during operations.",
+        "testStrategy": "Perform operations and verify database table consistency. Test custom field validation rules and data types. Check referential integrity constraints. Verify cascade deletes work correctly. Test data migration scenarios and field mapping accuracy.",
+        "priority": "high",
+        "dependencies": [
+          25
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 28,
+        "title": "Security and Permission Testing",
+        "description": "Validate role-based access control, team security, and permission enforcement across all user types",
+        "details": "Test admin user access to all pipeline functionality. Validate sales user team-based access restrictions. Test read-only user permissions and view-only access. Verify team security isolates deals appropriately. Test cross-team access restrictions. Validate permission inheritance and override scenarios. Test security with different role combinations. Verify data exposure prevention for unauthorized users.",
+        "testStrategy": "Login as different user types and verify access restrictions. Test team assignment and visibility rules. Attempt unauthorized actions and verify proper blocking. Validate permission inheritance from parent modules. Test edge cases with mixed permissions.",
+        "priority": "high",
+        "dependencies": [
+          24
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 29,
+        "title": "Module Integration and Relationship Testing",
+        "description": "Test bidirectional relationships with Accounts, Contacts, and other SuiteCRM modules",
+        "details": "Test account-deal relationship bidirectionality and subpanel functionality. Validate contact-deal relationships and role assignments. Test navigation between modules maintains context. Verify relationship integrity during module operations. Test opportunity conversion workflows. Validate related module subpanels display correctly. Test relationship-based reporting and filtering.",
+        "testStrategy": "Create relationships between modules and verify bidirectional functionality. Test subpanel displays and navigation. Verify relationship data integrity during CRUD operations. Test related module impact of deal changes. Validate relationship-based searches and reports.",
+        "priority": "medium",
+        "dependencies": [
+          27
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 30,
+        "title": "User Interface and Cross-Browser Testing",
+        "description": "Comprehensive UI testing across browsers, devices, and screen resolutions for optimal user experience",
+        "details": "Test pipeline responsiveness on desktop (1920x1080), laptop (1366x768), and tablet (768x1024) resolutions. Validate cross-browser compatibility on Chrome, Firefox, Safari, and Edge. Test horizontal scrolling behavior with many stages. Verify layout adjustments for different screen sizes. Test touch interactions on mobile devices. Validate consistent styling and behavior across browsers.",
+        "testStrategy": "Test on multiple browsers and verify consistent functionality. Use browser developer tools to simulate different screen sizes. Test touch gestures on mobile devices. Verify responsive design breakpoints. Validate accessibility compliance and keyboard navigation.",
+        "priority": "medium",
+        "dependencies": [
+          23
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 31,
+        "title": "Performance and Load Testing",
+        "description": "Test system performance under various load conditions and optimize for acceptable response times",
+        "details": "Test pipeline performance with 10, 50, and 100+ deals per stage. Measure page load times and browser performance metrics. Test concurrent user access with 5+ simultaneous users. Validate no conflicts during concurrent modifications. Test database query performance and optimization. Monitor memory usage and resource consumption. Test performance degradation thresholds and establish benchmarks.",
+        "testStrategy": "Load test environment with varying deal volumes and measure response times. Simulate concurrent users performing operations simultaneously. Monitor database performance and query execution times. Use browser profiling tools to identify bottlenecks. Establish performance baselines and acceptable thresholds.",
+        "priority": "medium",
+        "dependencies": [
+          26
+        ],
+        "status": "pending",
+        "subtasks": []
       }
     ],
     "metadata": {
       "created": "2025-07-24T14:33:29.923Z",
-      "updated": "2025-07-25T13:53:39.152Z",
+      "updated": "2025-07-25T16:24:16.738Z",
       "description": "Tasks for master context"
     }
   }

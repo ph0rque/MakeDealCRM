@@ -8,7 +8,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('modules/Opportunities/views/view.list.php');
+// Adjust paths for custom module location
+$suitecrm_root = dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/SuiteCRM';
+require_once($suitecrm_root . '/modules/Opportunities/views/view.list.php');
 
 class DealsViewList extends OpportunitiesViewList
 {

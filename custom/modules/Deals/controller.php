@@ -6,11 +6,24 @@
 
 if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
-require_once('include/MVC/Controller/SugarController.php');
-require_once('custom/modules/Deals/api/StateSync.php');
-require_once('custom/modules/Deals/api/StageTransitionService.php');
-require_once('custom/modules/Deals/api/TimeTrackingService.php');
-require_once('custom/modules/Deals/api/StakeholderIntegrationApi.php');
+// Adjust paths for custom module location
+$suitecrm_root = dirname(dirname(dirname(dirname(__FILE__)))) . '/SuiteCRM';
+require_once($suitecrm_root . '/include/MVC/Controller/SugarController.php');
+
+// Check if API files exist before including them
+$apiPath = $suitecrm_root . '/custom/modules/Deals/api/';
+if (file_exists($apiPath . 'StateSync.php')) {
+    require_once($apiPath . 'StateSync.php');
+}
+if (file_exists($apiPath . 'StageTransitionService.php')) {
+    require_once($apiPath . 'StageTransitionService.php');
+}
+if (file_exists($apiPath . 'TimeTrackingService.php')) {
+    require_once($apiPath . 'TimeTrackingService.php');
+}
+if (file_exists($apiPath . 'StakeholderIntegrationApi.php')) {
+    require_once($apiPath . 'StakeholderIntegrationApi.php');
+}
 
 class DealsController extends SugarController
 {

@@ -6,10 +6,12 @@
 
 if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
-require_once('modules/Opportunities/Opportunity.php');
-require_once('include/SugarLogger.php');
-require_once('modules/ACL/ACLController.php');
-require_once('include/utils.php');
+// Adjust paths for custom module location
+$suitecrm_root = dirname(dirname(dirname(dirname(__FILE__)))) . '/SuiteCRM';
+require_once($suitecrm_root . '/modules/Opportunities/Opportunity.php');
+require_once($suitecrm_root . '/include/SugarLogger/SugarLogger.php');
+require_once($suitecrm_root . '/modules/ACL/ACLController.php');
+require_once($suitecrm_root . '/include/utils.php');
 
 class Deal extends Opportunity
 {

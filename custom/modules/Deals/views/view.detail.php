@@ -8,7 +8,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('modules/Opportunities/views/view.detail.php');
+$suitecrm_root = dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/SuiteCRM';
+require_once($suitecrm_root . '/modules/Opportunities/views/view.detail.php');
 
 class DealsViewDetail extends OpportunitiesViewDetail
 {

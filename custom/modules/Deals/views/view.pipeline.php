@@ -8,7 +8,9 @@
 
 if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
-require_once('include/MVC/View/views/view.detail.php');
+// Adjust paths for custom module location
+$suitecrm_root = dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/SuiteCRM';
+require_once($suitecrm_root . '/include/MVC/View/views/view.detail.php');
 
 class DealsViewPipeline extends SugarView
 {
@@ -216,7 +218,7 @@ class DealsViewPipeline extends SugarView
         // Enable SuiteCRM's built-in caching mechanisms
         if (!empty($sugar_config['cache_dir'])) {
             // Use SuiteCRM's cache system for asset optimization
-            require_once('include/SugarCache/SugarCache.php');
+            require_once($suitecrm_root . '/include/SugarCache/SugarCache.php');
         }
     }
 

@@ -7,7 +7,8 @@
 if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 // Include the base Opportunities vardefs
-require_once('modules/Opportunities/vardefs.php');
+$suitecrm_root = dirname(dirname(dirname(dirname(__FILE__)))) . '/SuiteCRM';
+require_once($suitecrm_root . '/modules/Opportunities/vardefs.php');
 
 // Extend the dictionary for Deals
 $dictionary['Deal'] = $dictionary['Opportunity'];

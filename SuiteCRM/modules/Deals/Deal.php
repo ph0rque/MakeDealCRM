@@ -16,12 +16,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('data/SugarBean.php');
 require_once('include/utils.php');
 
-class Deal extends Basic
+class Deal extends SugarBean
 {
     public $module_name = 'Deals';
     public $object_name = 'Deal';
     public $module_dir = 'Deals';
-    public $table_name = 'deals';
+    public $table_name = 'opportunities';
     public $new_schema = true;
     public $importable = true;
     
@@ -41,7 +41,7 @@ class Deal extends Basic
     public $source;
     public $deal_value;
     public $at_risk_status;
-    public $focus_c;
+    public $focus_flag_c;
     
     // Financial fields
     public $asking_price_c;
@@ -116,6 +116,30 @@ class Deal extends Basic
     {
         $query = parent::create_list_query($order_by, $where, $show_deleted);
         return $query;
+    }
+    
+    /**
+     * Create new list query for deals (required for list view)
+     */
+    public function create_new_list_query($order_by, $where, $filter = array(), $params = array(), $show_deleted = 0, $join_type = '', $return_array = false, $parentbean = null, $singleSelect = false, $ifListForExport = false)
+    {
+        // Call parent method to get the base query
+        $ret_value = parent::create_new_list_query($order_by, $where, $filter, $params, $show_deleted, $join_type, $return_array, $parentbean, $singleSelect, $ifListForExport);
+        
+        // Fix the table name in the query if it's using 'deals' instead of 'opportunities'
+        if (is_string($ret_value)) {
+            $ret_value = str_replace('deals.', 'opportunities.', $ret_value);
+        } elseif (is_array($ret_value) && isset($ret_value['select'])) {
+            $ret_value['select'] = str_replace('deals.', 'opportunities.', $ret_value['select']);
+            if (isset($ret_value['from'])) {
+                $ret_value['from'] = str_replace('deals.', 'opportunities.', $ret_value['from']);
+            }
+            if (isset($ret_value['where'])) {
+                $ret_value['where'] = str_replace('deals.', 'opportunities.', $ret_value['where']);
+            }
+        }
+        
+        return $ret_value;
     }
     
     /**

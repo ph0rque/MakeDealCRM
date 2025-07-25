@@ -9,7 +9,9 @@
 
 if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
-require_once('include/MVC/View/views/view.detail.php');
+// Adjust paths for custom module location
+$suitecrm_root = dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/SuiteCRM';
+require_once($suitecrm_root . '/include/MVC/View/views/view.detail.php');
 
 class DealsViewFinancialdashboard extends ViewDetail
 {

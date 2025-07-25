@@ -12,7 +12,8 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 // Register module with beanList
 $beanList['Deals'] = 'Deal';
-$beanFiles['Deal'] = 'custom/modules/Deals/Deal.php';
+// Point to the Deal bean file in SuiteCRM
+$beanFiles['Deal'] = 'SuiteCRM/modules/Deals/Deal.php';
 
 // Add module to moduleList (makes it visible in the UI)
 $moduleList[] = 'Deals';

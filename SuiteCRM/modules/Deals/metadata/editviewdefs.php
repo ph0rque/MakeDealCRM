@@ -1,127 +1,45 @@
 <?php
 /**
- * Edit View Definitions for Deals Module
- * 
- * @package MakeDealCRM
- * @subpackage Deals
+ * Simple Edit View Definitions for Deals Module
  */
 
-$module_name = 'Deals';
-$viewdefs[$module_name]['EditView'] = array(
+$viewdefs['Deals']['EditView'] = array(
     'templateMeta' => array(
         'maxColumns' => '2',
         'widths' => array(
             array('label' => '10', 'field' => '30'),
-            array('label' => '10', 'field' => '30'),
-        ),
-        'includes' => array(
-            array('file' => 'modules/Deals/Deal.js'),
-        ),
-        'form' => array(
-            'enctype' => 'multipart/form-data',
-            'headerTpl' => 'modules/Deals/tpls/EditViewHeader.tpl',
-        ),
-        'useTabs' => true,
-        'tabDefs' => array(
-            'LBL_DEAL_INFORMATION' => array(
-                'newTab' => true,
-                'panelDefault' => 'expanded',
-            ),
-            'LBL_FINANCIAL_INFORMATION' => array(
-                'newTab' => true,
-                'panelDefault' => 'expanded',
-            ),
-            'LBL_CAPITAL_STACK' => array(
-                'newTab' => false,
-                'panelDefault' => 'expanded',
-            ),
-            'LBL_PANEL_ASSIGNMENT' => array(
-                'newTab' => false,
-                'panelDefault' => 'expanded',
-            ),
+            array('label' => '10', 'field' => '30')
         ),
     ),
     'panels' => array(
-        'LBL_DEAL_INFORMATION' => array(
+        'default' => array(
             array(
                 'name',
-                array(
-                    'name' => 'status',
-                    'displayParams' => array(
-                        'required' => true,
-                    ),
-                ),
+                'account_name',
             ),
             array(
-                'source',
-                'deal_value',
+                'amount',
+                'date_closed',
             ),
             array(
-                array(
-                    'name' => 'focus_c',
-                    'label' => 'LBL_FOCUS',
-                ),
-                array(
-                    'name' => 'at_risk_status',
-                    'displayParams' => array(
-                        'disabled' => true,
-                    ),
-                ),
+                'sales_stage',
+                'probability',
             ),
             array(
-                array(
-                    'name' => 'description',
-                    'displayParams' => array(
-                        'rows' => 6,
-                        'cols' => 80,
-                    ),
-                ),
-            ),
-        ),
-        'LBL_FINANCIAL_INFORMATION' => array(
-            array(
-                'asking_price_c',
-                'proposed_valuation_c',
+                'lead_source',
+                'campaign_name',
             ),
             array(
-                'ttm_revenue_c',
-                'ttm_ebitda_c',
+                'next_step',
             ),
             array(
-                'sde_c',
-                array(
-                    'name' => 'target_multiple_c',
-                    'displayParams' => array(
-                        'size' => 10,
-                    ),
-                ),
+                'description',
             ),
-        ),
-        'LBL_CAPITAL_STACK' => array(
-            array(
-                'equity_c',
-                'senior_debt_c',
-            ),
-            array(
-                'seller_note_c',
-                '',
-            ),
-        ),
-        'LBL_PANEL_ASSIGNMENT' => array(
             array(
                 'assigned_user_name',
-                '',
-            ),
-            array(
-                array(
-                    'name' => 'date_entered',
-                    'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
-                ),
-                array(
-                    'name' => 'date_modified',
-                    'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
-                ),
+                'team_name',
             ),
         ),
     ),
 );
+?>
