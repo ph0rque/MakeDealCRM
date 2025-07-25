@@ -8,3 +8,4 @@ $action_view_map['pipeline'] = 'pipeline';
 $action_view_map['listview'] = 'pipeline';
 $action_view_map['ListView'] = 'pipeline';
 $action_view_map['index'] = 'pipeline';
+$action_view_map['stakeholder_bulk'] = 'stakeholder_bulk';

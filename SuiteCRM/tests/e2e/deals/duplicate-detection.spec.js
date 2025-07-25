@@ -50,7 +50,7 @@ test.describe('Duplicate Detection UI Tests', () => {
     // Login to SuiteCRM
     await page.goto('http://localhost:8080');
     await page.fill('#user_name', 'admin');
-    await page.fill('#username_password', 'admin');
+    await page.fill('#username_password', 'admin123');
     await page.click('#bigbutton');
     
     // Navigate to Deals module

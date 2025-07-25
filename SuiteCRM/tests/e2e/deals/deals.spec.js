@@ -16,7 +16,7 @@ const testDeal = {
 async function login(page) {
   await page.goto('http://localhost:8080');
   await page.fill('input[name="user_name"]', 'admin');
-  await page.fill('input[name="username_password"]', 'admin');
+  await page.fill('input[name="username_password"]', 'admin123');
   await page.click('input[type="submit"]');
   await page.waitForSelector('.navbar-brand', { timeout: 10000 });
 }

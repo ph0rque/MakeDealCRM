@@ -1121,8 +1121,8 @@ var PipelineView = {
             url += '&deal_ids=' + dealIds.join(',');
         }
         
-        // Open in new tab
-        window.open(url, '_blank');
+        // Open in same window
+        window.location.href = url;
     },
     
     /**
