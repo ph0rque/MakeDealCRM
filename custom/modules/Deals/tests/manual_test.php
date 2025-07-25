@@ -8,7 +8,7 @@
 if (!defined('sugarEntry')) define('sugarEntry', true);
 require_once('include/entryPoint.php');
 require_once('modules/Users/User.php');
-require_once('modules/Deals/Deal.php');
+require_once('custom/modules/Deals/Deal.php');
 
 echo "=== DEALS MODULE MANUAL TEST SUITE ===\n\n";
 

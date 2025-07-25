@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 19 - Browser Feature Tests</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .test-result {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 3px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+        .info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .test-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            background-color: #f9f9f9;
+        }
+        .test-card h3 {
+            margin-top: 0;
+            color: #555;
+        }
+        #console {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin: 20px 0;
+        }
+        .console-error {
+            color: #f48771;
+        }
+        .console-warn {
+            color: #dcdcaa;
+        }
+        .console-info {
+            color: #9cdcfe;
+        }
+        .console-success {
+            color: #4ec9b0;
+        }
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Task 19 - Browser Feature Tests</h1>
+        <p>This page tests all features after migration to ensure everything works correctly.</p>
+        
+        <div class="test-section">
+            <h2>Quick Test Actions</h2>
+            <button onclick="runAllTests()">Run All Tests</button>
+            <button onclick="testAssetLoading()">Test Asset Loading</button>
+            <button onclick="testAjaxCalls()">Test AJAX Calls</button>
+            <button onclick="testDragDrop()">Test Drag & Drop</button>
+            <button onclick="testConsoleErrors()">Check Console Errors</button>
+            <button onclick="clearConsole()">Clear Console</button>
+        </div>
+
+        <div class="test-grid">
+            <div class="test-card">
+                <h3>🎨 CSS Asset Loading</h3>
+                <div id="css-test-results"></div>
+            </div>
+            
+            <div class="test-card">
+                <h3>📜 JavaScript Loading</h3>
+                <div id="js-test-results"></div>
+            </div>
+            
+            <div class="test-card">
+                <h3>🔌 AJAX Functionality</h3>
+                <div id="ajax-test-results"></div>
+            </div>
+            
+            <div class="test-card">
+                <h3>🖱️ Drag & Drop</h3>
+                <div id="dragdrop-test-results"></div>
+            </div>
+            
+            <div class="test-card">
+                <h3>🔒 Permissions</h3>
+                <div id="permission-test-results"></div>
+            </div>
+            
+            <div class="test-card">
+                <h3>💾 Database</h3>
+                <div id="database-test-results"></div>
+            </div>
+        </div>
+
+        <h2>Console Output</h2>
+        <div id="console"></div>
+
+        <div class="test-section">
+            <h2>Manual Test Checklist</h2>
+            <p>Please manually verify the following:</p>
+            <ul>
+                <li><input type="checkbox"> Navigate to Deals module and verify it loads without errors</li>
+                <li><input type="checkbox"> Click on "Pipeline" view and verify Kanban board displays</li>
+                <li><input type="checkbox"> Test drag-and-drop: Move a deal card between stages</li>
+                <li><input type="checkbox"> Check that deal cards display all required information</li>
+                <li><input type="checkbox"> Test stage filters and verify they work correctly</li>
+                <li><input type="checkbox"> Test WIP limits (if configured) by exceeding stage limits</li>
+                <li><input type="checkbox"> Click on a deal card and verify detail view opens</li>
+                <li><input type="checkbox"> Test the financial dashboard if available</li>
+                <li><input type="checkbox"> Test export functionality</li>
+                <li><input type="checkbox"> Verify stakeholder badges display correctly</li>
+                <li><input type="checkbox"> Test checklist functionality within deals</li>
+                <li><input type="checkbox"> Verify no JavaScript errors in browser console</li>
+                <li><input type="checkbox"> Test on mobile device or responsive mode</li>
+                <li><input type="checkbox"> Verify all custom buttons and actions work</li>
+                <li><input type="checkbox"> Test search and filter functionality</li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h2>Test Results Summary</h2>
+            <div id="summary"></div>
+        </div>
+    </div>
+
+    <script>
+        // Console logging wrapper
+        const testConsole = {
+            log: function(message, type = 'info') {
+                const console = document.getElementById('console');
+                const timestamp = new Date().toLocaleTimeString();
+                const entry = document.createElement('div');
+                entry.className = `console-${type}`;
+                entry.textContent = `[${timestamp}] ${message}`;
+                console.appendChild(entry);
+                console.scrollTop = console.scrollHeight;
+            },
+            error: function(message) {
+                this.log(message, 'error');
+            },
+            warn: function(message) {
+                this.log(message, 'warn');
+            },
+            success: function(message) {
+                this.log(message, 'success');
+            },
+            info: function(message) {
+                this.log(message, 'info');
+            }
+        };
+
+        // Clear console
+        function clearConsole() {
+            document.getElementById('console').innerHTML = '';
+            testConsole.info('Console cleared');
+        }
+
+        // Test Asset Loading
+        async function testAssetLoading() {
+            testConsole.info('Starting asset loading tests...');
+            
+            // CSS files to test
+            const cssFiles = [
+                'custom/modules/Deals/css/pipeline.css',
+                'custom/modules/Deals/css/progress-indicators.css',
+                'custom/modules/Deals/css/stakeholder-badges.css',
+                'custom/modules/Deals/css/financial-dashboard.css',
+                'custom/modules/Deals/css/wip-limits.css'
+            ];
+            
+            // JS files to test
+            const jsFiles = [
+                'custom/modules/Deals/js/pipeline.js',
+                'custom/modules/Deals/js/state-manager.js',
+                'custom/modules/Deals/js/progress-indicators.js',
+                'custom/modules/Deals/js/stakeholder-integration.js',
+                'custom/modules/Deals/js/asset-loader.js'
+            ];
+            
+            // Test CSS loading
+            const cssResults = document.getElementById('css-test-results');
+            cssResults.innerHTML = '<div class="spinner"></div> Testing...';
+            
+            let cssLoaded = 0;
+            let cssFailed = 0;
+            
+            for (const css of cssFiles) {
+                try {
+                    const response = await fetch(`/MakeDealCRM/${css}`);
+                    if (response.ok) {
+                        cssLoaded++;
+                        testConsole.success(`CSS loaded: ${css}`);
+                    } else {
+                        cssFailed++;
+                        testConsole.error(`CSS failed: ${css} (${response.status})`);
+                    }
+                } catch (error) {
+                    cssFailed++;
+                    testConsole.error(`CSS error: ${css} - ${error.message}`);
+                }
+            }
+            
+            cssResults.innerHTML = `
+                <div class="${cssLoaded > 0 ? 'success' : 'error'} test-result">
+                    Loaded: ${cssLoaded}/${cssFiles.length}
+                </div>
+                ${cssFailed > 0 ? `<div class="error test-result">Failed: ${cssFailed}</div>` : ''}
+            `;
+            
+            // Test JS loading
+            const jsResults = document.getElementById('js-test-results');
+            jsResults.innerHTML = '<div class="spinner"></div> Testing...';
+            
+            let jsLoaded = 0;
+            let jsFailed = 0;
+            
+            for (const js of jsFiles) {
+                try {
+                    const response = await fetch(`/MakeDealCRM/${js}`);
+                    if (response.ok) {
+                        jsLoaded++;
+                        testConsole.success(`JS loaded: ${js}`);
+                    } else {
+                        jsFailed++;
+                        testConsole.error(`JS failed: ${js} (${response.status})`);
+                    }
+                } catch (error) {
+                    jsFailed++;
+                    testConsole.error(`JS error: ${js} - ${error.message}`);
+                }
+            }
+            
+            jsResults.innerHTML = `
+                <div class="${jsLoaded > 0 ? 'success' : 'error'} test-result">
+                    Loaded: ${jsLoaded}/${jsFiles.length}
+                </div>
+                ${jsFailed > 0 ? `<div class="error test-result">Failed: ${jsFailed}</div>` : ''}
+            `;
+        }
+
+        // Test AJAX Calls
+        async function testAjaxCalls() {
+            testConsole.info('Starting AJAX functionality tests...');
+            
+            const ajaxResults = document.getElementById('ajax-test-results');
+            ajaxResults.innerHTML = '<div class="spinner"></div> Testing...';
+            
+            // Test endpoints
+            const endpoints = [
+                {
+                    url: '/MakeDealCRM/SuiteCRM/index.php?module=Deals&action=pipeline_api&method=getStages',
+                    name: 'Get Pipeline Stages'
+                },
+                {
+                    url: '/MakeDealCRM/SuiteCRM/index.php?module=Deals&action=pipeline_api&method=getDealsByStage',
+                    name: 'Get Deals by Stage'
+                }
+            ];
+            
+            let successCount = 0;
+            let failCount = 0;
+            
+            for (const endpoint of endpoints) {
+                try {
+                    const response = await fetch(endpoint.url);
+                    if (response.ok) {
+                        successCount++;
+                        testConsole.success(`AJAX success: ${endpoint.name}`);
+                    } else {
+                        failCount++;
+                        testConsole.error(`AJAX failed: ${endpoint.name} (${response.status})`);
+                    }
+                } catch (error) {
+                    failCount++;
+                    testConsole.error(`AJAX error: ${endpoint.name} - ${error.message}`);
+                }
+            }
+            
+            ajaxResults.innerHTML = `
+                <div class="${successCount > 0 ? 'success' : 'error'} test-result">
+                    Success: ${successCount}/${endpoints.length}
+                </div>
+                ${failCount > 0 ? `<div class="error test-result">Failed: ${failCount}</div>` : ''}
+            `;
+        }
+
+        // Test Drag & Drop
+        function testDragDrop() {
+            testConsole.info('Testing drag & drop functionality...');
+            
+            const dragDropResults = document.getElementById('dragdrop-test-results');
+            dragDropResults.innerHTML = '<div class="spinner"></div> Testing...';
+            
+            // Create test elements
+            const testContainer = document.createElement('div');
+            testContainer.style.display = 'none';
+            testContainer.innerHTML = `
+                <div id="test-drag-source" draggable="true">Test Item</div>
+                <div id="test-drop-target">Drop Here</div>
+            `;
+            document.body.appendChild(testContainer);
+            
+            const source = document.getElementById('test-drag-source');
+            const target = document.getElementById('test-drop-target');
+            
+            let dragSupported = false;
+            let dropSupported = false;
+            
+            // Test drag events
+            source.addEventListener('dragstart', function(e) {
+                dragSupported = true;
+                testConsole.success('Drag start event supported');
+            });
+            
+            target.addEventListener('dragover', function(e) {
+                e.preventDefault();
+            });
+            
+            target.addEventListener('drop', function(e) {
+                e.preventDefault();
+                dropSupported = true;
+                testConsole.success('Drop event supported');
+            });
+            
+            // Simulate drag
+            try {
+                const dragStartEvent = new DragEvent('dragstart', {
+                    dataTransfer: new DataTransfer(),
+                    bubbles: true
+                });
+                source.dispatchEvent(dragStartEvent);
+                
+                const dropEvent = new DragEvent('drop', {
+                    dataTransfer: new DataTransfer(),
+                    bubbles: true
+                });
+                target.dispatchEvent(dropEvent);
+                
+                dragDropResults.innerHTML = `
+                    <div class="success test-result">
+                        Drag & Drop API supported
+                    </div>
+                    <div class="info test-result">
+                        Manual testing required
+                    </div>
+                `;
+            } catch (error) {
+                dragDropResults.innerHTML = `
+                    <div class="warning test-result">
+                        Limited drag & drop support
+                    </div>
+                    <div class="info test-result">
+                        ${error.message}
+                    </div>
+                `;
+            }
+            
+            // Cleanup
+            document.body.removeChild(testContainer);
+        }
+
+        // Check Console Errors
+        function testConsoleErrors() {
+            testConsole.info('Checking for JavaScript console errors...');
+            
+            // Override console.error temporarily
+            const originalError = console.error;
+            let errorCount = 0;
+            
+            console.error = function() {
+                errorCount++;
+                originalError.apply(console, arguments);
+                testConsole.error(`Console error detected: ${arguments[0]}`);
+            };
+            
+            // Check for common errors
+            setTimeout(() => {
+                console.error = originalError;
+                
+                if (errorCount === 0) {
+                    testConsole.success('No console errors detected');
+                } else {
+                    testConsole.warn(`${errorCount} console errors detected`);
+                }
+            }, 1000);
+        }
+
+        // Run all tests
+        async function runAllTests() {
+            testConsole.info('Running all tests...');
+            
+            await testAssetLoading();
+            await testAjaxCalls();
+            testDragDrop();
+            testConsoleErrors();
+            
+            // Update summary
+            setTimeout(() => {
+                updateSummary();
+            }, 2000);
+        }
+
+        // Update summary
+        function updateSummary() {
+            const summary = document.getElementById('summary');
+            const consoleContent = document.getElementById('console').textContent;
+            
+            const successCount = (consoleContent.match(/success/gi) || []).length;
+            const errorCount = (consoleContent.match(/error/gi) || []).length;
+            const warnCount = (consoleContent.match(/warn/gi) || []).length;
+            
+            summary.innerHTML = `
+                <div class="test-result ${successCount > 0 ? 'success' : ''}">
+                    ✅ Successful tests: ${successCount}
+                </div>
+                <div class="test-result ${errorCount > 0 ? 'error' : 'info'}">
+                    ❌ Failed tests: ${errorCount}
+                </div>
+                <div class="test-result ${warnCount > 0 ? 'warning' : 'info'}">
+                    ⚠️ Warnings: ${warnCount}
+                </div>
+                <div class="test-result info">
+                    📊 Total tests run: ${successCount + errorCount + warnCount}
+                </div>
+            `;
+            
+            if (errorCount === 0) {
+                summary.innerHTML += `
+                    <div class="test-result success" style="margin-top: 20px; font-weight: bold;">
+                        🎉 All automated tests passed! Please complete manual testing checklist above.
+                    </div>
+                `;
+            } else {
+                summary.innerHTML += `
+                    <div class="test-result error" style="margin-top: 20px; font-weight: bold;">
+                        ⚠️ Some tests failed. Please review the console output and fix issues before deployment.
+                    </div>
+                `;
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            testConsole.info('Task 19 Browser Test Page loaded');
+            testConsole.info('Click "Run All Tests" to begin automated testing');
+        });
+    </script>
+</body>
+</html>

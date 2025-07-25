@@ -1,0 +1,10 @@
+{
+  "default": [
+    {
+      "key": "swarm/init",
+      "value": "{\"project\": \"MakeDealCRM\", \"focus\": \"cleanup_and_fixes\", \"timestamp\": \"Fri Jul 25 00:14:05 CDT 2025\"}",
+      "namespace": "default",
+      "timestamp": 1753420446576
+    }
+  ]
+}
