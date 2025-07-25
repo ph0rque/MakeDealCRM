@@ -101,4 +101,8 @@ If ANY answer is "No", you MUST combine operations into a single message!
 
 ## 🚧 Development Testing Configuration
 
-- Use http://localhost:8080/ for the root URL when testing and running playwright
+- Use http://localhost:8080/ for the root URL when testing and running playwright.
+
+## Introspection
+
+- **Please ask questions and confirm assumptions before generating code.**

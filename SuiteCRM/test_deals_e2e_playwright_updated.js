@@ -149,8 +149,8 @@ async function test_login(page) {
         
         // Fill login form
         await page.fill('input[name="user_name"]', USERNAME);
-        await page.fill('input[name="username_password"]', PASSWORD);
-        await page.click('input#bigbutton');
+        await page.fill('input[name="password"]', PASSWORD);
+        await page.click('input[type="submit"]');
         
         // Wait for dashboard
         await page.waitForURL('**/index.php**', { timeout: 10000 });
