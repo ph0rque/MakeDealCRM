@@ -1,0 +1,130 @@
+version: '3.8'
+
+services:
+  # MakeDealCRM Application
+  app:
+    build:
+      context: ../..
+      dockerfile: aws-deploy/docker/Dockerfile
+    container_name: makedealcrm-app
+    restart: unless-stopped
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_NAME=${DB_NAME:-makedealcrm}
+      - DB_USER=${DB_USER:-makedealcrm}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - SITE_URL=${SITE_URL:-http://localhost}
+      - ADMIN_USER=${ADMIN_USER:-admin}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+    volumes:
+      - app_data:/var/www/html/upload
+      - app_cache:/var/www/html/cache
+      - app_custom:/var/www/html/custom
+    depends_on:
+      - db
+    networks:
+      - makedealcrm-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.makedealcrm.rule=Host(`${DOMAIN_NAME:-localhost}`)"
+      - "traefik.http.routers.makedealcrm.entrypoints=websecure"
+      - "traefik.http.routers.makedealcrm.tls.certresolver=letsencrypt"
+      - "traefik.http.services.makedealcrm.loadbalancer.server.port=80"
+
+  # MySQL Database
+  db:
+    image: mysql:5.7
+    container_name: makedealcrm-db
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME:-makedealcrm}
+      - MYSQL_USER=${DB_USER:-makedealcrm}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d
+    networks:
+      - makedealcrm-network
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --innodb-buffer-pool-size=256M
+      --max-connections=100
+      --query-cache-size=32M
+      --query-cache-type=1
+
+  # Redis Cache
+  redis:
+    image: redis:6-alpine
+    container_name: makedealcrm-redis
+    restart: unless-stopped
+    networks:
+      - makedealcrm-network
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+
+  # Traefik Reverse Proxy
+  traefik:
+    image: traefik:v2.9
+    container_name: makedealcrm-traefik
+    restart: unless-stopped
+    command:
+      - "--api.insecure=false"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.letsencrypt.acme.email=${ADMIN_EMAIL}"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+      # Redirect HTTP to HTTPS
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - traefik_data:/letsencrypt
+    networks:
+      - makedealcrm-network
+
+  # Backup Service
+  backup:
+    image: offen/docker-volume-backup:v2
+    container_name: makedealcrm-backup
+    restart: unless-stopped
+    environment:
+      - BACKUP_FILENAME=makedealcrm-backup-%Y-%m-%d_%H-%M-%S.tar.gz
+      - BACKUP_PRUNING_PREFIX=makedealcrm-backup-
+      - BACKUP_RETENTION_DAYS=7
+      - BACKUP_CRON_EXPRESSION=0 2 * * *
+      - AWS_S3_BUCKET_NAME=${BACKUP_S3_BUCKET}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_DEFAULT_REGION=${AWS_REGION:-us-east-1}
+    volumes:
+      - app_data:/backup/app_data:ro
+      - app_custom:/backup/app_custom:ro
+      - db_data:/backup/db_data:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - makedealcrm-network
+
+volumes:
+  app_data:
+    driver: local
+  app_cache:
+    driver: local
+  app_custom:
+    driver: local
+  db_data:
+    driver: local
+  traefik_data:
+    driver: local
+
+networks:
+  makedealcrm-network:
+    driver: bridge

@@ -1,0 +1,209 @@
+{
+  "DashboardName": "MakeDealCRM-Monitoring",
+  "DashboardBody": {
+    "widgets": [
+      {
+        "type": "metric",
+        "x": 0,
+        "y": 0,
+        "width": 12,
+        "height": 6,
+        "properties": {
+          "metrics": [
+            [ "AWS/EC2", "CPUUtilization", { "stat": "Average" } ],
+            [ ".", ".", { "stat": "Maximum", "color": "#d62728" } ]
+          ],
+          "view": "timeSeries",
+          "stacked": false,
+          "region": "us-east-1",
+          "title": "EC2 CPU Utilization",
+          "period": 300,
+          "yAxis": {
+            "left": {
+              "min": 0,
+              "max": 100
+            }
+          }
+        }
+      },
+      {
+        "type": "metric",
+        "x": 12,
+        "y": 0,
+        "width": 12,
+        "height": 6,
+        "properties": {
+          "metrics": [
+            [ "CWAgent", "mem_used_percent", { "stat": "Average" } ]
+          ],
+          "view": "timeSeries",
+          "stacked": false,
+          "region": "us-east-1",
+          "title": "Memory Utilization",
+          "period": 300,
+          "yAxis": {
+            "left": {
+              "min": 0,
+              "max": 100
+            }
+          }
+        }
+      },
+      {
+        "type": "metric",
+        "x": 0,
+        "y": 6,
+        "width": 12,
+        "height": 6,
+        "properties": {
+          "metrics": [
+            [ "CWAgent", "disk_used_percent", { "stat": "Average" } ]
+          ],
+          "view": "timeSeries",
+          "stacked": false,
+          "region": "us-east-1",
+          "title": "Disk Usage",
+          "period": 300,
+          "yAxis": {
+            "left": {
+              "min": 0,
+              "max": 100
+            }
+          }
+        }
+      },
+      {
+        "type": "metric",
+        "x": 12,
+        "y": 6,
+        "width": 12,
+        "height": 6,
+        "properties": {
+          "metrics": [
+            [ "AWS/RDS", "DatabaseConnections", { "stat": "Average" } ],
+            [ ".", ".", { "stat": "Maximum", "color": "#d62728" } ]
+          ],
+          "view": "timeSeries",
+          "stacked": false,
+          "region": "us-east-1",
+          "title": "Database Connections",
+          "period": 300
+        }
+      },
+      {
+        "type": "metric",
+        "x": 0,
+        "y": 12,
+        "width": 12,
+        "height": 6,
+        "properties": {
+          "metrics": [
+            [ "AWS/RDS", "CPUUtilization", { "stat": "Average" } ],
+            [ ".", "FreeableMemory", { "stat": "Average", "yAxis": "right" } ]
+          ],
+          "view": "timeSeries",
+          "stacked": false,
+          "region": "us-east-1",
+          "title": "RDS Performance",
+          "period": 300,
+          "yAxis": {
+            "left": {
+              "min": 0,
+              "max": 100,
+              "label": "CPU %"
+            },
+            "right": {
+              "label": "Memory (Bytes)"
+            }
+          }
+        }
+      },
+      {
+        "type": "metric",
+        "x": 12,
+        "y": 12,
+        "width": 12,
+        "height": 6,
+        "properties": {
+          "metrics": [
+            [ "AWS/RDS", "ReadLatency", { "stat": "Average" } ],
+            [ ".", "WriteLatency", { "stat": "Average" } ]
+          ],
+          "view": "timeSeries",
+          "stacked": false,
+          "region": "us-east-1",
+          "title": "Database Latency",
+          "period": 300,
+          "yAxis": {
+            "left": {
+              "label": "Milliseconds"
+            }
+          }
+        }
+      },
+      {
+        "type": "log",
+        "x": 0,
+        "y": 18,
+        "width": 24,
+        "height": 6,
+        "properties": {
+          "query": "SOURCE '/aws/ec2/makedealcrm/app'\n| fields @timestamp, @message\n| filter @message like /ERROR/\n| sort @timestamp desc\n| limit 50",
+          "region": "us-east-1",
+          "title": "Application Errors",
+          "queryType": "Logs"
+        }
+      },
+      {
+        "type": "metric",
+        "x": 0,
+        "y": 24,
+        "width": 8,
+        "height": 6,
+        "properties": {
+          "metrics": [
+            [ { "expression": "RATE(m1)", "label": "Request Rate", "id": "e1" } ],
+            [ "AWS/ApplicationELB", "RequestCount", { "stat": "Sum", "id": "m1", "visible": false } ]
+          ],
+          "view": "singleValue",
+          "region": "us-east-1",
+          "title": "Request Rate",
+          "period": 300
+        }
+      },
+      {
+        "type": "metric",
+        "x": 8,
+        "y": 24,
+        "width": 8,
+        "height": 6,
+        "properties": {
+          "metrics": [
+            [ "AWS/ApplicationELB", "TargetResponseTime", { "stat": "Average" } ]
+          ],
+          "view": "singleValue",
+          "region": "us-east-1",
+          "title": "Average Response Time",
+          "period": 300
+        }
+      },
+      {
+        "type": "metric",
+        "x": 16,
+        "y": 24,
+        "width": 8,
+        "height": 6,
+        "properties": {
+          "metrics": [
+            [ "AWS/ApplicationELB", "HTTPCode_Target_4XX_Count", { "stat": "Sum" } ],
+            [ ".", "HTTPCode_Target_5XX_Count", { "stat": "Sum", "color": "#d62728" } ]
+          ],
+          "view": "singleValue",
+          "region": "us-east-1",
+          "title": "Error Count",
+          "period": 300
+        }
+      }
+    ]
+  }
+}

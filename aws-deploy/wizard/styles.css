@@ -1,0 +1,236 @@
+/* MakeDealCRM AWS Deployment Wizard Styles */
+
+body {
+    background-color: #f8f9fa;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+}
+
+.card-header {
+    border-radius: 10px 10px 0 0 !important;
+    padding: 1.5rem;
+}
+
+.wizard-step {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.feature-box {
+    text-align: center;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    height: 100%;
+}
+
+.cost-estimate {
+    margin-top: 1rem;
+}
+
+.instance-option {
+    border: 2px solid #dee2e6;
+    padding: 1rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+    cursor: pointer;
+    height: 100%;
+}
+
+.instance-option:hover {
+    border-color: #0d6efd;
+    background-color: #f8f9fa;
+}
+
+.form-check-input:checked ~ .instance-option {
+    border-color: #0d6efd;
+    background-color: #e7f1ff;
+}
+
+.cost-breakdown {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+}
+
+.configuration-summary {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+}
+
+.deployment-progress {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+}
+
+.deployment-item {
+    padding: 0.75rem 0;
+    font-size: 1.1rem;
+}
+
+.deployment-item i {
+    width: 20px;
+}
+
+.deployment-item.completed {
+    color: #198754;
+}
+
+.deployment-item.completed i {
+    color: #198754;
+}
+
+.deployment-details {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+}
+
+.wizard-navigation {
+    border-top: 1px solid #dee2e6;
+    padding-top: 1.5rem;
+}
+
+/* Connection status indicators */
+.connection-success {
+    color: #198754;
+}
+
+.connection-error {
+    color: #dc3545;
+}
+
+.connection-testing {
+    color: #ffc107;
+}
+
+/* Progress bar customization */
+.progress {
+    background-color: #e9ecef;
+}
+
+.progress-bar {
+    transition: width 0.6s ease;
+}
+
+/* Button states */
+.btn:disabled {
+    cursor: not-allowed;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .feature-box {
+        margin-bottom: 1rem;
+    }
+    
+    .instance-option {
+        margin-bottom: 1rem;
+    }
+    
+    .wizard-navigation button {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    .wizard-navigation .float-end {
+        float: none !important;
+    }
+}
+
+/* Loading spinner animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.fa-spinner {
+    animation: spin 1s linear infinite;
+}
+
+/* Alert customization */
+.alert {
+    border: none;
+    border-radius: 8px;
+}
+
+/* Form styling */
+.form-control, .form-select {
+    border-radius: 6px;
+    border: 1px solid #ced4da;
+    padding: 0.75rem 1rem;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Table styling */
+.table {
+    margin-bottom: 0;
+}
+
+.table td, .table th {
+    padding: 0.75rem;
+    vertical-align: middle;
+}
+
+/* List group customization */
+.list-group-item {
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 6px !important;
+    margin-bottom: 0.5rem;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+}
+
+/* Copy button styling */
+.btn-outline-secondary {
+    border-color: #dee2e6;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #e9ecef;
+    border-color: #adb5bd;
+}
+
+/* Success state styling */
+.text-success {
+    color: #198754 !important;
+}
+
+.bg-success {
+    background-color: #198754 !important;
+}
+
+/* Error state styling */
+.text-danger {
+    color: #dc3545 !important;
+}
+
+.bg-danger {
+    background-color: #dc3545 !important;
+}
+
+/* Info state styling */
+.text-info {
+    color: #0dcaf0 !important;
+}
+
+.bg-info {
+    background-color: #0dcaf0 !important;
+}

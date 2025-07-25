@@ -1,0 +1,507 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'MakeDealCRM Solo Tier Deployment - Complete infrastructure for 1-5 users'
+
+Parameters:
+  InstanceType:
+    Type: String
+    Default: t3.small
+    AllowedValues:
+      - t3.small
+      - t3.medium
+      - t3.large
+    Description: EC2 instance type for the application server
+  
+  KeyPairName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: EC2 Key Pair for SSH access
+  
+  DomainName:
+    Type: String
+    Default: ''
+    Description: Custom domain name (leave blank for AWS default)
+  
+  AdminEmail:
+    Type: String
+    Description: Admin email for SSL certificates and notifications
+    AllowedPattern: ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$
+  
+  BackupRetentionDays:
+    Type: Number
+    Default: 7
+    MinValue: 1
+    MaxValue: 35
+    Description: Number of days to retain automated backups
+  
+  EnableHighAvailability:
+    Type: String
+    Default: 'false'
+    AllowedValues:
+      - 'true'
+      - 'false'
+    Description: Enable Multi-AZ deployment for high availability
+
+Conditions:
+  HasDomainName: !Not [!Equals [!Ref DomainName, '']]
+  EnableHA: !Equals [!Ref EnableHighAvailability, 'true']
+
+Resources:
+  # VPC and Networking
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-vpc
+
+  PublicSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: 10.0.1.0/24
+      AvailabilityZone: !Select [0, !GetAZs '']
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-public-subnet-1
+
+  PublicSubnet2:
+    Type: AWS::EC2::Subnet
+    Condition: EnableHA
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: 10.0.2.0/24
+      AvailabilityZone: !Select [1, !GetAZs '']
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-public-subnet-2
+
+  PrivateSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: 10.0.11.0/24
+      AvailabilityZone: !Select [0, !GetAZs '']
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-private-subnet-1
+
+  PrivateSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: 10.0.12.0/24
+      AvailabilityZone: !Select [1, !GetAZs '']
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-private-subnet-2
+
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-igw
+
+  AttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref VPC
+      InternetGatewayId: !Ref InternetGateway
+
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-public-routes
+
+  PublicRoute:
+    Type: AWS::EC2::Route
+    DependsOn: AttachGateway
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+
+  SubnetRouteTableAssociation1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet1
+      RouteTableId: !Ref PublicRouteTable
+
+  SubnetRouteTableAssociation2:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Condition: EnableHA
+    Properties:
+      SubnetId: !Ref PublicSubnet2
+      RouteTableId: !Ref PublicRouteTable
+
+  # Security Groups
+  WebSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for MakeDealCRM web servers
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0  # Restrict this in production
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-web-sg
+
+  DatabaseSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for MakeDealCRM database
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 3306
+          ToPort: 3306
+          SourceSecurityGroupId: !Ref WebSecurityGroup
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-db-sg
+
+  # RDS Database
+  DBSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: Subnet group for MakeDealCRM database
+      SubnetIds:
+        - !Ref PrivateSubnet1
+        - !Ref PrivateSubnet2
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-db-subnet-group
+
+  DBInstance:
+    Type: AWS::RDS::DBInstance
+    DeletionPolicy: Snapshot
+    Properties:
+      DBInstanceIdentifier: !Sub ${AWS::StackName}-db
+      DBInstanceClass: !If [EnableHA, db.t3.small, db.t3.micro]
+      Engine: mysql
+      EngineVersion: '5.7'
+      MasterUsername: makedealcrm
+      MasterUserPassword: !Sub '{{resolve:secretsmanager:${DBPasswordSecret}:SecretString:password}}'
+      DBName: makedealcrm
+      AllocatedStorage: '20'
+      StorageType: gp3
+      StorageEncrypted: true
+      MultiAZ: !If [EnableHA, true, false]
+      VPCSecurityGroups:
+        - !Ref DatabaseSecurityGroup
+      DBSubnetGroupName: !Ref DBSubnetGroup
+      BackupRetentionPeriod: !Ref BackupRetentionDays
+      PreferredBackupWindow: "03:00-04:00"
+      PreferredMaintenanceWindow: "sun:04:00-sun:05:00"
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-db
+
+  DBPasswordSecret:
+    Type: AWS::SecretsManager::Secret
+    Properties:
+      Name: !Sub ${AWS::StackName}-db-password
+      Description: Password for MakeDealCRM database
+      GenerateSecretString:
+        SecretStringTemplate: '{"username": "makedealcrm"}'
+        GenerateStringKey: 'password'
+        PasswordLength: 32
+        ExcludeCharacters: '"@/\'
+
+  # EC2 Instance
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: !Ref InstanceType
+      ImageId: !Sub '{{resolve:ssm:/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2}}'
+      KeyName: !Ref KeyPairName
+      SubnetId: !Ref PublicSubnet1
+      SecurityGroupIds:
+        - !Ref WebSecurityGroup
+      IamInstanceProfile: !Ref EC2InstanceProfile
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          yum update -y
+          yum install -y docker git amazon-cloudwatch-agent
+          
+          # Start Docker
+          service docker start
+          usermod -a -G docker ec2-user
+          
+          # Install Docker Compose
+          curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          chmod +x /usr/local/bin/docker-compose
+          
+          # Create application directory
+          mkdir -p /opt/makedealcrm
+          cd /opt/makedealcrm
+          
+          # Clone repository
+          git clone https://github.com/yourusername/MakeDealCRM.git .
+          
+          # Create environment file
+          cat > .env <<EOF
+          DB_HOST=${DBInstance.Endpoint.Address}
+          DB_PORT=3306
+          DB_NAME=makedealcrm
+          DB_USER=makedealcrm
+          DB_PASSWORD=$(aws secretsmanager get-secret-value --secret-id ${DBPasswordSecret} --query SecretString --output text | jq -r .password)
+          SITE_URL=https://${DomainName}
+          ADMIN_EMAIL=${AdminEmail}
+          ADMIN_USER=admin
+          ADMIN_PASSWORD=$(openssl rand -base64 12)
+          BACKUP_S3_BUCKET=${BackupBucket}
+          AWS_REGION=${AWS::Region}
+          EOF
+          
+          # Start application
+          cd aws-deploy/docker
+          docker-compose up -d
+          
+          # Configure CloudWatch
+          /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
+            -a fetch-config \
+            -m ec2 \
+            -s -c ssm:${CloudWatchConfig}
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-app-server
+
+  # Elastic IP
+  ElasticIP:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+      InstanceId: !Ref EC2Instance
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-eip
+
+  # S3 Backup Bucket
+  BackupBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub ${AWS::StackName}-backups-${AWS::AccountId}
+      VersioningConfiguration:
+        Status: Enabled
+      LifecycleConfiguration:
+        Rules:
+          - Id: DeleteOldBackups
+            Status: Enabled
+            ExpirationInDays: !Ref BackupRetentionDays
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+
+  # IAM Role for EC2
+  EC2Role:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
+      Policies:
+        - PolicyName: S3BackupAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 's3:PutObject'
+                  - 's3:GetObject'
+                  - 's3:ListBucket'
+                Resource:
+                  - !Sub '${BackupBucket.Arn}'
+                  - !Sub '${BackupBucket.Arn}/*'
+        - PolicyName: SecretsManagerAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'secretsmanager:GetSecretValue'
+                Resource: !Ref DBPasswordSecret
+
+  EC2InstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles:
+        - !Ref EC2Role
+
+  # CloudWatch Configuration
+  CloudWatchConfig:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub ${AWS::StackName}-cloudwatch-config
+      Type: String
+      Value: |
+        {
+          "agent": {
+            "metrics_collection_interval": 60,
+            "run_as_user": "root"
+          },
+          "logs": {
+            "logs_collected": {
+              "files": {
+                "collect_list": [
+                  {
+                    "file_path": "/opt/makedealcrm/logs/app.log",
+                    "log_group_name": "/aws/ec2/makedealcrm/app",
+                    "log_stream_name": "{instance_id}"
+                  },
+                  {
+                    "file_path": "/var/log/docker",
+                    "log_group_name": "/aws/ec2/makedealcrm/docker",
+                    "log_stream_name": "{instance_id}"
+                  }
+                ]
+              }
+            }
+          },
+          "metrics": {
+            "metrics_collected": {
+              "cpu": {
+                "measurement": [
+                  {
+                    "name": "cpu_usage_idle",
+                    "rename": "CPU_USAGE_IDLE",
+                    "unit": "Percent"
+                  },
+                  {
+                    "name": "cpu_usage_iowait",
+                    "rename": "CPU_USAGE_IOWAIT",
+                    "unit": "Percent"
+                  }
+                ],
+                "totalcpu": false
+              },
+              "disk": {
+                "measurement": [
+                  {
+                    "name": "used_percent",
+                    "rename": "DISK_USED_PERCENT",
+                    "unit": "Percent"
+                  }
+                ],
+                "resources": [
+                  "*"
+                ]
+              },
+              "mem": {
+                "measurement": [
+                  {
+                    "name": "mem_used_percent",
+                    "rename": "MEM_USED_PERCENT",
+                    "unit": "Percent"
+                  }
+                ]
+              }
+            }
+          }
+        }
+
+  # CloudWatch Alarms
+  HighCPUAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmDescription: Triggers when CPU utilization is high
+      MetricName: CPUUtilization
+      Namespace: AWS/EC2
+      Statistic: Average
+      Period: 300
+      EvaluationPeriods: 2
+      Threshold: 80
+      ComparisonOperator: GreaterThanThreshold
+      Dimensions:
+        - Name: InstanceId
+          Value: !Ref EC2Instance
+      AlarmActions:
+        - !Ref SNSTopic
+
+  LowDiskSpaceAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmDescription: Triggers when disk space is low
+      MetricName: DISK_USED_PERCENT
+      Namespace: CWAgent
+      Statistic: Average
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 90
+      ComparisonOperator: GreaterThanThreshold
+      Dimensions:
+        - Name: InstanceId
+          Value: !Ref EC2Instance
+      AlarmActions:
+        - !Ref SNSTopic
+
+  # SNS Topic for Alerts
+  SNSTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: !Sub ${AWS::StackName}-alerts
+      Subscription:
+        - Endpoint: !Ref AdminEmail
+          Protocol: email
+
+Outputs:
+  ApplicationURL:
+    Description: URL to access MakeDealCRM
+    Value: !If 
+      - HasDomainName
+      - !Sub 'https://${DomainName}'
+      - !Sub 'https://${ElasticIP}'
+  
+  EC2InstanceId:
+    Description: EC2 Instance ID
+    Value: !Ref EC2Instance
+  
+  DatabaseEndpoint:
+    Description: RDS Database Endpoint
+    Value: !GetAtt DBInstance.Endpoint.Address
+  
+  BackupBucket:
+    Description: S3 Bucket for backups
+    Value: !Ref BackupBucket
+  
+  SSHCommand:
+    Description: SSH connection command
+    Value: !Sub 'ssh -i ${KeyPairName}.pem ec2-user@${ElasticIP}'
+  
+  EstimatedMonthlyCost:
+    Description: Estimated monthly cost (USD)
+    Value: !If
+      - EnableHA
+      - "$175-250"
+      - "$75-150"
