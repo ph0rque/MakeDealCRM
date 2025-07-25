@@ -1,0 +1,433 @@
+/**
+ * Email Template Selection Interface Styles
+ */
+
+/* Template selector overlay */
+.template-selector-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Template selector modal */
+.template-selector {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow: hidden;
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.template-selector h3 {
+    margin: 0;
+    padding: 20px 24px;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 18px;
+    color: #111827;
+}
+
+/* Template list */
+.template-list {
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 16px;
+}
+
+.template-item {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.template-item:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
+}
+
+.template-item.selected {
+    border-color: #3b82f6;
+    background-color: #eff6ff;
+}
+
+.template-item h4 {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+    color: #111827;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.template-item p {
+    margin: 0 0 12px 0;
+    font-size: 14px;
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+/* Template tags */
+.template-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.template-tag {
+    display: inline-block;
+    padding: 4px 8px;
+    background-color: #f3f4f6;
+    color: #4b5563;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.template-tag.priority {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* Template preview button */
+.template-preview-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    padding: 6px 12px;
+    background-color: transparent;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    color: #6b7280;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.template-preview-btn:hover {
+    background-color: #f3f4f6;
+    border-color: #9ca3af;
+    color: #374151;
+}
+
+/* Template actions */
+.template-actions {
+    padding: 16px 24px;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.template-actions button {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-cancel {
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+    color: #374151;
+}
+
+.btn-cancel:hover {
+    background-color: #f3f4f6;
+    border-color: #9ca3af;
+}
+
+.btn-select {
+    background-color: #3b82f6;
+    border: none;
+    color: #ffffff;
+}
+
+.btn-select:hover {
+    background-color: #2563eb;
+}
+
+.btn-select:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+}
+
+/* Email composer */
+.email-composer {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    max-width: 800px;
+    width: 90%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.email-composer-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.email-composer-header h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #111827;
+}
+
+.email-composer-close {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    border: none;
+    background-color: transparent;
+    color: #6b7280;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.email-composer-close:hover {
+    background-color: #f3f4f6;
+    color: #374151;
+}
+
+/* Email composer body */
+.email-composer-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+}
+
+.email-field {
+    margin-bottom: 20px;
+}
+
+.email-field label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.email-field input,
+.email-field textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.2s ease;
+}
+
+.email-field input:focus,
+.email-field textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.email-field textarea {
+    min-height: 200px;
+    resize: vertical;
+}
+
+/* Template variables */
+.template-variables {
+    margin-top: 12px;
+    padding: 12px;
+    background-color: #f9fafb;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+}
+
+.template-variables-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: #6b7280;
+    margin-bottom: 8px;
+}
+
+.template-variable {
+    display: inline-block;
+    padding: 4px 8px;
+    margin: 4px;
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: monospace;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.template-variable:hover {
+    background-color: #eff6ff;
+    border-color: #3b82f6;
+    color: #1e40af;
+}
+
+/* Email composer footer */
+.email-composer-footer {
+    padding: 16px 24px;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.email-options {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.email-option {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: #374151;
+}
+
+.email-option input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+}
+
+.email-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-send {
+    background-color: #10b981;
+    border: none;
+    color: #ffffff;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.btn-send:hover {
+    background-color: #059669;
+}
+
+.btn-send i {
+    font-size: 14px;
+}
+
+/* Template preview */
+.template-preview {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    width: 90%;
+    max-height: 70vh;
+    padding: 20px;
+    overflow-y: auto;
+    z-index: 2001;
+}
+
+.template-preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.template-preview-content {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #374151;
+}
+
+.template-preview-close {
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    border: none;
+    background-color: #f3f4f6;
+    color: #6b7280;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .template-selector,
+    .email-composer {
+        width: 95%;
+        max-height: 95vh;
+    }
+    
+    .template-list {
+        max-height: 300px;
+    }
+    
+    .email-composer-body {
+        padding: 16px;
+    }
+    
+    .email-composer-footer {
+        flex-direction: column;
+        gap: 16px;
+    }
+    
+    .email-options {
+        width: 100%;
+        justify-content: center;
+    }
+}

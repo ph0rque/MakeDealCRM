@@ -1,0 +1,562 @@
+/**
+ * Deals Module Theme Integration CSS
+ * 
+ * Provides dynamic theme support for SuiteCRM themes (SuiteP, Suite7, default)
+ * Uses CSS custom properties for easy theme switching and compatibility
+ */
+
+/* ===== THEME VARIABLES SYSTEM ===== */
+
+:root {
+    /* Default SuiteP Dawn theme colors - fallback values */
+    --deals-primary-color: #F08377;
+    --deals-primary-hover: #ED6C5F;
+    --deals-secondary-color: #534D64;
+    --deals-text-color: #333333;
+    --deals-text-muted: #666666;
+    
+    /* Background colors */
+    --deals-bg-primary: #FFFFFF;
+    --deals-bg-secondary: #F5F5F5;
+    --deals-bg-tertiary: #FAFAFA;
+    
+    /* Border and divider colors */
+    --deals-border-primary: #DDDDDD;
+    --deals-border-secondary: #E0E0E0;
+    --deals-border-focus: #F08377;
+    
+    /* Status colors */
+    --deals-success-bg: #DFF0D8;
+    --deals-success-text: #3C763D;
+    --deals-warning-bg: #FCF8E3;
+    --deals-warning-text: #8A6D3B;
+    --deals-danger-bg: #F2DEDE;
+    --deals-danger-text: #A94442;
+    --deals-info-bg: #D9EDF7;
+    --deals-info-text: #31708F;
+    
+    /* Interactive elements */
+    --deals-hover-bg: rgba(240, 131, 119, 0.1);
+    --deals-active-bg: rgba(240, 131, 119, 0.2);
+    --deals-focus-shadow: 0 0 0 2px rgba(240, 131, 119, 0.25);
+    
+    /* Spacing and sizing */
+    --deals-spacing-xs: 4px;
+    --deals-spacing-sm: 8px;
+    --deals-spacing-md: 12px;
+    --deals-spacing-lg: 16px;
+    --deals-spacing-xl: 20px;
+    
+    /* Typography */
+    --deals-font-family: inherit;
+    --deals-font-size-sm: 11px;
+    --deals-font-size-base: 13px;
+    --deals-font-size-lg: 14px;
+    --deals-font-size-xl: 16px;
+    --deals-font-size-xxl: 20px;
+    
+    /* Border radius */
+    --deals-border-radius-sm: 3px;
+    --deals-border-radius-md: 4px;
+    --deals-border-radius-lg: 6px;
+    
+    /* Shadows */
+    --deals-shadow-sm: 0 1px 1px rgba(0,0,0,0.05);
+    --deals-shadow-md: 0 2px 4px rgba(0,0,0,0.1);
+    --deals-shadow-lg: 0 4px 8px rgba(0,0,0,0.15);
+    
+    /* Transitions */
+    --deals-transition-fast: 0.15s ease;
+    --deals-transition-base: 0.2s ease;
+    --deals-transition-slow: 0.3s ease;
+}
+
+/* ===== THEME DETECTION AND OVERRIDES ===== */
+
+/* SuiteP Theme Variants */
+body.SuiteP {
+    /* Dawn (default) - already set in :root */
+}
+
+body.SuiteP[data-subtheme="Day"] {
+    --deals-primary-color: #5DADE2;
+    --deals-primary-hover: #3498DB;
+    --deals-secondary-color: #2C3E50;
+    --deals-bg-secondary: #ECF0F1;
+}
+
+body.SuiteP[data-subtheme="Dusk"] {
+    --deals-primary-color: #E67E22;
+    --deals-primary-hover: #D35400;
+    --deals-secondary-color: #34495E;
+    --deals-bg-secondary: #F4F4F4;
+}
+
+body.SuiteP[data-subtheme="Night"] {
+    --deals-primary-color: #9B59B6;
+    --deals-primary-hover: #8E44AD;
+    --deals-secondary-color: #2C3E50;
+    --deals-bg-primary: #2C3E50;
+    --deals-bg-secondary: #34495E;
+    --deals-text-color: #ECF0F1;
+    --deals-text-muted: #BDC3C7;
+    --deals-border-primary: #4A4A4A;
+    --deals-border-secondary: #555555;
+}
+
+body.SuiteP[data-subtheme="Noon"] {
+    --deals-primary-color: #27AE60;
+    --deals-primary-hover: #229954;
+    --deals-secondary-color: #2C3E50;
+    --deals-bg-secondary: #E8F5E8;
+}
+
+/* Suite7 Theme */
+body.Suite7 {
+    --deals-primary-color: #337AB7;
+    --deals-primary-hover: #2E6DA4;
+    --deals-secondary-color: #333333;
+    --deals-bg-secondary: #F5F5F5;
+    --deals-font-size-base: 12px;
+    --deals-border-radius-sm: 2px;
+    --deals-border-radius-md: 3px;
+}
+
+/* Default Theme */
+body.default {
+    --deals-primary-color: #337AB7;
+    --deals-primary-hover: #2E6DA4;
+    --deals-secondary-color: #333333;
+    --deals-bg-secondary: #F5F5F5;
+    --deals-font-size-base: 12px;
+    --deals-border-radius-sm: 1px;
+    --deals-border-radius-md: 2px;
+}
+
+/* ===== COMPONENT STYLES USING THEME VARIABLES ===== */
+
+/* Pipeline Container */
+.pipeline-container {
+    background-color: var(--deals-bg-secondary);
+    color: var(--deals-text-color);
+    font-family: var(--deals-font-family);
+}
+
+/* Pipeline Header */
+.pipeline-header {
+    background-color: var(--deals-bg-primary);
+    border-bottom: 1px solid var(--deals-border-primary);
+    color: var(--deals-text-color);
+}
+
+.pipeline-header h2 {
+    color: var(--deals-secondary-color);
+    font-size: var(--deals-font-size-xxl);
+}
+
+/* Buttons */
+.pipeline-actions .btn {
+    border-radius: var(--deals-border-radius-sm);
+    font-size: var(--deals-font-size-base);
+    transition: all var(--deals-transition-base);
+}
+
+.pipeline-actions .btn-primary {
+    background-color: var(--deals-primary-color);
+    border-color: var(--deals-primary-color);
+    color: var(--deals-bg-primary);
+}
+
+.pipeline-actions .btn-primary:hover,
+.pipeline-actions .btn-primary:focus {
+    background-color: var(--deals-primary-hover);
+    border-color: var(--deals-primary-hover);
+}
+
+.pipeline-actions .btn-default {
+    background-color: var(--deals-bg-primary);
+    border: 1px solid var(--deals-border-primary);
+    color: var(--deals-text-color);
+}
+
+.pipeline-actions .btn-default:hover,
+.pipeline-actions .btn-default:focus {
+    background-color: var(--deals-bg-tertiary);
+    border-color: var(--deals-border-secondary);
+}
+
+.pipeline-actions .btn-default.active {
+    background-color: var(--deals-active-bg);
+    border-color: var(--deals-border-focus);
+    box-shadow: var(--deals-shadow-sm);
+}
+
+.pipeline-actions .btn-info {
+    background-color: var(--deals-info-bg);
+    border-color: var(--deals-info-text);
+    color: var(--deals-info-text);
+}
+
+.pipeline-actions .btn-info:hover,
+.pipeline-actions .btn-info:focus {
+    background-color: var(--deals-info-text);
+    color: var(--deals-bg-primary);
+}
+
+.pipeline-actions .btn-info.active {
+    background-color: var(--deals-info-text);
+    color: var(--deals-bg-primary);
+    box-shadow: var(--deals-shadow-sm);
+}
+
+/* Pipeline Stages */
+.pipeline-stage {
+    background-color: var(--deals-bg-primary);
+    border-radius: var(--deals-border-radius-md);
+    box-shadow: var(--deals-shadow-sm);
+    border: 1px solid var(--deals-border-primary);
+    transition: all var(--deals-transition-base);
+}
+
+.pipeline-stage:hover {
+    box-shadow: var(--deals-shadow-md);
+    border-color: var(--deals-border-secondary);
+}
+
+.stage-header {
+    background-color: var(--deals-bg-secondary);
+    border-bottom: 1px solid var(--deals-border-primary);
+    border-radius: var(--deals-border-radius-md) var(--deals-border-radius-md) 0 0;
+}
+
+.stage-header h3 {
+    color: var(--deals-secondary-color);
+    font-size: var(--deals-font-size-lg);
+}
+
+.stage-stats {
+    color: var(--deals-text-muted);
+    font-size: var(--deals-font-size-base);
+}
+
+/* WIP Limit Indicators */
+.wip-limit-indicator {
+    border-radius: calc(var(--deals-font-size-sm) / 2);
+    background-color: var(--deals-success-bg);
+    color: var(--deals-success-text);
+    font-size: var(--deals-font-size-sm);
+}
+
+.wip-limit-indicator.near-limit {
+    background-color: var(--deals-warning-bg);
+    color: var(--deals-warning-text);
+}
+
+.wip-limit-indicator.over-limit {
+    background-color: var(--deals-danger-bg);
+    color: var(--deals-danger-text);
+}
+
+/* Deal Cards */
+.deal-card {
+    background-color: var(--deals-bg-primary);
+    border: 1px solid var(--deals-border-secondary);
+    border-radius: var(--deals-border-radius-sm);
+    color: var(--deals-text-color);
+    transition: all var(--deals-transition-base);
+}
+
+.deal-card:hover {
+    background-color: var(--deals-bg-tertiary);
+    border-color: var(--deals-border-primary);
+    box-shadow: var(--deals-shadow-sm);
+}
+
+.deal-card:focus {
+    outline: none;
+    box-shadow: var(--deals-focus-shadow);
+    border-color: var(--deals-border-focus);
+}
+
+.deal-card.dragging {
+    opacity: 0.6;
+    transform: rotate(2deg);
+    box-shadow: var(--deals-shadow-lg);
+}
+
+/* Deal Card Header */
+.deal-name a {
+    color: var(--deals-primary-color);
+    text-decoration: none;
+    font-size: var(--deals-font-size-lg);
+}
+
+.deal-name a:hover,
+.deal-name a:focus {
+    color: var(--deals-primary-hover);
+    text-decoration: underline;
+}
+
+/* Deal Card Body */
+.deal-card-body {
+    font-size: var(--deals-font-size-sm);
+    color: var(--deals-text-muted);
+}
+
+/* Focus Toggle Button */
+.focus-toggle-btn {
+    background: transparent;
+    border: 1px solid var(--deals-border-secondary);
+    color: var(--deals-text-muted);
+    border-radius: var(--deals-border-radius-sm);
+    transition: all var(--deals-transition-fast);
+}
+
+.focus-toggle-btn:hover {
+    background-color: var(--deals-hover-bg);
+    border-color: var(--deals-border-focus);
+    color: var(--deals-primary-color);
+}
+
+.focus-toggle-btn.active {
+    background-color: var(--deals-primary-color);
+    border-color: var(--deals-primary-color);
+    color: var(--deals-bg-primary);
+}
+
+.focus-toggle-btn:focus {
+    outline: none;
+    box-shadow: var(--deals-focus-shadow);
+}
+
+/* Days Indicator */
+.deal-days-indicator {
+    font-size: var(--deals-font-size-sm);
+    border-radius: calc(var(--deals-font-size-sm) * 0.6);
+    background-color: var(--deals-bg-secondary);
+    color: var(--deals-text-muted);
+}
+
+/* Stage Color Classes */
+.deal-card.stage-normal .deal-days-indicator {
+    background-color: var(--deals-success-bg);
+    color: var(--deals-success-text);
+}
+
+.deal-card.stage-orange .deal-days-indicator {
+    background-color: var(--deals-warning-bg);
+    color: var(--deals-warning-text);
+}
+
+.deal-card.stage-red .deal-days-indicator {
+    background-color: var(--deals-danger-bg);
+    color: var(--deals-danger-text);
+}
+
+/* Probability Bar */
+.deal-probability {
+    background-color: var(--deals-bg-secondary);
+    border-radius: calc(var(--deals-spacing-md) / 2);
+    border: 1px solid var(--deals-border-secondary);
+}
+
+.probability-bar {
+    background: linear-gradient(90deg, var(--deals-primary-color) 0%, var(--deals-primary-hover) 100%);
+    transition: width var(--deals-transition-slow);
+}
+
+.probability-text {
+    font-size: var(--deals-font-size-sm);
+    color: var(--deals-text-color);
+}
+
+/* Empty Stage Placeholder */
+.empty-stage-placeholder {
+    color: var(--deals-text-muted);
+    font-size: var(--deals-font-size-base);
+}
+
+.empty-stage-placeholder .glyphicon {
+    color: var(--deals-border-primary);
+}
+
+/* Loading Overlay */
+.pipeline-loading {
+    background-color: rgba(255, 255, 255, 0.95);
+}
+
+body.SuiteP[data-subtheme="Night"] .pipeline-loading {
+    background-color: rgba(44, 62, 80, 0.95);
+}
+
+.loading-spinner .glyphicon {
+    color: var(--deals-primary-color);
+}
+
+.loading-spinner p {
+    color: var(--deals-secondary-color);
+    font-size: var(--deals-font-size-lg);
+}
+
+/* Drag and Drop States */
+.stage-body.drag-over {
+    background-color: var(--deals-hover-bg);
+    border: 2px dashed var(--deals-border-focus);
+    box-shadow: inset 0 0 10px rgba(240, 131, 119, 0.1);
+}
+
+.stage-body.wip-limit-exceeded {
+    background-color: var(--deals-danger-bg);
+    border-color: var(--deals-danger-text);
+}
+
+/* Drop Position Indicator */
+.drop-position-indicator {
+    background: linear-gradient(90deg, var(--deals-primary-color) 0%, var(--deals-primary-hover) 100%);
+    border-radius: var(--deals-border-radius-sm);
+    box-shadow: 0 0 var(--deals-spacing-sm) rgba(240, 131, 119, 0.5);
+}
+
+/* Touch Feedback */
+.touch-active {
+    background-color: var(--deals-hover-bg) !important;
+    transform: scale(0.98);
+    transition: all var(--deals-transition-fast);
+}
+
+.btn.btn-pressed {
+    transform: scale(0.95);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+    transition: all var(--deals-transition-fast);
+}
+
+/* Focus States for Accessibility */
+.deal-card:focus,
+.focus-toggle-btn:focus,
+.pipeline-actions .btn:focus {
+    outline: 2px solid var(--deals-border-focus);
+    outline-offset: 2px;
+    z-index: 10;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    .deal-card,
+    .pipeline-stage {
+        border-width: 2px;
+        border-color: var(--deals-text-color);
+    }
+    
+    .deal-name a {
+        color: var(--deals-text-color) !important;
+        text-decoration: underline;
+    }
+    
+    .focus-toggle-btn {
+        border-width: 2px;
+    }
+}
+
+/* Dark Mode Support (for Night theme and system preference) */
+@media (prefers-color-scheme: dark) {
+    body:not(.SuiteP[data-subtheme="Night"]) {
+        --deals-bg-primary: #2d2d2d;
+        --deals-bg-secondary: #1a1a1a;
+        --deals-bg-tertiary: #404040;
+        --deals-text-color: #e0e0e0;
+        --deals-text-muted: #cccccc;
+        --deals-border-primary: #404040;
+        --deals-border-secondary: #555555;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    .deal-card,
+    .pipeline-stage,
+    .focus-toggle-btn,
+    .drop-position-indicator,
+    .btn,
+    .probability-bar {
+        transition: none !important;
+        animation: none !important;
+    }
+    
+    .mobile-swipe-hint {
+        animation: none;
+        opacity: 1;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .pipeline-container {
+        background: white !important;
+        color: black !important;
+    }
+    
+    .deal-card {
+        border: 1px solid black !important;
+        box-shadow: none !important;
+        background: white !important;
+        color: black !important;
+    }
+    
+    .pipeline-stage {
+        border: 1px solid black !important;
+        box-shadow: none !important;
+        background: white !important;
+    }
+    
+    .stage-header {
+        background: #f0f0f0 !important;
+        color: black !important;
+    }
+}
+
+/* ===== THEME INTEGRATION UTILITIES ===== */
+
+/* Theme detection helper class */
+.theme-aware {
+    color: var(--deals-text-color);
+    background-color: var(--deals-bg-primary);
+    border-color: var(--deals-border-primary);
+}
+
+/* Primary theme color helper */
+.theme-primary {
+    color: var(--deals-primary-color);
+}
+
+.theme-primary-bg {
+    background-color: var(--deals-primary-color);
+    color: var(--deals-bg-primary);
+}
+
+/* Secondary theme color helper */
+.theme-secondary {
+    color: var(--deals-secondary-color);
+}
+
+.theme-secondary-bg {
+    background-color: var(--deals-secondary-color);
+    color: var(--deals-bg-primary);
+}
+
+/* Theme border helper */
+.theme-border {
+    border: 1px solid var(--deals-border-primary);
+}
+
+/* Theme shadow helper */
+.theme-shadow {
+    box-shadow: var(--deals-shadow-sm);
+}
+
+.theme-shadow-md {
+    box-shadow: var(--deals-shadow-md);
+}
+
+.theme-shadow-lg {
+    box-shadow: var(--deals-shadow-lg);
+}

@@ -1,25 +1,61 @@
 <?php
 /**
- * Module registration for Deals
+ * Deals Module Loader Entry
+ * 
+ * This file registers the Deals module with SuiteCRM's module loader
+ * 
+ * @package MakeDealCRM
+ * @module Deals
  */
 
+if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
+// Register module with beanList
 $beanList['Deals'] = 'Deal';
 $beanFiles['Deal'] = 'custom/modules/Deals/Deal.php';
+
+// Add module to moduleList (makes it visible in the UI)
 $moduleList[] = 'Deals';
 
-// Add to the displayed modules
-$modInvisList[] = 'Deals';
+// Remove from modInvisList to ensure visibility
+// $modInvisList[] = 'Deals';
 
 // Tab configuration
 $modules_exempt_from_availability_check['Deals'] = 'Deals';
 
-// Add module to global search
+// Add module to system tabs
+$system_tabs['Deals'] = 'Deals';
+
+// Register module for mobile
+$mobile_modules[] = 'Deals';
+
+// Register module portal visibility
+$portal_modules[] = 'Deals';
+
+// Add module to import modules
+$import_modules[] = 'Deals';
+
+// Add module to global search with extended fields
 $unified_search_modules['Deals'] = array(
     'searchfields' => array(
         'name',
         'account_name',
         'amount',
         'pipeline_stage_c',
-        'assigned_user_name'
+        'assigned_user_name',
+        'date_entered',
+        'date_modified',
+        'expected_close_date_c',
+        'deal_source_c'
     )
 );
+
+// Register for workflow
+$workflow_object_list['Deals'] = 'Deal';
+$workflow_modules[] = 'Deals';
+
+// Register for reporting
+$report_modules[] = 'Deals';
+
+// Add to module groups for better organization
+$moduleGroups['Sales']['modules'][] = 'Deals';

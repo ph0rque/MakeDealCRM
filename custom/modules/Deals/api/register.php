@@ -13,6 +13,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once 'custom/modules/Deals/api/PipelineApi.php';
 require_once 'custom/modules/Deals/api/TemplateApi.php';
 require_once 'custom/modules/Deals/api/FileRequestApi.php';
+require_once 'custom/modules/Deals/api/StakeholderIntegrationApi.php';
 
 // The APIs will be automatically discovered by SuiteCRM's API framework
 // when placed in the custom/modules/Deals/api/ directory

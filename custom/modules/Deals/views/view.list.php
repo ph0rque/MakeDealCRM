@@ -18,29 +18,13 @@ class DealsViewList extends OpportunitiesViewList
     }
     
     /**
-     * Override preDisplay to redirect to pipeline view
+     * Override preDisplay - no longer needed since controller handles redirect
      */
     public function preDisplay()
     {
-        // Handle AJAX navigation to pipeline view
-        echo '<script type="text/javascript">
-            if (typeof SUGAR !== "undefined" && SUGAR.ajaxUI) {
-                // Use SuiteCRM AJAX navigation
-                SUGAR.ajaxUI.go("index.php?module=Deals&action=pipeline");
-            } else {
-                // Fallback to regular redirect
-                window.location.href = "index.php?module=Deals&action=pipeline";
-            }
-        </script>';
-        
-        // Provide a loading message
-        echo '<div style="padding: 40px; text-align: center;">
-            <h3>Redirecting to Pipeline View...</h3>
-            <p>If you are not redirected automatically, <a href="index.php?module=Deals&action=pipeline">click here</a>.</p>
-        </div>';
-        
-        // Exit to prevent further processing
-        sugar_cleanup(true);
+        // The controller now handles the redirect to pipeline view
+        // This method is kept for compatibility but does nothing
+        parent::preDisplay();
     }
 
     public function listViewProcess()

@@ -1,11 +1,51 @@
 {*
- * Pipeline Kanban Board Template
+ * Pipeline Kanban Board Template - SuiteCRM Theme Integrated
  * Displays deals in a horizontal scrollable Kanban board with drag-and-drop
+ * Compatible with SuiteCRM Smarty template system and theme engine
  *}
 
+{* Skip link for accessibility *}
 <a href="#pipeline-board" class="skip-link">Skip to pipeline board</a>
 
-<div id="pipeline-container" class="pipeline-container {if $is_mobile}mobile-view{/if}" role="main" aria-label="Deal Pipeline">
+{* Theme detection and CSS variables setup *}
+<script type="text/javascript">
+    // Detect current theme and subtheme for CSS variables
+    document.addEventListener('DOMContentLoaded', function() {literal}{{/literal}
+        var body = document.body;
+        var themeClass = '';
+        
+        // Detect SuiteCRM theme from body classes or global variables
+        if (typeof SUGAR !== 'undefined' && SUGAR.themes && SUGAR.themes.theme_name) {
+            themeClass = SUGAR.themes.theme_name;
+        } else if (body.className.includes('SuiteP')) {
+            themeClass = 'SuiteP';
+        } else if (body.className.includes('Suite7')) {
+            themeClass = 'Suite7';
+        } else {
+            themeClass = 'default';
+        }
+        
+        // Add theme class to body if not present
+        if (!body.classList.contains(themeClass)) {
+            body.classList.add(themeClass);
+        }
+        
+        // Detect subtheme for SuiteP
+        if (themeClass === 'SuiteP' && typeof SUGAR !== 'undefined' && SUGAR.themes && SUGAR.themes.sub_theme) {
+            body.setAttribute('data-subtheme', SUGAR.themes.sub_theme);
+        }
+        
+        // Apply device-specific classes
+        body.classList.add({if $is_mobile}'mobile-device'{else}'desktop-device'{/if});
+    {literal}}{/literal});
+</script>
+
+{* Main pipeline container with responsive and theme-aware classes *}
+<div id="pipeline-container" class="pipeline-container theme-aware {if $is_mobile}mobile-view{/if}" 
+     role="main" aria-label="Deal Pipeline" 
+     data-theme="{$current_theme|default:'SuiteP'}" 
+     data-subtheme="{$current_subtheme|default:'Dawn'}"
+     data-mobile="{if $is_mobile}true{else}false{/if}">
     <div class="pipeline-header">
         <h2 id="pipeline-title">Deal Pipeline</h2>
         <div class="pipeline-actions" role="toolbar" aria-label="Pipeline actions">
@@ -17,6 +57,9 @@
             </button>
             <button class="btn btn-info btn-sm" onclick="PipelineView.toggleFocusFilter()" id="focus-filter-btn" aria-label="Toggle focus filter" title="Toggle focus filter">
                 <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span id="focus-filter-text">Show Focused</span>
+            </button>
+            <button class="btn btn-warning btn-sm" onclick="PipelineView.openBulkStakeholders()" aria-label="Manage stakeholders" title="Bulk stakeholder management">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Manage Stakeholders
             </button>
         </div>
     </div>
@@ -40,7 +83,7 @@
                     <div class="stage-body droppable" data-stage="{$stage_key}" data-wip-limit="{$wip_limits.$stage_key|default:999}" 
                          role="group" aria-labelledby="stage-{$stage_key}-title">
                         {foreach from=$deals_by_stage.$stage_key item=deal}
-                            <div class="deal-card draggable {$deal.stage_color_class} {if $deal.focus_flag_c}focused-deal{/if}" 
+                            <div class="deal-card draggable theme-aware {$deal.stage_color_class} {if $deal.focus_flag_c}focused-deal{/if}" 
                                  data-deal-id="{$deal.id}" 
                                  data-stage="{$stage_key}"
                                  data-focused="{if $deal.focus_flag_c}true{else}false{/if}"
@@ -61,10 +104,11 @@
                                         </a>
                                     </h4>
                                     <div class="deal-card-actions">
-                                        <button class="focus-toggle-btn {if $deal.focus_flag_c}active{/if}" 
+                                        <button class="focus-toggle-btn theme-aware {if $deal.focus_flag_c}active{/if}" 
                                                 onclick="PipelineView.toggleFocus('{$deal.id}', {if $deal.focus_flag_c}false{else}true{/if}); event.stopPropagation();" 
-                                                title="{if $deal.focus_flag_c}Remove focus{else}Mark as focused{/if}">
-                                            <span class="glyphicon glyphicon-star{if !$deal.focus_flag_c}-empty{/if}"></span>
+                                                title="{if $deal.focus_flag_c}Remove focus{else}Mark as focused{/if}"
+                                                aria-label="{if $deal.focus_flag_c}Remove focus from {$deal.name|escape}{else}Mark {$deal.name|escape} as focused{/if}">
+                                            <span class="glyphicon glyphicon-star{if !$deal.focus_flag_c}-empty{/if}" aria-hidden="true"></span>
                                         </button>
                                         <div class="deal-days-indicator" title="Days in current stage">
                                             <span class="glyphicon glyphicon-time"></span> {$deal.days_in_stage}d

@@ -48,6 +48,7 @@ $mod_strings = array(
     'LBL_VIEW_PIPELINE' => 'View Pipeline',
     'LBL_LIST_VIEW' => 'List View',
     'LBL_IMPORT_DEALS' => 'Import Deals',
+    'LBL_FINANCIAL_DASHBOARD' => 'Financial Dashboard',
     'LBL_EXPORT_DEALS' => 'Export Deals',
     
     // Pipeline actions
@@ -100,17 +101,65 @@ $app_list_strings['deal_source_list'] = array(
     'other' => 'Other',
 );
 
-// Pipeline stage options
-$app_list_strings['pipeline_stage_list'] = array(
-    'sourcing' => 'Sourcing',
-    'screening' => 'Screening',
-    'analysis_outreach' => 'Analysis & Outreach',
-    'due_diligence' => 'Due Diligence',
-    'valuation_structuring' => 'Valuation & Structuring',
-    'loi_negotiation' => 'LOI / Negotiation',
-    'financing' => 'Financing',
-    'closing' => 'Closing',
-    'closed_owned_90_day' => 'Closed/Owned – 90-Day Plan',
-    'closed_owned_stable' => 'Closed/Owned – Stable Operations',
-    'unavailable' => 'Unavailable',
-);
+// Add additional module strings
+$mod_strings['LBL_CHECKLIST_COMPLETION'] = 'Checklist Completion';
+$mod_strings['LBL_CHECKLIST_PROGRESS'] = 'Checklist Progress';
+$mod_strings['LBL_VIEW_CHECKLISTS'] = 'View Checklists';
+$mod_strings['LBL_STAKEHOLDERS'] = 'Stakeholders';
+$mod_strings['LBL_STAGE_HISTORY'] = 'Stage History';
+
+// Subpanel titles
+$mod_strings['LBL_CONTACTS_SUBPANEL_TITLE'] = 'Stakeholders';
+$mod_strings['LBL_DOCUMENTS_SUBPANEL_TITLE'] = 'Documents';
+$mod_strings['LBL_TASKS_SUBPANEL_TITLE'] = 'Tasks';
+$mod_strings['LBL_NOTES_SUBPANEL_TITLE'] = 'Notes';
+$mod_strings['LBL_MEETINGS_SUBPANEL_TITLE'] = 'Meetings';
+$mod_strings['LBL_CALLS_SUBPANEL_TITLE'] = 'Calls';
+$mod_strings['LBL_EMAILS_SUBPANEL_TITLE'] = 'Emails';
+$mod_strings['LBL_CHECKLIST_ITEMS_SUBPANEL_TITLE'] = 'Checklist Items';
+
+// Search filters
+$mod_strings['LBL_SEARCH_BY_STAGE'] = 'Search by Stage';
+$mod_strings['LBL_SEARCH_BY_SOURCE'] = 'Search by Source';
+$mod_strings['LBL_SEARCH_BY_DATE_RANGE'] = 'Search by Date Range';
+
+// Dashlets
+$mod_strings['LBL_PIPELINE_METRICS'] = 'Pipeline Metrics';
+$mod_strings['LBL_STAGE_DURATION'] = 'Average Stage Duration';
+$mod_strings['LBL_CONVERSION_RATES'] = 'Stage Conversion Rates';
+$mod_strings['LBL_DEALS_BY_STAGE'] = 'Deals by Stage';
+$mod_strings['LBL_DEALS_BY_SOURCE'] = 'Deals by Source';
+// Menu items
+$mod_strings['LBL_ADVANCED_SEARCH'] = 'Advanced Search';
+$mod_strings['LBL_REPORTS'] = 'Reports';
+$mod_strings['LBL_PIPELINE_ANALYTICS'] = 'Pipeline Analytics';
+$mod_strings['LBL_BULK_OPERATIONS'] = 'Bulk Operations';
+$mod_strings['LBL_CONFIGURE_MODULE'] = 'Configure Module';
+
+// CRUD Operations
+$mod_strings['LBL_CREATE_DEAL'] = 'Create Deal';
+$mod_strings['LBL_EDIT_DEAL'] = 'Edit Deal';
+$mod_strings['LBL_DELETE_DEAL'] = 'Delete Deal';
+$mod_strings['LBL_DUPLICATE_DEAL'] = 'Duplicate Deal';
+$mod_strings['LBL_SAVE_DEAL'] = 'Save Deal';
+$mod_strings['LBL_CANCEL'] = 'Cancel';
+
+// Validation Messages
+$mod_strings['LBL_REQUIRED_FIELD'] = 'This field is required';
+$mod_strings['LBL_INVALID_FORMAT'] = 'Invalid format';
+$mod_strings['LBL_INVALID_AMOUNT'] = 'Please enter a valid amount';
+$mod_strings['LBL_INVALID_DATE'] = 'Please enter a valid date';
+$mod_strings['LBL_INVALID_PROBABILITY'] = 'Probability must be between 0 and 100';
+
+// Search
+$mod_strings['LBL_SEARCH_RESULTS'] = 'Search Results';
+$mod_strings['LBL_NO_RESULTS'] = 'No results found';
+$mod_strings['LBL_SEARCH_CRITERIA'] = 'Search Criteria';
+$mod_strings['LBL_CLEAR_SEARCH'] = 'Clear Search';
+
+// Workflow Messages
+$mod_strings['LBL_WORKFLOW_TRIGGERED'] = 'Workflow triggered';
+$mod_strings['LBL_STAGE_CHANGE_LOGGED'] = 'Stage change logged';
+$mod_strings['LBL_VALIDATION_PASSED'] = 'Validation passed';
+$mod_strings['LBL_VALIDATION_FAILED'] = 'Validation failed';
+EOF < /dev/null

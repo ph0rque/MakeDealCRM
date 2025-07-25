@@ -8,6 +8,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('modules/Opportunities/Opportunity.php');
 require_once('include/database/DBManagerFactory.php');
+require_once('custom/modules/Deals/DealsSecurityHelper.php');
 
 class Deal extends Opportunity
 {
@@ -150,26 +151,36 @@ class Deal extends Opportunity
     {
         global $db;
         
-        // Check if table exists using prepared statement
-        $stmt = $db->getConnection()->prepare("SHOW TABLES LIKE ?");
-        $tableName = 'pipeline_stage_history';
-        $stmt->bind_param('s', $tableName);
-        $stmt->execute();
-        $result = $stmt->get_result();
+        // Check if table exists
+        $tableCheck = "SHOW TABLES LIKE 'pipeline_stage_history'";
+        $result = $db->query($tableCheck);
         
-        if ($result->num_rows > 0) {
+        if ($db->fetchByAssoc($result)) {
             $id = create_guid();
             
-            // Use prepared statement for insert
-            $query = "INSERT INTO pipeline_stage_history 
-                      (id, deal_id, old_stage, new_stage, changed_by, date_changed, deleted) 
-                      VALUES 
-                      (?, ?, ?, ?, ?, NOW(), 0)";
+            // Use security helper for prepared statement
+            $query = DealsSecurityHelper::prepareSQLQuery(
+                "INSERT INTO pipeline_stage_history 
+                 (id, deal_id, old_stage, new_stage, changed_by, date_changed, deleted) 
+                 VALUES 
+                 (:id, :deal_id, :old_stage, :new_stage, :changed_by, NOW(), 0)",
+                array(
+                    'id' => $id,
+                    'deal_id' => $this->id,
+                    'old_stage' => $old_stage,
+                    'new_stage' => $new_stage,
+                    'changed_by' => $user_id
+                )
+            );
             
-            $stmt = $db->getConnection()->prepare($query);
-            $stmt->bind_param('sssss', $id, $this->id, $old_stage, $new_stage, $user_id);
-            $stmt->execute();
-            $stmt->close();
+            $db->query($query);
+            
+            // Log security event
+            DealsSecurityHelper::logSecurityEvent('stage_change', 'Deal stage changed', array(
+                'deal_id' => $this->id,
+                'old_stage' => $old_stage,
+                'new_stage' => $new_stage
+            ));
         }
     }
     
@@ -212,7 +223,9 @@ class Deal extends Opportunity
     {
         global $db;
         
-        // Validate target stage
+        // Sanitize and validate target stage
+        $target_stage = DealsSecurityHelper::sanitizeInput($target_stage, 'sql');
+        
         if (!isset($this->pipeline_stages[$target_stage])) {
             return array(
                 'allowed' => false,
@@ -223,24 +236,23 @@ class Deal extends Opportunity
         // Check WIP limits
         $stage_config = $this->getPipelineStageConfig($target_stage);
         if ($stage_config && !empty($stage_config['wip_limit'])) {
-            // Use prepared statement for count query
-            $query = "SELECT COUNT(*) as count 
-                      FROM opportunities 
-                      WHERE pipeline_stage_c = ? 
-                      AND deleted = 0 
-                      AND sales_stage NOT IN ('Closed Won', 'Closed Lost')";
+            // Use security helper for prepared query
+            $query = DealsSecurityHelper::prepareSQLQuery(
+                "SELECT COUNT(*) as count 
+                 FROM opportunities 
+                 WHERE pipeline_stage_c = :stage 
+                 AND deleted = 0 
+                 AND sales_stage NOT IN ('Closed Won', 'Closed Lost')",
+                array('stage' => $target_stage)
+            );
             
-            $stmt = $db->getConnection()->prepare($query);
-            $stmt->bind_param('s', $target_stage);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $row = $result->fetch_assoc();
-            $stmt->close();
+            $result = $db->query($query);
+            $row = $db->fetchByAssoc($result);
             
             if ($row['count'] >= $stage_config['wip_limit']) {
                 return array(
                     'allowed' => false,
-                    'reason' => 'WIP limit reached for stage ' . htmlspecialchars($stage_config['name'], ENT_QUOTES, 'UTF-8')
+                    'reason' => 'WIP limit reached for stage ' . DealsSecurityHelper::encodeOutput($stage_config['name'])
                 );
             }
         }
@@ -257,23 +269,25 @@ class Deal extends Opportunity
         
         $metrics = array();
         
-        // Prepare the query once
-        $query = "SELECT 
+        foreach ($this->pipeline_stages as $stage_key => $stage) {
+            // Sanitize stage key
+            $safe_stage_key = DealsSecurityHelper::sanitizeInput($stage_key, 'sql');
+            
+            // Use security helper for prepared query
+            $query = DealsSecurityHelper::prepareSQLQuery(
+                "SELECT 
                     COUNT(*) as count,
                     SUM(amount) as total_value,
                     AVG(DATEDIFF(NOW(), stage_entered_date_c)) as avg_days
                   FROM opportunities 
-                  WHERE pipeline_stage_c = ? 
+                  WHERE pipeline_stage_c = :stage 
                   AND deleted = 0 
-                  AND sales_stage NOT IN ('Closed Won', 'Closed Lost')";
-        
-        $stmt = $db->getConnection()->prepare($query);
-        
-        foreach ($this->pipeline_stages as $stage_key => $stage) {
-            $stmt->bind_param('s', $stage_key);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $row = $result->fetch_assoc();
+                  AND sales_stage NOT IN ('Closed Won', 'Closed Lost')",
+                array('stage' => $safe_stage_key)
+            );
+            
+            $result = $db->query($query);
+            $row = $db->fetchByAssoc($result);
             
             $metrics[$stage_key] = array(
                 'count' => (int)$row['count'],
@@ -284,8 +298,6 @@ class Deal extends Opportunity
                     round(($row['count'] / $stage['wip_limit']) * 100, 2) : 0
             );
         }
-        
-        $stmt->close();
         
         return $metrics;
     }

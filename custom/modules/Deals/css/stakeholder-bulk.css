@@ -1,0 +1,301 @@
+/**
+ * Stakeholder Bulk Management Styles
+ */
+
+.stakeholder-bulk-container {
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.stakeholder-bulk-container h2 {
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.stakeholder-bulk-container .section {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stakeholder-bulk-container h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #555;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+}
+
+/* Deal Selection Section */
+.deal-filter {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.deal-filter input {
+    flex: 1;
+    max-width: 300px;
+}
+
+.deal-list {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+.deal-selection-table {
+    margin-bottom: 0;
+}
+
+.deal-selection-table th {
+    position: sticky;
+    top: 0;
+    background: #f8f9fa;
+    z-index: 10;
+}
+
+.selected-count {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #007bff;
+}
+
+/* Stakeholder Actions Section */
+.action-tabs {
+    margin-top: 20px;
+}
+
+.tab-content {
+    padding-top: 20px;
+}
+
+/* Contact Search */
+.contact-search-results {
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.contact-result {
+    padding: 10px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.contact-result:hover {
+    background-color: #f8f9fa;
+}
+
+.contact-result.selected {
+    background-color: #e3f2fd;
+}
+
+.contact-result:last-child {
+    border-bottom: none;
+}
+
+.contact-name {
+    font-weight: 500;
+}
+
+.contact-title {
+    color: #666;
+    font-size: 12px;
+}
+
+.contact-account {
+    color: #999;
+    font-size: 11px;
+}
+
+/* Selected Contacts */
+.selected-contacts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    min-height: 40px;
+    padding: 10px;
+    background: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+.selected-contact {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+.selected-contact button {
+    padding: 0;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Existing Stakeholders Tables */
+.existing-stakeholders,
+.removable-stakeholders {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+.existing-stakeholders table,
+.removable-stakeholders table {
+    margin-bottom: 0;
+}
+
+/* Import/Export Section */
+.import-export-section h4 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.import-export-section hr {
+    margin: 30px 0;
+}
+
+.import-template {
+    margin-top: 15px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+.import-template p {
+    margin-bottom: 5px;
+}
+
+/* Operation Results */
+.operation-results {
+    min-height: 50px;
+}
+
+.operation-results .alert {
+    margin-bottom: 10px;
+}
+
+.operation-results ul {
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+/* Form Controls */
+.form-horizontal .control-label {
+    text-align: right;
+    padding-top: 7px;
+}
+
+/* Buttons */
+.stakeholder-bulk-container .btn {
+    margin-right: 10px;
+}
+
+.stakeholder-bulk-container .btn i {
+    margin-right: 5px;
+}
+
+/* Loading State */
+.section.loading {
+    position: relative;
+    min-height: 200px;
+}
+
+.section.loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.section.loading::before {
+    content: 'Loading...';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 101;
+    font-size: 16px;
+    color: #666;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .deal-filter {
+        flex-direction: column;
+    }
+    
+    .deal-filter input {
+        max-width: 100%;
+    }
+    
+    .form-horizontal .control-label {
+        text-align: left;
+        margin-bottom: 5px;
+    }
+    
+    .deal-selection-table {
+        font-size: 12px;
+    }
+    
+    .deal-selection-table th,
+    .deal-selection-table td {
+        padding: 5px;
+    }
+}
+
+/* Badge Styling */
+.badge {
+    background-color: #007bff;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+}
+
+/* No Results */
+.no-results {
+    text-align: center;
+    padding: 20px;
+    color: #999;
+    font-style: italic;
+}
+
+/* Tooltip Styling */
+.stakeholder-bulk-container .tooltip {
+    font-size: 12px;
+}
+
+.stakeholder-bulk-container .tooltip-inner {
+    max-width: 300px;
+}

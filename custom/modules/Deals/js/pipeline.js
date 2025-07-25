@@ -1103,6 +1103,29 @@ var PipelineView = {
     },
     
     /**
+     * Open bulk stakeholder management
+     */
+    openBulkStakeholders: function() {
+        // Get all visible deals
+        var dealIds = [];
+        jQuery('.deal-card:visible').each(function() {
+            var dealId = jQuery(this).data('deal-id');
+            if (dealId) {
+                dealIds.push(dealId);
+            }
+        });
+        
+        // Open bulk management view with pre-selected deals
+        var url = 'index.php?module=Deals&action=stakeholder_bulk';
+        if (dealIds.length > 0) {
+            url += '&deal_ids=' + dealIds.join(',');
+        }
+        
+        // Open in new tab
+        window.open(url, '_blank');
+    },
+    
+    /**
      * Toggle focus flag on a deal
      */
     toggleFocus: function(dealId, focusState) {

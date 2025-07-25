@@ -1,0 +1,183 @@
+/**
+ * Stakeholder Badges - Visual indicators for contact freshness
+ * 
+ * Badge styles for showing contact engagement status:
+ * - Fresh (green): Contacted within target period
+ * - Warning (yellow): Approaching deadline  
+ * - Overdue (red): Past target contact date
+ * - Inactive (gray): No engagement tracking
+ */
+
+/* Base badge styles */
+.stakeholder-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    vertical-align: middle;
+    transition: all 0.2s ease;
+    cursor: help;
+    position: relative;
+}
+
+/* Badge states */
+.stakeholder-badge.fresh {
+    background-color: #10b981;
+    color: #ffffff;
+    box-shadow: 0 1px 2px rgba(16, 185, 129, 0.2);
+}
+
+.stakeholder-badge.warning {
+    background-color: #f59e0b;
+    color: #ffffff;
+    box-shadow: 0 1px 2px rgba(245, 158, 11, 0.2);
+}
+
+.stakeholder-badge.overdue {
+    background-color: #ef4444;
+    color: #ffffff;
+    box-shadow: 0 1px 2px rgba(239, 68, 68, 0.2);
+    animation: pulse-red 2s infinite;
+}
+
+.stakeholder-badge.inactive {
+    background-color: #9ca3af;
+    color: #ffffff;
+    box-shadow: 0 1px 2px rgba(156, 163, 175, 0.2);
+}
+
+/* Pulse animation for overdue contacts */
+@keyframes pulse-red {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.9;
+        transform: scale(1.05);
+    }
+}
+
+/* Badge with icon */
+.stakeholder-badge-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.stakeholder-badge-icon i {
+    font-size: 12px;
+}
+
+/* Badge tooltip */
+.stakeholder-badge-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #1f2937;
+    color: #ffffff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: normal;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    pointer-events: none;
+    z-index: 1000;
+    margin-bottom: 5px;
+}
+
+.stakeholder-badge-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: #1f2937;
+}
+
+.stakeholder-badge:hover .stakeholder-badge-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Badge in list views */
+.list-view .stakeholder-badge {
+    margin-left: 8px;
+}
+
+/* Badge in detail view */
+.detail-view .stakeholder-badge {
+    margin-left: 10px;
+    font-size: 12px;
+    padding: 5px 10px;
+}
+
+/* Compact badge for grid views */
+.stakeholder-badge.compact {
+    padding: 2px 6px;
+    font-size: 10px;
+    border-radius: 8px;
+}
+
+/* Badge group */
+.stakeholder-badge-group {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+}
+
+/* Quick action indicator */
+.stakeholder-quick-action {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-left: 4px;
+    animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+/* Stakeholder role badges */
+.stakeholder-role {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    margin-right: 4px;
+    background-color: #e5e7eb;
+    color: #374151;
+}
+
+.stakeholder-role.decision-maker {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+.stakeholder-role.influencer {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.stakeholder-role.champion {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.stakeholder-role.blocker {
+    background-color: #fee2e2;
+    color: #991b1b;
+}

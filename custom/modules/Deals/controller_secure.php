@@ -9,6 +9,11 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/MVC/Controller/SugarController.php');
 require_once('include/database/DBManagerFactory.php');
 require_once('include/utils.php');
+require_once('custom/modules/Deals/DealsSecurityHelper.php');
+require_once('custom/modules/Deals/api/StateSync.php');
+require_once('custom/modules/Deals/api/StageTransitionService.php');
+require_once('custom/modules/Deals/api/TimeTrackingService.php');
+require_once('custom/modules/Deals/api/StakeholderIntegrationApi.php');
 
 class DealsController extends SugarController
 {

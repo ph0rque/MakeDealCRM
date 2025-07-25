@@ -10,6 +10,7 @@ require_once('include/MVC/Controller/SugarController.php');
 require_once('custom/modules/Deals/api/StateSync.php');
 require_once('custom/modules/Deals/api/StageTransitionService.php');
 require_once('custom/modules/Deals/api/TimeTrackingService.php');
+require_once('custom/modules/Deals/api/StakeholderIntegrationApi.php');
 
 class DealsController extends SugarController
 {
@@ -18,23 +19,17 @@ class DealsController extends SugarController
      */
     public function action_index()
     {
-        // For AJAX requests, handle the redirect properly
-        if (!empty($_REQUEST['ajax_load']) || !empty($_REQUEST['ajaxLoad'])) {
-            // Load the pipeline view for AJAX
-            $this->view = 'pipeline';
-        } else {
-            // For non-AJAX, use regular redirect
-            sugar_redirect('index.php?module=Deals&action=pipeline');
-        }
+        // Always load the pipeline view directly
+        $this->view = 'pipeline';
     }
     
     /**
-     * Override list view to redirect to pipeline
+     * Override list view to redirect to pipeline (handles both listview and ListView)
      */
     public function action_listview()
     {
-        // Redirect list view to pipeline as well
-        $this->action_index();
+        // Load the pipeline view directly instead of redirecting
+        $this->view = 'pipeline';
     }
     
     /**
@@ -46,34 +41,315 @@ class DealsController extends SugarController
     }
     
     /**
+     * Display the Financial Dashboard view
+     */
+    public function action_financialdashboard()
+    {
+        $this->view = 'financialdashboard';
+    }
+    
+    /**
      * Update deal pipeline stage via AJAX (Enhanced with validation)
      */
     public function action_updatePipelineStage()
     {
         global $current_user, $db;
         
-        // Check permissions
-        if (!$current_user->id) {
-            $this->sendJsonResponse(['success' => false, 'message' => 'Unauthorized']);
-            return;
+        try {
+            // Check permissions
+            if (!$current_user->id) {
+                $this->sendJsonResponse(['success' => false, 'message' => 'Unauthorized']);
+                return;
+            }
+            
+            // Validate and sanitize parameters
+            $dealId = $this->validateAndSanitize($_POST['deal_id'] ?? '', 'guid');
+            $newStage = $this->validateAndSanitize($_POST['new_stage'] ?? '', 'pipeline_stage');
+            $oldStage = $this->validateAndSanitize($_POST['old_stage'] ?? '', 'pipeline_stage');
+            $options = $this->validateOptionsArray($_POST['options'] ?? []);
+            
+            if (!$dealId || !$newStage) {
+                $this->sendJsonResponse(['success' => false, 'message' => 'Missing or invalid required parameters']);
+                return;
+            }
+            
+            // Check if deal exists and user has access
+            $deal = BeanFactory::getBean('Opportunities', $dealId);
+            if (!$deal || $deal->deleted || !$deal->ACLAccess('edit')) {
+                $this->sendJsonResponse(['success' => false, 'message' => 'Deal not found or access denied']);
+                return;
+            }
+            
+            // Use the enhanced Stage Transition Service
+            $transitionService = new StageTransitionService();
+            $result = $transitionService->transitionDeal($dealId, $oldStage, $newStage, $current_user->id, $options);
+            
+            // Log the action
+            $GLOBALS['log']->info("Deal stage updated: {$dealId} from {$oldStage} to {$newStage} by {$current_user->id}");
+            
+            $this->sendJsonResponse($result);
+            
+        } catch (Exception $e) {
+            $GLOBALS['log']->error('Update pipeline stage failed: ' . $e->getMessage());
+            $this->sendJsonResponse(['success' => false, 'message' => 'Internal error occurred']);
         }
+    }
+    
+    /**
+     * Create new deal via AJAX
+     */
+    public function action_createDeal()
+    {
+        global $current_user;
         
-        // Get parameters
-        $dealId = $db->quote($_POST['deal_id'] ?? '');
-        $newStage = $db->quote($_POST['new_stage'] ?? '');
-        $oldStage = $db->quote($_POST['old_stage'] ?? '');
-        $options = $_POST['options'] ?? [];
-        
-        if (!$dealId || !$newStage) {
-            $this->sendJsonResponse(['success' => false, 'message' => 'Missing required parameters']);
-            return;
+        try {
+            // Check permissions
+            if (!$current_user->id || !ACLController::checkAccess('Deals', 'edit', true)) {
+                $this->sendJsonResponse(['success' => false, 'message' => 'Unauthorized']);
+                return;
+            }
+            
+            // Validate required fields
+            $name = $this->validateAndSanitize($_POST['name'] ?? '', 'string');
+            if (empty($name)) {
+                $this->sendJsonResponse(['success' => false, 'message' => 'Deal name is required']);
+                return;
+            }
+            
+            // Create new deal
+            $deal = BeanFactory::newBean('Opportunities');
+            $deal->name = $name;
+            $deal->amount = $this->validateAndSanitize($_POST['amount'] ?? '', 'currency');
+            $deal->account_id = $this->validateAndSanitize($_POST['account_id'] ?? '', 'guid');
+            $deal->assigned_user_id = $_POST['assigned_user_id'] ?? $current_user->id;
+            $deal->date_closed = $this->validateAndSanitize($_POST['date_closed'] ?? '', 'date');
+            $deal->probability = $this->validateAndSanitize($_POST['probability'] ?? 50, 'integer');
+            $deal->sales_stage = $_POST['sales_stage'] ?? 'Prospecting';
+            $deal->lead_source = $this->validateAndSanitize($_POST['lead_source'] ?? '', 'string');
+            $deal->description = $this->validateAndSanitize($_POST['description'] ?? '', 'text');
+            
+            // Pipeline-specific fields
+            $deal->pipeline_stage_c = $this->validateAndSanitize($_POST['pipeline_stage_c'] ?? 'sourcing', 'pipeline_stage');
+            $deal->expected_close_date_c = $this->validateAndSanitize($_POST['expected_close_date_c'] ?? '', 'date');
+            $deal->deal_source_c = $this->validateAndSanitize($_POST['deal_source_c'] ?? '', 'string');
+            $deal->pipeline_notes_c = $this->validateAndSanitize($_POST['pipeline_notes_c'] ?? '', 'text');
+            
+            // Save the deal
+            $dealId = $deal->save();
+            
+            if ($dealId) {
+                $GLOBALS['log']->info("New deal created: {$dealId} by {$current_user->id}");
+                $this->sendJsonResponse([
+                    'success' => true,
+                    'message' => 'Deal created successfully',
+                    'deal_id' => $dealId,
+                    'deal_name' => $deal->name
+                ]);
+            } else {
+                throw new Exception('Failed to save deal');
+            }
+            
+        } catch (Exception $e) {
+            $GLOBALS['log']->error('Create deal failed: ' . $e->getMessage());
+            $this->sendJsonResponse(['success' => false, 'message' => 'Failed to create deal: ' . $e->getMessage()]);
         }
+    }
+    
+    /**
+     * Update deal via AJAX
+     */
+    public function action_updateDeal()
+    {
+        global $current_user;
         
-        // Use the enhanced Stage Transition Service
-        $transitionService = new StageTransitionService();
-        $result = $transitionService->transitionDeal($dealId, $oldStage, $newStage, $current_user->id, $options);
+        try {
+            // Check permissions
+            if (!$current_user->id) {
+                $this->sendJsonResponse(['success' => false, 'message' => 'Unauthorized']);
+                return;
+            }
+            
+            $dealId = $this->validateAndSanitize($_POST['deal_id'] ?? '', 'guid');
+            if (!$dealId) {
+                $this->sendJsonResponse(['success' => false, 'message' => 'Deal ID is required']);
+                return;
+            }
+            
+            // Load the deal
+            $deal = BeanFactory::getBean('Opportunities', $dealId);
+            if (!$deal || $deal->deleted || !$deal->ACLAccess('edit')) {
+                $this->sendJsonResponse(['success' => false, 'message' => 'Deal not found or access denied']);
+                return;
+            }
+            
+            // Update fields if provided
+            if (isset($_POST['name'])) {
+                $deal->name = $this->validateAndSanitize($_POST['name'], 'string');
+            }
+            if (isset($_POST['amount'])) {
+                $deal->amount = $this->validateAndSanitize($_POST['amount'], 'currency');
+            }
+            if (isset($_POST['account_id'])) {
+                $deal->account_id = $this->validateAndSanitize($_POST['account_id'], 'guid');
+            }
+            if (isset($_POST['assigned_user_id'])) {
+                $deal->assigned_user_id = $this->validateAndSanitize($_POST['assigned_user_id'], 'guid');
+            }
+            if (isset($_POST['date_closed'])) {
+                $deal->date_closed = $this->validateAndSanitize($_POST['date_closed'], 'date');
+            }
+            if (isset($_POST['probability'])) {
+                $deal->probability = $this->validateAndSanitize($_POST['probability'], 'integer');
+            }
+            if (isset($_POST['sales_stage'])) {
+                $deal->sales_stage = $this->validateAndSanitize($_POST['sales_stage'], 'string');
+            }
+            if (isset($_POST['description'])) {
+                $deal->description = $this->validateAndSanitize($_POST['description'], 'text');
+            }
+            
+            // Pipeline-specific updates
+            if (isset($_POST['pipeline_stage_c'])) {
+                $deal->pipeline_stage_c = $this->validateAndSanitize($_POST['pipeline_stage_c'], 'pipeline_stage');
+            }
+            if (isset($_POST['expected_close_date_c'])) {
+                $deal->expected_close_date_c = $this->validateAndSanitize($_POST['expected_close_date_c'], 'date');
+            }
+            if (isset($_POST['deal_source_c'])) {
+                $deal->deal_source_c = $this->validateAndSanitize($_POST['deal_source_c'], 'string');
+            }
+            if (isset($_POST['pipeline_notes_c'])) {
+                $deal->pipeline_notes_c = $this->validateAndSanitize($_POST['pipeline_notes_c'], 'text');
+            }
+            
+            // Save the deal
+            $result = $deal->save();
+            
+            if ($result) {
+                $GLOBALS['log']->info("Deal updated: {$dealId} by {$current_user->id}");
+                $this->sendJsonResponse([
+                    'success' => true,
+                    'message' => 'Deal updated successfully',
+                    'deal_id' => $dealId
+                ]);
+            } else {
+                throw new Exception('Failed to save deal updates');
+            }
+            
+        } catch (Exception $e) {
+            $GLOBALS['log']->error('Update deal failed: ' . $e->getMessage());
+            $this->sendJsonResponse(['success' => false, 'message' => 'Failed to update deal: ' . $e->getMessage()]);
+        }
+    }
+    
+    /**
+     * Delete deal via AJAX
+     */
+    public function action_deleteDeal()
+    {
+        global $current_user;
         
-        $this->sendJsonResponse($result);
+        try {
+            // Check permissions
+            if (!$current_user->id) {
+                $this->sendJsonResponse(['success' => false, 'message' => 'Unauthorized']);
+                return;
+            }
+            
+            $dealId = $this->validateAndSanitize($_POST['deal_id'] ?? '', 'guid');
+            if (!$dealId) {
+                $this->sendJsonResponse(['success' => false, 'message' => 'Deal ID is required']);
+                return;
+            }
+            
+            // Load the deal
+            $deal = BeanFactory::getBean('Opportunities', $dealId);
+            if (!$deal || $deal->deleted || !$deal->ACLAccess('delete')) {
+                $this->sendJsonResponse(['success' => false, 'message' => 'Deal not found or access denied']);
+                return;
+            }
+            
+            $dealName = $deal->name;
+            
+            // Delete the deal
+            $result = $deal->mark_deleted($dealId);
+            
+            if ($result) {
+                $GLOBALS['log']->info("Deal deleted: {$dealId} ({$dealName}) by {$current_user->id}");
+                $this->sendJsonResponse([
+                    'success' => true,
+                    'message' => 'Deal deleted successfully',
+                    'deal_id' => $dealId
+                ]);
+            } else {
+                throw new Exception('Failed to delete deal');
+            }
+            
+        } catch (Exception $e) {
+            $GLOBALS['log']->error('Delete deal failed: ' . $e->getMessage());
+            $this->sendJsonResponse(['success' => false, 'message' => 'Failed to delete deal: ' . $e->getMessage()]);
+        }
+    }
+    
+    /**
+     * Search deals via AJAX
+     */
+    public function action_searchDeals()
+    {
+        global $current_user;
+        
+        try {
+            // Check permissions
+            if (!$current_user->id || !ACLController::checkAccess('Deals', 'list', true)) {
+                $this->sendJsonResponse(['success' => false, 'message' => 'Unauthorized']);
+                return;
+            }
+            
+            $searchParams = array();
+            
+            // Build search parameters
+            if (!empty($_GET['name'])) {
+                $searchParams['name'] = $this->validateAndSanitize($_GET['name'], 'string');
+            }
+            if (!empty($_GET['account_name'])) {
+                $searchParams['account_name'] = $this->validateAndSanitize($_GET['account_name'], 'string');
+            }
+            if (!empty($_GET['pipeline_stage'])) {
+                $searchParams['pipeline_stage'] = $this->validateAndSanitize($_GET['pipeline_stage'], 'pipeline_stage');
+            }
+            if (!empty($_GET['min_amount'])) {
+                $searchParams['min_amount'] = $this->validateAndSanitize($_GET['min_amount'], 'currency');
+            }
+            if (!empty($_GET['max_amount'])) {
+                $searchParams['max_amount'] = $this->validateAndSanitize($_GET['max_amount'], 'currency');
+            }
+            if (!empty($_GET['start_date'])) {
+                $searchParams['start_date'] = $this->validateAndSanitize($_GET['start_date'], 'date');
+            }
+            if (!empty($_GET['end_date'])) {
+                $searchParams['end_date'] = $this->validateAndSanitize($_GET['end_date'], 'date');
+            }
+            if (!empty($_GET['assigned_user_id'])) {
+                $searchParams['assigned_user_id'] = $this->validateAndSanitize($_GET['assigned_user_id'], 'guid');
+            }
+            
+            $limit = $this->validateAndSanitize($_GET['limit'] ?? 50, 'integer');
+            $searchParams['limit'] = min($limit, 500); // Cap at 500 results
+            
+            // Perform search
+            $deal = BeanFactory::newBean('Opportunities');
+            $results = $deal->searchDeals($searchParams);
+            
+            $this->sendJsonResponse([
+                'success' => true,
+                'count' => count($results),
+                'deals' => $results
+            ]);
+            
+        } catch (Exception $e) {
+            $GLOBALS['log']->error('Search deals failed: ' . $e->getMessage());
+            $this->sendJsonResponse(['success' => false, 'message' => 'Search failed']);
+        }
     }
     
     /**
@@ -656,13 +932,204 @@ class DealsController extends SugarController
     }
 
     /**
-     * Send JSON response
+     * Stakeholder integration actions
+     */
+    public function action_stakeholders()
+    {
+        $api = new StakeholderIntegrationApi();
+        $method = $_SERVER['REQUEST_METHOD'];
+        $args = array_merge($_GET, $_POST);
+        
+        // Add action parameter for API method routing
+        if ($method === 'GET' && isset($args['action']) && $args['action'] === 'communication') {
+            $args['deal_id'] = $args['deal_id'] ?? '';
+            $response = $api->getStakeholderCommunication(null, $args);
+        } elseif ($method === 'GET' && isset($args['deal_id'])) {
+            $response = $api->getStakeholders(null, $args);
+        } elseif ($method === 'POST') {
+            $response = $api->addStakeholder(null, $args);
+        } elseif ($method === 'PUT' && isset($args['relationship_id'])) {
+            $response = $api->updateStakeholderRole(null, $args);
+        } elseif ($method === 'DELETE' && isset($args['relationship_id'])) {
+            $response = $api->removeStakeholder(null, $args);
+        } else {
+            $response = array('success' => false, 'error' => 'Invalid request');
+        }
+        
+        $this->sendJsonResponse($response);
+    }
+    
+    /**
+     * Quick search for contacts (used in stakeholder integration)
+     */
+    public function action_quicksearch()
+    {
+        global $db;
+        
+        $query = $db->quote($_GET['query'] ?? '');
+        $limit = intval($_GET['limit'] ?? 10);
+        
+        if (strlen($query) < 2) {
+            $this->sendJsonResponse(['results' => []]);
+            return;
+        }
+        
+        $sql = "SELECT 
+                    c.id,
+                    CONCAT(c.first_name, ' ', c.last_name) as name,
+                    c.title,
+                    a.name as account_name
+                FROM contacts c
+                LEFT JOIN accounts a ON c.account_id = a.id AND a.deleted = 0
+                WHERE c.deleted = 0
+                AND (
+                    c.first_name LIKE '%{$query}%' OR
+                    c.last_name LIKE '%{$query}%' OR
+                    CONCAT(c.first_name, ' ', c.last_name) LIKE '%{$query}%' OR
+                    c.email1 LIKE '%{$query}%' OR
+                    a.name LIKE '%{$query}%'
+                )
+                ORDER BY c.last_name, c.first_name
+                LIMIT {$limit}";
+        
+        $result = $db->query($sql);
+        $contacts = [];
+        
+        while ($row = $db->fetchByAssoc($result)) {
+            $contacts[] = [
+                'id' => $row['id'],
+                'name' => trim($row['name']),
+                'title' => $row['title'],
+                'account_name' => $row['account_name']
+            ];
+        }
+        
+        $this->sendJsonResponse(['results' => $contacts]);
+    }
+
+    /**
+     * Display bulk stakeholder management view
+     */
+    public function action_stakeholder_bulk()
+    {
+        $this->view = 'stakeholder_bulk';
+    }
+
+    /**
+     * Validate and sanitize input data
+     */
+    private function validateAndSanitize($value, $type)
+    {
+        global $db;
+        
+        switch ($type) {
+            case 'guid':
+                if (empty($value) || !preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i', $value)) {
+                    return null;
+                }
+                return $db->quote($value);
+                
+            case 'string':
+                return !empty($value) ? $db->quote(trim($value)) : null;
+                
+            case 'text':
+                return !empty($value) ? $db->quote(trim($value)) : null;
+                
+            case 'integer':
+                return is_numeric($value) ? (int)$value : 0;
+                
+            case 'currency':
+                return is_numeric($value) ? (float)$value : 0.00;
+                
+            case 'date':
+                if (empty($value)) return null;
+                $date = date('Y-m-d', strtotime($value));
+                return $date !== '1970-01-01' ? $db->quote($date) : null;
+                
+            case 'datetime':
+                if (empty($value)) return null;
+                $datetime = date('Y-m-d H:i:s', strtotime($value));
+                return $datetime !== '1970-01-01 00:00:00' ? $db->quote($datetime) : null;
+                
+            case 'pipeline_stage':
+                $validStages = array(
+                    'sourcing', 'screening', 'analysis_outreach', 'due_diligence',
+                    'valuation_structuring', 'loi_negotiation', 'financing', 'closing',
+                    'closed_owned_90_day', 'closed_owned_stable', 'unavailable'
+                );
+                return in_array($value, $validStages) ? $db->quote($value) : null;
+                
+            default:
+                return $db->quote(trim($value));
+        }
+    }
+    
+    /**
+     * Validate options array
+     */
+    private function validateOptionsArray($options)
+    {
+        if (!is_array($options)) {
+            return array();
+        }
+        
+        $validatedOptions = array();
+        
+        // Only allow specific option keys for security
+        $allowedKeys = array('force_move', 'skip_validation', 'notify_users', 'update_probability');
+        
+        foreach ($options as $key => $value) {
+            if (in_array($key, $allowedKeys)) {
+                $validatedOptions[$key] = $value;
+            }
+        }
+        
+        return $validatedOptions;
+    }
+    
+    /**
+     * Send JSON response with error handling
      */
     private function sendJsonResponse($data)
     {
-        ob_clean();
-        header('Content-Type: application/json');
-        echo json_encode($data);
-        sugar_cleanup(true);
+        try {
+            // Clean any output buffers
+            while (ob_get_level()) {
+                ob_end_clean();
+            }
+            
+            // Set appropriate headers
+            header('Content-Type: application/json; charset=utf-8');
+            header('Cache-Control: no-cache, must-revalidate');
+            header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+            
+            // Ensure data is properly encoded
+            $jsonData = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PARTIAL_OUTPUT_ON_ERROR);
+            
+            if ($jsonData === false) {
+                // JSON encoding failed
+                $jsonData = json_encode(array(
+                    'success' => false,
+                    'message' => 'JSON encoding error: ' . json_last_error_msg()
+                ));
+            }
+            
+            echo $jsonData;
+            
+            // Clean shutdown
+            if (function_exists('sugar_cleanup')) {
+                sugar_cleanup(true);
+            }
+            exit();
+            
+        } catch (Exception $e) {
+            // Last resort error handling
+            header('Content-Type: application/json');
+            echo json_encode(array(
+                'success' => false,
+                'message' => 'Response error occurred'
+            ));
+            exit();
+        }
     }
 }

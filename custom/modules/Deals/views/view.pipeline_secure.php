@@ -11,6 +11,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/MVC/View/views/view.detail.php');
 require_once('include/database/DBManagerFactory.php');
 require_once('include/utils.php');
+require_once('custom/modules/Deals/DealsSecurityHelper.php');
 
 class DealsViewPipeline extends SugarView
 {

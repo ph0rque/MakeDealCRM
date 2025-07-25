@@ -1,0 +1,285 @@
+/**
+ * Quick Access UI Elements
+ * Floating buttons, tooltips, and quick action menus
+ */
+
+/* Floating quick access button */
+.quick-access-fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: #3b82f6;
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.quick-access-fab:hover {
+    background-color: #2563eb;
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.5);
+}
+
+.quick-access-fab i {
+    font-size: 24px;
+}
+
+/* Quick access menu */
+.quick-access-menu {
+    position: fixed;
+    bottom: 90px;
+    right: 24px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    padding: 8px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    z-index: 999;
+    min-width: 200px;
+}
+
+.quick-access-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.quick-access-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+    color: #374151;
+}
+
+.quick-access-item:hover {
+    background-color: #f3f4f6;
+}
+
+.quick-access-item i {
+    width: 20px;
+    margin-right: 12px;
+    color: #6b7280;
+}
+
+.quick-access-item span {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Quick action buttons in list/grid views */
+.quick-action-buttons {
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+tr:hover .quick-action-buttons,
+.stakeholder-card:hover .quick-action-buttons {
+    opacity: 1;
+}
+
+.quick-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    background-color: #ffffff;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quick-action-btn:hover {
+    background-color: #f3f4f6;
+    color: #374151;
+    border-color: #d1d5db;
+}
+
+.quick-action-btn.email {
+    color: #3b82f6;
+}
+
+.quick-action-btn.email:hover {
+    background-color: #eff6ff;
+    border-color: #3b82f6;
+}
+
+.quick-action-btn.call {
+    color: #10b981;
+}
+
+.quick-action-btn.call:hover {
+    background-color: #f0fdf4;
+    border-color: #10b981;
+}
+
+.quick-action-btn.note {
+    color: #f59e0b;
+}
+
+.quick-action-btn.note:hover {
+    background-color: #fffbeb;
+    border-color: #f59e0b;
+}
+
+/* Enhanced tooltips */
+.stakeholder-tooltip {
+    position: relative;
+}
+
+.stakeholder-tooltip-content {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #1f2937;
+    color: #ffffff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    pointer-events: none;
+    z-index: 1001;
+    margin-bottom: 8px;
+}
+
+.stakeholder-tooltip-content.large {
+    white-space: normal;
+    max-width: 250px;
+    padding: 12px 16px;
+}
+
+.stakeholder-tooltip-content::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: #1f2937;
+}
+
+.stakeholder-tooltip:hover .stakeholder-tooltip-content {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Contact history preview */
+.contact-history-preview {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 8px;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 12px;
+    min-width: 280px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-5px);
+    transition: all 0.2s ease;
+    z-index: 1000;
+}
+
+.stakeholder-tooltip:hover .contact-history-preview {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.contact-history-item {
+    display: flex;
+    align-items: start;
+    padding: 8px 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.contact-history-item:last-child {
+    border-bottom: none;
+}
+
+.contact-history-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.contact-history-icon.email {
+    background-color: #eff6ff;
+    color: #3b82f6;
+}
+
+.contact-history-icon.call {
+    background-color: #f0fdf4;
+    color: #10b981;
+}
+
+.contact-history-icon.meeting {
+    background-color: #fef3c7;
+    color: #f59e0b;
+}
+
+.contact-history-details {
+    flex: 1;
+}
+
+.contact-history-type {
+    font-size: 12px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.contact-history-date {
+    font-size: 11px;
+    color: #6b7280;
+    margin-top: 2px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .quick-access-fab {
+        width: 48px;
+        height: 48px;
+        bottom: 16px;
+        right: 16px;
+    }
+    
+    .quick-access-fab i {
+        font-size: 20px;
+    }
+    
+    .quick-access-menu {
+        right: 16px;
+        bottom: 72px;
+    }
+}

@@ -1,0 +1,430 @@
+/**
+ * Stakeholder Badges Styling
+ * 
+ * Styles for stakeholder badges, quick actions, and related UI components
+ */
+
+/* Stakeholder Badges Container */
+.stakeholder-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 8px 0;
+    padding: 8px;
+    background: rgba(240, 240, 240, 0.5);
+    border-radius: 4px;
+    align-items: center;
+}
+
+/* Individual Stakeholder Badge */
+.stakeholder-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.stakeholder-badge:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stakeholder-badge i {
+    margin-right: 4px;
+    font-size: 11px;
+}
+
+.badge-count {
+    margin-left: 4px;
+    font-weight: bold;
+}
+
+/* Role-specific Badge Colors */
+.role-decision-maker {
+    background-color: #ff6b6b;
+    color: white;
+}
+
+.role-champion {
+    background-color: #4ecdc4;
+    color: white;
+}
+
+.role-technical {
+    background-color: #45b7d1;
+    color: white;
+}
+
+.role-business {
+    background-color: #96ceb4;
+    color: white;
+}
+
+.role-other {
+    background-color: #95a5a6;
+    color: white;
+}
+
+/* Quick Action Button */
+.stakeholder-quick-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    background: white;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-left: auto;
+}
+
+.stakeholder-quick-action:hover {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+    transform: scale(1.1);
+}
+
+/* Quick Actions Menu */
+.stakeholder-quick-menu {
+    position: absolute;
+    z-index: 1050;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    width: 320px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid #eee;
+    background-color: #f8f9fa;
+    border-radius: 8px 8px 0 0;
+}
+
+.menu-header h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.close-menu {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-actions {
+    padding: 12px;
+    display: flex;
+    gap: 8px;
+    border-bottom: 1px solid #eee;
+}
+
+.menu-actions .btn {
+    flex: 1;
+    font-size: 12px;
+    padding: 6px 8px;
+}
+
+.menu-stakeholder-list {
+    padding: 12px;
+}
+
+.menu-stakeholder-list h5 {
+    margin: 0 0 12px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #666;
+}
+
+/* Stakeholder Item in Menu */
+.stakeholder-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.stakeholder-item:last-child {
+    border-bottom: none;
+}
+
+.stakeholder-info {
+    flex: 1;
+}
+
+.stakeholder-info strong {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 2px;
+}
+
+.stakeholder-role {
+    display: inline-block;
+    font-size: 11px;
+    color: #666;
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-right: 8px;
+}
+
+.comm-count {
+    display: inline-block;
+    font-size: 11px;
+    color: #007bff;
+}
+
+.stakeholder-actions {
+    display: flex;
+    gap: 4px;
+}
+
+.stakeholder-actions .btn {
+    padding: 2px 6px;
+    min-width: auto;
+}
+
+.menu-empty {
+    text-align: center;
+    padding: 24px;
+    color: #999;
+    font-style: italic;
+}
+
+/* Contact Search Results */
+.contact-search-results {
+    margin-top: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.contact-result {
+    padding: 8px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s;
+}
+
+.contact-result:hover {
+    background-color: #f8f9fa;
+}
+
+.contact-result:last-child {
+    border-bottom: none;
+}
+
+.no-results {
+    padding: 12px;
+    text-align: center;
+    color: #999;
+    font-style: italic;
+}
+
+/* Communication Timeline */
+.communication-timeline {
+    position: relative;
+    padding-left: 40px;
+}
+
+.timeline-item {
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.timeline-item:before {
+    content: '';
+    position: absolute;
+    left: -25px;
+    top: 20px;
+    bottom: 0;
+    width: 2px;
+    background: #e0e0e0;
+}
+
+.timeline-item:last-child:before {
+    display: none;
+}
+
+.timeline-icon {
+    position: absolute;
+    left: -32px;
+    top: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 14px;
+}
+
+.timeline-icon.email {
+    background-color: #007bff;
+}
+
+.timeline-icon.call {
+    background-color: #28a745;
+}
+
+.timeline-icon.meeting {
+    background-color: #ffc107;
+}
+
+.timeline-content {
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 4px;
+    border-left: 3px solid #007bff;
+}
+
+.timeline-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+
+.timeline-header strong {
+    font-size: 14px;
+}
+
+.timeline-date {
+    font-size: 12px;
+    color: #666;
+}
+
+.timeline-details {
+    font-size: 12px;
+    color: #666;
+}
+
+/* Role Stakeholders Popup */
+.role-stakeholders-popup {
+    padding: 8px;
+}
+
+.role-stakeholders-popup h5 {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.stakeholder-mini {
+    padding: 4px 0;
+    font-size: 12px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.stakeholder-mini:last-child {
+    border-bottom: none;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .stakeholder-badges {
+        padding: 6px;
+    }
+    
+    .stakeholder-badge {
+        padding: 3px 6px;
+        font-size: 11px;
+    }
+    
+    .stakeholder-quick-menu {
+        width: 280px;
+    }
+    
+    .menu-actions {
+        flex-direction: column;
+    }
+    
+    .menu-actions .btn {
+        width: 100%;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .stakeholder-badges {
+        background: rgba(50, 50, 50, 0.5);
+    }
+    
+    .stakeholder-quick-menu {
+        background: #2a2a2a;
+        border-color: #444;
+        color: #e0e0e0;
+    }
+    
+    .menu-header {
+        background-color: #333;
+        border-color: #444;
+    }
+    
+    .stakeholder-role {
+        background: #444;
+        color: #e0e0e0;
+    }
+    
+    .contact-result:hover {
+        background-color: #333;
+    }
+    
+    .timeline-content {
+        background: #333;
+        border-left-color: #007bff;
+    }
+}
+
+/* Integration with Pipeline Cards */
+.deal-card.has-stakeholders .deal-card-header {
+    padding-bottom: 4px;
+}
+
+.deal-card.focused-deal .stakeholder-badges {
+    background: rgba(255, 235, 59, 0.2);
+}
+
+/* Loading State */
+.stakeholder-badges.loading {
+    min-height: 32px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
