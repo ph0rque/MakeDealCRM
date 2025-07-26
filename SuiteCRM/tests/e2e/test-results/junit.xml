@@ -1,0 +1,61 @@
+<testsuites id="" name="" tests="2" failures="1" skipped="0" errors="0" time="22.339215">
+<testsuite name="deals/test-deal-detail-access.spec.js" timestamp="2025-07-26T17:54:20.138Z" hostname="chromium" tests="2" failures="1" skipped="0" time="30.713" errors="0">
+<testcase name="[chromium] Deal Detail View Access › should open deal details in same window with proper access" classname="deals/test-deal-detail-access.spec.js" time="20.614">
+<failure message="test-deal-detail-access.spec.js:17:5 should open deal details in same window with proper access" type="FAILURE">
+<![CDATA[  [chromium] › deals/test-deal-detail-access.spec.js:17:5 › Deal Detail View Access › should open deal details in same window with proper access 
+
+    TimeoutError: page.waitForSelector: Timeout 10000ms exceeded.
+    Call log:
+      - waiting for locator('.detail-view, .moduleTitle, h2') to be visible
+        25 × locator resolved to 5 elements. Proceeding with the first one: <h2 class="recent_h3">ACTIONS</h2>
+
+
+      58 |         
+      59 |         // Verify detail view elements are visible
+    > 60 |         await page.waitForSelector('.detail-view, .moduleTitle, h2', { timeout: 10000 });
+         |                    ^
+      61 |         
+      62 |         // Verify no access denied message
+      63 |         const bodyText = await page.locator('body').textContent();
+        at /Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/deals/test-deal-detail-access.spec.js:60:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/deals-test-deal-detail-acc-b4277-e-window-with-proper-access-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/deals-test-deal-detail-acc-b4277-e-window-with-proper-access-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/deals-test-deal-detail-acc-b4277-e-window-with-proper-access-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/deals-test-deal-detail-acc-b4277-e-window-with-proper-access-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/deals-test-deal-detail-acc-b4277-e-window-with-proper-access-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[Deal link href: index.php?module=Deals&action=DetailView&record=3686ef52-bb73-d952-36b7-68850fcbde12
+
+[[ATTACHMENT|deals-test-deal-detail-acc-b4277-e-window-with-proper-access-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|deals-test-deal-detail-acc-b4277-e-window-with-proper-access-chromium/video.webm]]
+
+[[ATTACHMENT|deals-test-deal-detail-acc-b4277-e-window-with-proper-access-chromium/error-context.md]]
+
+[[ATTACHMENT|deals-test-deal-detail-acc-b4277-e-window-with-proper-access-chromium/trace.zip]]
+]]>
+</system-out>
+</testcase>
+<testcase name="[chromium] Deal Detail View Access › should navigate between pipeline and detail view seamlessly" classname="deals/test-deal-detail-access.spec.js" time="10.099">
+<system-out>
+<![CDATA[✅ Navigation between pipeline and detail view works correctly
+]]>
+</system-out>
+</testcase>
+</testsuite>
+</testsuites>

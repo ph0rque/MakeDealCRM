@@ -1,0 +1,375 @@
+{
+  "config": {
+    "configFile": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/playwright.config.js",
+    "rootDir": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/lib/config/global-setup.js",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "testEnvironment": "development",
+      "browser": "chromium",
+      "buildNumber": "local",
+      "buildUrl": "",
+      "gitCommit": "",
+      "gitBranch": "local",
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
+        {
+          "outputFolder": "html-report",
+          "open": "never",
+          "host": "localhost",
+          "port": 9323
+        }
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "test-results/junit.xml",
+          "includeProjectInTestName": true
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/test-results.json",
+          "includeProjectInTestName": true
+        }
+      ],
+      [
+        "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/node_modules/allure-playwright/dist/cjs/index.js",
+        {
+          "outputFolder": "test-results/allure-results"
+        }
+      ],
+      [
+        "github",
+        null
+      ],
+      [
+        "list",
+        null
+      ],
+      [
+        "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/lib/reporters/custom-reporter.js",
+        {
+          "outputFile": "test-results/custom-report.json"
+        }
+      ],
+      [
+        "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/lib/reporters/performance-reporter.js",
+        {
+          "outputFile": "test-results/performance-report.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "testEnvironment": "development",
+          "browser": "chromium",
+          "buildNumber": "local",
+          "buildUrl": "",
+          "gitCommit": "",
+          "gitBranch": "local",
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.spec.{js,ts}"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "testEnvironment": "development",
+          "browser": "chromium",
+          "buildNumber": "local",
+          "buildUrl": "",
+          "gitCommit": "",
+          "gitBranch": "local",
+          "actualWorkers": 2
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.spec.{js,ts}"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "testEnvironment": "development",
+          "browser": "chromium",
+          "buildNumber": "local",
+          "buildUrl": "",
+          "gitCommit": "",
+          "gitBranch": "local",
+          "actualWorkers": 2
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.spec.{js,ts}"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "testEnvironment": "development",
+          "browser": "chromium",
+          "buildNumber": "local",
+          "buildUrl": "",
+          "gitCommit": "",
+          "gitBranch": "local",
+          "actualWorkers": 2
+        },
+        "id": "Mobile Chrome",
+        "name": "Mobile Chrome",
+        "testDir": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.spec.{js,ts}"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "testEnvironment": "development",
+          "browser": "chromium",
+          "buildNumber": "local",
+          "buildUrl": "",
+          "gitCommit": "",
+          "gitBranch": "local",
+          "actualWorkers": 2
+        },
+        "id": "Mobile Safari",
+        "name": "Mobile Safari",
+        "testDir": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.spec.{js,ts}"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "testEnvironment": "development",
+          "browser": "chromium",
+          "buildNumber": "local",
+          "buildUrl": "",
+          "gitCommit": "",
+          "gitBranch": "local",
+          "actualWorkers": 2
+        },
+        "id": "api",
+        "name": "api",
+        "testDir": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.spec.{js,ts}"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.54.1",
+    "workers": 4,
+    "webServer": {
+      "command": "docker-compose up",
+      "port": 8080,
+      "timeout": 120000,
+      "reuseExistingServer": true,
+      "cwd": "../../../"
+    }
+  },
+  "suites": [
+    {
+      "title": "deals/test-deal-detail-access.spec.js",
+      "file": "deals/test-deal-detail-access.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Deal Detail View Access",
+          "file": "deals/test-deal-detail-access.spec.js",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should open deal details in same window with proper access",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 20614,
+                      "error": {
+                        "message": "TimeoutError: page.waitForSelector: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.detail-view, .moduleTitle, h2') to be visible\u001b[22m\n\u001b[2m    25 × locator resolved to 5 elements. Proceeding with the first one: <h2 class=\"recent_h3\">ACTIONS</h2>\u001b[22m\n",
+                        "stack": "TimeoutError: page.waitForSelector: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.detail-view, .moduleTitle, h2') to be visible\u001b[22m\n\u001b[2m    25 × locator resolved to 5 elements. Proceeding with the first one: <h2 class=\"recent_h3\">ACTIONS</h2>\u001b[22m\n\n    at /Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/deals/test-deal-detail-access.spec.js:60:20",
+                        "location": {
+                          "file": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/deals/test-deal-detail-access.spec.js",
+                          "column": 20,
+                          "line": 60
+                        },
+                        "snippet": "  58 |         \n  59 |         // Verify detail view elements are visible\n> 60 |         await page.waitForSelector('.detail-view, .moduleTitle, h2', { timeout: 10000 });\n     |                    ^\n  61 |         \n  62 |         // Verify no access denied message\n  63 |         const bodyText = await page.locator('body').textContent();"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/deals/test-deal-detail-access.spec.js",
+                            "column": 20,
+                            "line": 60
+                          },
+                          "message": "TimeoutError: page.waitForSelector: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.detail-view, .moduleTitle, h2') to be visible\u001b[22m\n\u001b[2m    25 × locator resolved to 5 elements. Proceeding with the first one: <h2 class=\"recent_h3\">ACTIONS</h2>\u001b[22m\n\n\n  58 |         \n  59 |         // Verify detail view elements are visible\n> 60 |         await page.waitForSelector('.detail-view, .moduleTitle, h2', { timeout: 10000 });\n     |                    ^\n  61 |         \n  62 |         // Verify no access denied message\n  63 |         const bodyText = await page.locator('body').textContent();\n    at /Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/deals/test-deal-detail-access.spec.js:60:20"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "Deal link href: index.php?module=Deals&action=DetailView&record=3686ef52-bb73-d952-36b7-68850fcbde12\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-26T17:54:20.475Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/test-results/deals-test-deal-detail-acc-b4277-e-window-with-proper-access-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/test-results/deals-test-deal-detail-acc-b4277-e-window-with-proper-access-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/test-results/deals-test-deal-detail-acc-b4277-e-window-with-proper-access-chromium/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/test-results/deals-test-deal-detail-acc-b4277-e-window-with-proper-access-chromium/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/deals/test-deal-detail-access.spec.js",
+                        "column": 20,
+                        "line": 60
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "11592796d463e228c462-099f76f0078a97eada5d",
+              "file": "deals/test-deal-detail-access.spec.js",
+              "line": 17,
+              "column": 5
+            },
+            {
+              "title": "should navigate between pipeline and detail view seamlessly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 10099,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "✅ Navigation between pipeline and detail view works correctly\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-26T17:54:20.475Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "11592796d463e228c462-5010a875bf5ccfffd7af",
+              "file": "deals/test-deal-detail-access.spec.js",
+              "line": 70,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2025-07-26T17:54:20.050Z",
+    "duration": 22339.215,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

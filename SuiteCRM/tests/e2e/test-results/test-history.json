@@ -1,110 +1,14 @@
 {
-  " › chromium › deals/deals.spec.js › Deals Module Tests › Performance - list view loads quickly": {
+  " › chromium › deals/test-deal-detail-access.spec.js › Deal Detail View Access › should open deal details in same window with proper access": {
     "failures": [
       {
-        "timestamp": 1753550706199,
-        "error": "Error: Page should load within 3000ms\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m3000\u001b[39m\nReceived:   \u001b[31mNaN\u001b[39m",
-        "duration": 3148,
+        "timestamp": 1753552482373,
+        "error": "TimeoutError: page.waitForSelector: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.detail-view, .moduleTitle, h2') to be visible\u001b[22m\n\u001b[2m    25 × locator resolved to 5 elements. Proceeding with the first one: <h2 class=\"recent_h3\">ACTIONS</h2>\u001b[22m\n",
+        "duration": 20614,
         "retry": 0
       }
     ],
     "totalRuns": 1,
-    "lastSeen": 1753550706199
-  },
-  " › chromium › deals/enhanced-integration.spec.js › Enhanced Integration Tests with Comprehensive Assertions › Deal creation with complete workflow verification": {
-    "failures": [
-      {
-        "timestamp": 1753550742602,
-        "error": "Error: Navigate to deals module should complete within 3000ms\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m3000\u001b[39m\nReceived:   \u001b[31m3282.992082999999\u001b[39m",
-        "duration": 7736,
-        "retry": 0
-      }
-    ],
-    "totalRuns": 1,
-    "lastSeen": 1753550742602
-  },
-  " › chromium › deals/feature1-deal-central-object-fixed.spec.js › Feature 1: Deal as Central Object (Fixed) › Test Case 1.1: E2E Deal Creation and Data Association (Fixed)": {
-    "failures": [
-      {
-        "timestamp": 1753550788776,
-        "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"action=DetailView\"\u001b[39m\nReceived string:    \u001b[31m\"chrome-error://chromewebdata/\"\u001b[39m",
-        "duration": 13648,
-        "retry": 0
-      }
-    ],
-    "totalRuns": 1,
-    "lastSeen": 1753550788776
-  },
-  " › chromium › deals/feature3-checklist-due-diligence.spec.js › Feature 3: Personal Due-Diligence Checklists › Test Case 3.1: E2E Checklist Application and Task Generation": {
-    "failures": [
-      {
-        "timestamp": 1753550883636,
-        "error": "TimeoutError: page.waitForSelector: Timeout 5000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.templates-list-view') to be visible\u001b[22m\n",
-        "duration": 17041,
-        "retry": 0
-      }
-    ],
-    "totalRuns": 1,
-    "lastSeen": 1753550883636
-  },
-  " › chromium › deals/feature3-checklist-due-diligence.spec.js › Feature 3: Personal Due-Diligence Checklists › Verify task completion affects overall checklist status": {
-    "failures": [
-      {
-        "timestamp": 1753550887087,
-        "error": "TimeoutError: page.waitForSelector: Timeout 5000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.list-view-rounded-corners') to be visible\u001b[22m\n",
-        "duration": 16269,
-        "retry": 0
-      }
-    ],
-    "totalRuns": 1,
-    "lastSeen": 1753550887087
-  },
-  " › chromium › deals/feature3-checklist-due-diligence.spec.js › Feature 3: Personal Due-Diligence Checklists › Verify checklist template persistence and reusability": {
-    "failures": [
-      {
-        "timestamp": 1753550887095,
-        "error": "TimeoutError: page.waitForSelector: Timeout 5000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.templates-list-view') to be visible\u001b[22m\n",
-        "duration": 16550,
-        "retry": 0
-      }
-    ],
-    "totalRuns": 1,
-    "lastSeen": 1753550887095
-  },
-  " › chromium › deals/feature3-checklist-due-diligence.spec.js › Feature 3: Checklist Edge Cases and Error Handling › Handle template creation with validation errors": {
-    "failures": [
-      {
-        "timestamp": 1753550893636,
-        "error": "TimeoutError: page.waitForSelector: Timeout 5000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.templates-list-view') to be visible\u001b[22m\n",
-        "duration": 10850,
-        "retry": 0
-      }
-    ],
-    "totalRuns": 1,
-    "lastSeen": 1753550893636
-  },
-  " › chromium › deals/feature4-stakeholder-tracking.spec.js › Feature 4: Simplified Stakeholder Tracking › Test Case 4.1: E2E Stakeholder Role Assignment and Verification": {
-    "failures": [
-      {
-        "timestamp": 1753550899334,
-        "error": "TimeoutError: page.waitForSelector: Timeout 5000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.list-view-rounded-corners') to be visible\u001b[22m\n",
-        "duration": 11191,
-        "retry": 0
-      }
-    ],
-    "totalRuns": 1,
-    "lastSeen": 1753550899334
-  },
-  " › chromium › deals/feature4-stakeholder-tracking.spec.js › Feature 4: Simplified Stakeholder Tracking › Verify stakeholder relationship persistence": {
-    "failures": [
-      {
-        "timestamp": 1753550901041,
-        "error": "TimeoutError: page.waitForSelector: Timeout 5000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.list-view-rounded-corners') to be visible\u001b[22m\n",
-        "duration": 12898,
-        "retry": 0
-      }
-    ],
-    "totalRuns": 1,
-    "lastSeen": 1753550901041
+    "lastSeen": 1753552482373
   }
 }

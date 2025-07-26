@@ -106,8 +106,7 @@
                                 
                                 <div class="deal-card-header">
                                     <h4 class="deal-name">
-                                        <a href="index.php?module=Opportunities&action=DetailView&record={$deal.id}" 
-                                           target="_blank" 
+                                        <a href="index.php?module=Deals&action=DetailView&record={$deal.id}" 
                                            onclick="event.stopPropagation();">
                                             {$deal.name|truncate:50}
                                         </a>
