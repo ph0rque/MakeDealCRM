@@ -1,0 +1,1 @@
+✅ Navigation between pipeline and detail view works correctly

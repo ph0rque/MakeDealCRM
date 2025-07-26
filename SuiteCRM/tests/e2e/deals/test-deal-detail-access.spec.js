@@ -5,10 +5,21 @@ test.describe('Deal Detail View Access', () => {
         // Navigate to login page
         await page.goto('http://localhost:8080');
         
-        // Login
-        await page.fill('#user_name', 'admin');
-        await page.fill('#username_password', 'admin123');
-        await page.click('#bigbutton');
+        // Check which login form is present
+        const oldLoginForm = await page.locator('#user_name').count();
+        const newLoginForm = await page.locator('input[name="username"]').count();
+        
+        if (oldLoginForm > 0) {
+            // Old login form
+            await page.fill('#user_name', 'admin');
+            await page.fill('#username_password', 'admin123');
+            await page.click('#bigbutton');
+        } else if (newLoginForm > 0) {
+            // New login form
+            await page.fill('input[name="username"]', 'admin');
+            await page.fill('input[name="password"]', 'admin123');
+            await page.click('button:has-text("LOG IN")');
+        }
         
         // Wait for dashboard
         await page.waitForSelector('.navbar', { timeout: 10000 });
@@ -56,8 +67,8 @@ test.describe('Deal Detail View Access', () => {
         const currentUrl = page.url();
         expect(currentUrl).not.toContain('module=Home');
         
-        // Verify detail view elements are visible
-        await page.waitForSelector('.detail-view, .moduleTitle, h2', { timeout: 10000 });
+        // Verify detail view elements are visible - Financial & Valuation Hub is unique to deal detail view
+        await page.waitForSelector('text=Financial & Valuation Hub', { timeout: 10000 });
         
         // Verify no access denied message
         const bodyText = await page.locator('body').textContent();

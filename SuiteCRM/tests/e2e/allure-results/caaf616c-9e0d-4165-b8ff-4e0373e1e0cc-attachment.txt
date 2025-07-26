@@ -1,0 +1,1 @@
+Deal link href: index.php?module=Deals&action=DetailView&record=3686ef52-bb73-d952-36b7-68850fcbde12
