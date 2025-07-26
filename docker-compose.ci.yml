@@ -1,0 +1,213 @@
+version: '3.8'
+
+services:
+  suitecrm-ci:
+    build:
+      context: .
+      dockerfile: Dockerfile.ci
+    ports:
+      - "8080:80"
+    environment:
+      - DB_HOST=mysql-ci
+      - DB_NAME=suitecrm_test
+      - DB_USER=suitecrm
+      - DB_PASSWORD=suitecrm
+      - REDIS_HOST=redis-ci
+      - REDIS_PORT=6379
+      - PHP_MEMORY_LIMIT=512M
+      - PHP_MAX_EXECUTION_TIME=300
+      - ENVIRONMENT=test
+    depends_on:
+      mysql-ci:
+        condition: service_healthy
+      redis-ci:
+        condition: service_healthy
+    volumes:
+      - ./SuiteCRM:/var/www/html
+      - ./logs/suitecrm:/var/log/suitecrm
+    networks:
+      - ci-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/index.php"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  mysql-ci:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: suitecrm_test
+      MYSQL_USER: suitecrm
+      MYSQL_PASSWORD: suitecrm
+      MYSQL_INITDB_SKIP_TZINFO: 1
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_ci_data:/var/lib/mysql
+      - ./scripts/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - ./scripts/mysql/my.cnf:/etc/mysql/conf.d/custom.cnf:ro
+    networks:
+      - ci-network
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --innodb-buffer-pool-size=256M
+      --max-connections=100
+      --query-cache-type=1
+      --query-cache-size=64M
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  redis-ci:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_ci_data:/data
+      - ./scripts/redis/redis.conf:/usr/local/etc/redis/redis.conf:ro
+    networks:
+      - ci-network
+    command: redis-server /usr/local/etc/redis/redis.conf
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  elasticsearch-ci:
+    image: elasticsearch:8.11.0
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch_ci_data:/usr/share/elasticsearch/data
+    networks:
+      - ci-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  playwright:
+    image: mcr.microsoft.com/playwright:v1.54.1-jammy
+    working_dir: /app
+    environment:
+      - BASE_URL=http://suitecrm-ci
+      - CI=true
+      - HEADLESS=true
+      - DB_HOST=mysql-ci
+      - DB_NAME=suitecrm_test
+      - DB_USER=suitecrm
+      - DB_PASSWORD=suitecrm
+      - REDIS_HOST=redis-ci
+      - REDIS_PORT=6379
+    volumes:
+      - ./SuiteCRM/tests/e2e:/app
+      - ./test-results:/app/test-results
+      - ./logs/playwright:/app/logs
+    depends_on:
+      suitecrm-ci:
+        condition: service_healthy
+      mysql-ci:
+        condition: service_healthy
+      redis-ci:
+        condition: service_healthy
+    networks:
+      - ci-network
+    command: >
+      sh -c "
+        npm ci &&
+        npx playwright install chromium firefox webkit &&
+        npm run test:ci
+      "
+
+  test-data-seeder:
+    build:
+      context: .
+      dockerfile: scripts/Dockerfile.seeder
+    environment:
+      - DB_HOST=mysql-ci
+      - DB_NAME=suitecrm_test
+      - DB_USER=suitecrm
+      - DB_PASSWORD=suitecrm
+      - REDIS_HOST=redis-ci
+      - REDIS_PORT=6379
+      - SUITECRM_URL=http://suitecrm-ci
+    depends_on:
+      mysql-ci:
+        condition: service_healthy
+      suitecrm-ci:
+        condition: service_healthy
+    volumes:
+      - ./scripts/test-data:/app/test-data
+      - ./SuiteCRM/tests/e2e/test-data:/app/output
+    networks:
+      - ci-network
+    command: >
+      sh -c "
+        php /app/seed-test-data.php &&
+        node /app/generate-test-scenarios.js
+      "
+
+  performance-monitor:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_ci_data:/prometheus
+    networks:
+      - ci-network
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=30d'
+      - '--web.enable-lifecycle'
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana_ci_data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources:ro
+    networks:
+      - ci-network
+    depends_on:
+      - performance-monitor
+
+volumes:
+  mysql_ci_data:
+    driver: local
+  redis_ci_data:
+    driver: local
+  elasticsearch_ci_data:
+    driver: local
+  prometheus_ci_data:
+    driver: local
+  grafana_ci_data:
+    driver: local
+
+networks:
+  ci-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24

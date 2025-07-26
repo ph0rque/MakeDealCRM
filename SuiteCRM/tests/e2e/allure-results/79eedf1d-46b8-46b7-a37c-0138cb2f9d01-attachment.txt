@@ -1,0 +1,4 @@
+Cleanup error (non-critical): page.waitForSelector: Timeout 5000ms exceeded.
+Call log:
+  - waiting for locator('.list-view-rounded-corners') to be visible
+

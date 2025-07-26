@@ -1,0 +1,4037 @@
+Login successful
+✓ Step 1: Navigated to Pipeline view via button
+✓ Step 2: Found 11 pipeline stages using .pipeline-stage
+✓ Step 3: Found 61 existing deals in pipeline
+✓ Step 4: Performed drag and drop operation
+Stage 1 (Sourcing
+                        
+                            55
+                                                                                                                                                                                                
+                                    / 20
+                                
+                                                    
+                    
+                
+                    
+                
+                
+                    56
+                    /
+                    20
+                
+                
+                    
+                
+            
+                    
+                    
+                                                                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Test Deal 1753472794481
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             0d
+                                        
+                                    
+                                
+                                
+                                
+                                                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Administrator
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    87%
+                    
+                        
+                        7/8
+                    
+                
+                
+                Overdue (2)
+            
+                Due Today (1)
+            
+                
+                    
+                    
+                        1 task remaining
+                    
+                
+            
+        
+                                
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Test Deal 1753472442286
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             0d
+                                        
+                                    
+                                
+                                
+                                
+                                                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Administrator
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    87%
+                    
+                        
+                        7/8
+                    
+                
+                
+                Overdue (1)
+            
+                Due Today (1)
+            
+                
+                    
+                    
+                        1 task remaining
+                    
+                
+            
+        
+                                
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Test Deal 1753470737143
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             0d
+                                        
+                                    
+                                
+                                
+                                
+                                                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Administrator
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    87%
+                    
+                        
+                        7/8
+                    
+                
+                
+                Overdue (2)
+            
+                Due Today (1)
+            
+                
+                    
+                    
+                        1 task remaining
+                    
+                
+            
+        
+                                
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Test Deal via Browser
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             0d
+                                        
+                                    
+                                
+                                
+                                
+                                                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Administrator
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    54%
+                    
+                        
+                        6/11
+                    
+                
+                
+                Overdue (2)
+            On Track
+                
+                    
+                    
+                        5 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Test Deal 1753470574597
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             0d
+                                        
+                                    
+                                
+                                
+                                
+                                                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Administrator
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    60%
+                    
+                        
+                        3/5
+                    
+                
+                
+                Overdue (1)
+            
+                Due Today (1)
+            
+                
+                    
+                    
+                        2 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Test Deal 1753470322153
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             0d
+                                        
+                                    
+                                
+                                
+                                
+                                                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Administrator
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    55%
+                    
+                        
+                        5/9
+                    
+                
+                
+                Due Today (1)
+            
+                
+                    
+                    
+                        4 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Test Deal from Playwright
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             0d
+                                        
+                                    
+                                
+                                
+                                
+                                                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Administrator
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    60%
+                    
+                        
+                        3/5
+                    
+                
+                
+                Overdue (1)
+            
+                Due Today (1)
+            
+                
+                    
+                    
+                        2 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Test Deal 1753466502718
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             0d
+                                        
+                                    
+                                
+                                
+                                
+                                                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Administrator
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    80%
+                    
+                        
+                        8/10
+                    
+                
+                On Track
+                
+                    
+                    
+                        2 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Sandeon Consolidation Corp - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: Sandeon Consolidation Corp
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $50,000
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Sally Bronsen
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    66%
+                    
+                        
+                        2/3
+                    
+                
+                
+                
+                    
+                    
+                        1 task remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        70%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Start Over Trust - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: Start Over Trust
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $10,000
+                                        
+                                                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    55%
+                    
+                        
+                        5/9
+                    
+                
+                
+                Overdue (2)
+            
+                Due Today (1)
+            
+                
+                    
+                    
+                        4 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        10%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            B.H. Edwards Inc - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: B.H. Edwards Inc
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $75,000
+                                        
+                                                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    68%
+                    
+                        
+                        11/16
+                    
+                
+                
+                Overdue (1)
+            
+                Due Today (1)
+            
+                
+                    
+                    
+                        5 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        60%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Hammer Group Inc - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: Hammer Group Inc
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $10,000
+                                        
+                                                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    80%
+                    
+                        
+                        8/10
+                    
+                
+                
+                Overdue (2)
+            
+                
+                    
+                    
+                        2 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        10%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Smith & Sons - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: Smith & Sons
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $75,000
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Sally Bronsen
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    57%
+                    
+                        
+                        4/7
+                    
+                
+                
+                Overdue (1)
+            
+                
+                    
+                    
+                        3 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        40%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Hollywood Diner Ltd - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: Hollywood Diner Ltd
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $50,000
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Sarah Smith
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    57%
+                    
+                        
+                        4/7
+                    
+                
+                On Track
+                
+                    
+                    
+                        3 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        40%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            MMM Mortuary Corp - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: MMM Mortuary Corp
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $50,000
+                                        
+                                                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    68%
+                    
+                        
+                        11/16
+                    
+                
+                
+                Due Today (1)
+            
+                
+                    
+                    
+                        5 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        40%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            P Piper & Sons - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: P Piper & Sons
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $10,000
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Sally Bronsen
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    60%
+                    
+                        
+                        3/5
+                    
+                
+                
+                Overdue (1)
+            
+                Due Today (1)
+            
+                
+                    
+                    
+                        2 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        10%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Smallville Resources Inc - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: Smallville Resources Inc
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $25,000
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Sally Bronsen
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    66%
+                    
+                        
+                        2/3
+                    
+                
+                
+                Overdue (2)
+            
+                
+                    
+                    
+                        1 task remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        40%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            A.D. Importing Company Inc - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: A.D. Importing Company Inc
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $50,000
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Will Westin
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    71%
+                    
+                        
+                        10/14
+                    
+                
+                
+                Overdue (2)
+            On Track
+                
+                    
+                    
+                        4 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        10%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Southern Realty - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: Southern Realty
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $10,000
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Sally Bronsen
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    66%
+                    
+                        
+                        2/3
+                    
+                
+                On Track
+                
+                    
+                    
+                        1 task remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        40%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Waverly Trading House - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: Waverly Trading House
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $50,000
+                                        
+                                                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    60%
+                    
+                        
+                        3/5
+                    
+                
+                
+                Overdue (2)
+            
+                Due Today (1)
+            
+                
+                    
+                    
+                        2 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        10%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Income Free Investing LP - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: Income Free Investing LP
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $25,000
+                                        
+                                                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    66%
+                    
+                        
+                        2/3
+                    
+                
+                
+                Overdue (1)
+            
+                
+                    
+                    
+                        1 task remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        60%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Insight Marketing Inc - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: Insight Marketing Inc
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $75,000
+                                        
+                                                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    75%
+                    
+                        
+                        9/12
+                    
+                
+                
+                Overdue (1)
+            
+                Due Today (1)
+            
+                
+                    
+                    
+                        3 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        10%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Trait Institute Inc - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: Trait Institute Inc
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $75,000
+                                        
+                                                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    80%
+                    
+                        
+                        8/10
+                    
+                
+                
+                Overdue (1)
+            On Track
+                
+                    
+                    
+                        2 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        10%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            T-Squared Techs - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: T-Squared Techs
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $75,000
+                                        
+                                                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    66%
+                    
+                        
+                        2/3
+                    
+                
+                
+                Overdue (2)
+            
+                
+                    
+                    
+                        1 task remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        10%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            5D Investments - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: 5D Investments
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $25,000
+                                        
+                                                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    57%
+                    
+                        
+                        4/7
+                    
+                
+                
+                Overdue (2)
+            
+                
+                    
+                    
+                        3 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        60%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Sea Region Inc - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: Sea Region Inc
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $50,000
+                                        
+                                                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    55%
+                    
+                        
+                        5/9
+                    
+                
+                
+                Overdue (2)
+            
+                Due Today (1)
+            
+                
+                    
+                    
+                        4 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        10%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Dirt Mining Ltd - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: Dirt Mining Ltd
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $10,000
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Sally Bronsen
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    75%
+                    
+                        
+                        9/12
+                    
+                
+                
+                Due Today (1)
+            
+                
+                    
+                    
+                        3 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        60%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            DD Furniture Inc - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: DD Furniture Inc
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $75,000
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Will Westin
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    75%
+                    
+                        
+                        9/12
+                    
+                
+                
+                Overdue (2)
+            
+                Due Today (1)
+            
+                
+                    
+                    
+                        3 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        60%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            S Cane Sweeteners Ltd - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: S Cane Sweeteners Ltd
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $25,000
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Sally Bronsen
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    60%
+                    
+                        
+                        3/5
+                    
+                
+                
+                Overdue (1)
+            
+                Due Today (1)
+            
+                
+                    
+                    
+                        2 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        40%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            South Sea Plumbing Products - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: South Sea Plumbing Products
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $50,000
+                                        
+                                                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    60%
+                    
+                        
+                        3/5
+                    
+                
+                
+                Overdue (1)
+            
+                Due Today (1)
+            
+                
+                    
+                    
+                        2 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        40%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            MTM Investment Bank F S B - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: MTM Investment Bank F S B
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $25,000
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Sally Bronsen
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    57%
+                    
+                        
+                        4/7
+                    
+                
+                
+                Overdue (2)
+            On Track
+                
+                    
+                    
+                        3 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        60%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            NW Capital Corp - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: NW Capital Corp
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $75,000
+                                        
+                                                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    55%
+                    
+                        
+                        5/9
+                    
+                
+                
+                Due Today (1)
+            
+                
+                    
+                    
+                        4 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        60%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            AtoZ Co Ltd - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: AtoZ Co Ltd
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $50,000
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Will Westin
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    80%
+                    
+                        
+                        8/10
+                    
+                
+                On Track
+                
+                    
+                    
+                        2 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        40%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Ink Conglomerate Inc - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: Ink Conglomerate Inc
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $75,000
+                                        
+                                                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    55%
+                    
+                        
+                        5/9
+                    
+                
+                
+                Due Today (1)
+            
+                
+                    
+                    
+                        4 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        40%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            5D Investments - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: 5D Investments
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $75,000
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Sarah Smith
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    55%
+                    
+                        
+                        5/9
+                    
+                
+                
+                Overdue (1)
+            
+                Due Today (1)
+            
+                
+                    
+                    
+                        4 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        10%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Jungle Systems Inc - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: Jungle Systems Inc
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $75,000
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Sarah Smith
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    55%
+                    
+                        
+                        5/9
+                    
+                
+                
+                Overdue (1)
+            
+                Due Today (1)
+            
+                
+                    
+                    
+                        4 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        10%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Max Holdings Ltd - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: Max Holdings Ltd
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $75,000
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Sarah Smith
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    54%
+                    
+                        
+                        6/11
+                    
+                
+                
+                Overdue (1)
+            On Track
+                
+                    
+                    
+                        5 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        10%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Kaos Trading Ltd - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: Kaos Trading Ltd
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $75,000
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Sarah Smith
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    71%
+                    
+                        
+                        10/14
+                    
+                
+                
+                Overdue (2)
+            
+                
+                    
+                    
+                        4 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        60%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            AB Drivers Limited - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: AB Drivers Limited
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $10,000
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Sarah Smith
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    75%
+                    
+                        
+                        9/12
+                    
+                
+                
+                Overdue (1)
+            
+                Due Today (1)
+            
+                
+                    
+                    
+                        3 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        10%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Calm Sailing Inc - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: Calm Sailing Inc
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $25,000
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Sarah Smith
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    60%
+                    
+                        
+                        3/5
+                    
+                
+                
+                Overdue (1)
+            
+                Due Today (1)
+            
+                
+                    
+                    
+                        2 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        40%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            JBC Banking Inc - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: JBC Banking Inc
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $75,000
+                                        
+                                                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    80%
+                    
+                        
+                        8/10
+                    
+                
+                
+                Overdue (2)
+            On Track
+                
+                    
+                    
+                        2 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        60%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Tortoise Corp - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: Tortoise Corp
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $50,000
+                                        
+                                                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    71%
+                    
+                        
+                        10/14
+                    
+                
+                On Track
+                
+                    
+                    
+                        4 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        40%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            NW Bridge Construction - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: NW Bridge Construction
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $10,000
+                                        
+                                                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    71%
+                    
+                        
+                        10/14
+                    
+                
+                
+                
+                    
+                    
+                        4 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        70%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Hollywood Diner Ltd - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: Hollywood Diner Ltd
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $75,000
+                                        
+                                                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    87%
+                    
+                        
+                        7/8
+                    
+                
+                
+                Overdue (2)
+            
+                Due Today (1)
+            
+                
+                    
+                    
+                        1 task remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        40%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            T-Squared Techs - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: T-Squared Techs
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $25,000
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Sarah Smith
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    75%
+                    
+                        
+                        9/12
+                    
+                
+                
+                Overdue (1)
+            
+                Due Today (1)
+            
+                
+                    
+                    
+                        3 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        40%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            NW Bridge Construction - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: NW Bridge Construction
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $10,000
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Sarah Smith
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    71%
+                    
+                        
+                        10/14
+                    
+                
+                
+                Overdue (2)
+            On Track
+                
+                    
+                    
+                        4 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        10%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            JBC Banking Inc - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: JBC Banking Inc
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $25,000
+                                        
+                                                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    66%
+                    
+                        
+                        2/3
+                    
+                
+                
+                Overdue (1)
+            
+                
+                    
+                    
+                        1 task remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        70%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Green Tractor Group Limited - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: Green Tractor Group Limited
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $50,000
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Sarah Smith
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    71%
+                    
+                        
+                        10/14
+                    
+                
+                
+                
+                    
+                    
+                        4 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        40%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Nelson Inc - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: Nelson Inc
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $75,000
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Sally Bronsen
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    75%
+                    
+                        
+                        9/12
+                    
+                
+                
+                Overdue (1)
+            
+                Due Today (1)
+            
+                
+                    
+                    
+                        3 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        70%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            B.H. Edwards Inc - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: B.H. Edwards Inc
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $25,000
+                                        
+                                                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    75%
+                    
+                        
+                        9/12
+                    
+                
+                
+                Overdue (1)
+            
+                Due Today (1)
+            
+                
+                    
+                    
+                        3 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        60%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            TJ O'Rourke Inc - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: TJ O'Rourke Inc
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $10,000
+                                        
+                                                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    60%
+                    
+                        
+                        3/5
+                    
+                
+                
+                Overdue (1)
+            
+                Due Today (1)
+            
+                
+                    
+                    
+                        2 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        40%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            B.C. Investing International - 1000 units
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             3d
+                                        
+                                    
+                                
+                                
+                                
+                                                                            
+                                             
+                                            Account: B.C. Investing International
+                                        
+                                                                        
+                                                                            
+                                             
+                                            Amount: $10,000
+                                        
+                                                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    71%
+                    
+                        
+                        10/14
+                    
+                
+                
+                Overdue (2)
+            On Track
+                
+                    
+                    
+                        4 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                    
+                                        
+                                        70%
+                                    
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Basic Deal 1753545801492
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             0d
+                                        
+                                    
+                                
+                                
+                                
+                                                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Administrator
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    75%
+                    
+                        
+                        9/12
+                    
+                
+                
+                Overdue (2)
+            
+                Due Today (1)
+            
+                
+                    
+                    
+                        3 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Basic Deal 1753490380671
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             0d
+                                        
+                                    
+                                
+                                
+                                
+                                                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Administrator
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    60%
+                    
+                        
+                        3/5
+                    
+                
+                
+                Overdue (2)
+            
+                Due Today (1)
+            
+                
+                    
+                    
+                        2 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            E2E Test Deal 1753490372516
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             0d
+                                        
+                                    
+                                
+                                
+                                
+                                                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Administrator
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    71%
+                    
+                        
+                        10/14
+                    
+                
+                
+                Overdue (1)
+            On Track
+                
+                    
+                    
+                        4 tasks remaining): 55 deals
+Stage 2 (Screening
+                        
+                            3
+                                                                                                                                                                                                
+                                    / 15
+                                
+                                                    
+                    
+                
+                    
+                
+                
+                    2
+                    /
+                    15
+                
+                
+                    
+                
+            
+                    
+                    
+                                                                            
+                                
+                                
+                                    
+                                        
+                                            Test Deal 1753478646515
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             0d
+                                        
+                                    
+                                
+                                
+                                
+                                                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Administrator
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    68%
+                    
+                        
+                        11/16
+                    
+                
+                
+                Overdue (2)
+            
+                Due Today (1)
+            
+                
+                    
+                    
+                        5 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                                    
+                                
+                                
+                                    
+                                        
+                                            Test Deal 1753477942418
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             0d
+                                        
+                                    
+                                
+                                
+                                
+                                                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Administrator
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    68%
+                    
+                        
+                        11/16
+                    
+                
+                
+                Due Today (1)
+            
+                
+                    
+                    
+                        5 tasks remaining
+                    
+                
+            
+        
+                                
+                                                                
+                                
+                                
+                                    
+                                
+                            
+                                
+                                
+                                    
+                                        
+                                            Test Deal
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                         0d
+                                    
+                                
+                                
+                                
+                                                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Test McTesterson
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    66%
+                    
+                        
+                        2/3
+                    
+                
+                
+                Overdue (1)
+            
+                
+                    
+                    
+                        1 task remaining): 3 deals
+Stage 3 (Analysis & Outreach
+                        
+                            0
+                                                                                                                                                                                                
+                                    / 10
+                                
+                                                    
+                    
+                
+                    
+                
+                
+                    0
+                    /
+                    10
+                
+                
+                    
+                
+            
+                    
+                    
+                                                                                                
+                                                    
+                                
+                                Drop deals here): 0 deals
+Stage 4 (Due Diligence
+                        
+                            1
+                                                                                                                                                                                                
+                                    / 8
+                                
+                                                    
+                    
+                
+                    
+                
+                
+                    1
+                    /
+                    8
+                
+                
+                    
+                
+            
+                    
+                    
+                                                                            
+                                
+                                
+                                    
+                                        
+                                            Test Deal 1753476380888
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             0d
+                                        
+                                    
+                                
+                                
+                                
+                                                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Administrator
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    60%
+                    
+                        
+                        3/5
+                    
+                
+                
+                Due Today (1)
+            
+                
+                    
+                    
+                        2 tasks remaining): 1 deals
+Stage 5 (Valuation & Structuring
+                        
+                            1
+                                                                                                                                                                                                
+                                    / 6
+                                
+                                                    
+                    
+                
+                    
+                
+                
+                    1
+                    /
+                    6
+                
+                
+                    
+                
+            
+                    
+                    
+                                                                            
+                                
+                                
+                                    
+                                        
+                                            Test Deal 1753472999089
+                                        
+                                    
+                                    
+                                        
+                                            
+                                        
+                                        
+                                             0d
+                                        
+                                    
+                                
+                                
+                                
+                                                                        
+                                                                        
+                                                                            
+                                             
+                                            Assigned to: Administrator
+                                        
+                                                                        
+                                                                    
+            
+                
+                    
+                
+                
+                    54%
+                    
+                        
+                        6/11
+                    
+                
+                
+                Overdue (1)
+            On Track
+                
+                    
+                    
+                        5 tasks remaining): 1 deals
+Stage 6 (LOI / Negotiation
+                        
+                            0
+                                                                                                                                                                                                
+                                    / 5
+                                
+                                                    
+                    
+                
+                    
+                
+                
+                    0
+                    /
+                    5
+                
+                
+                    
+                
+            
+                    
+                    
+                                                                                                
+                                                    
+                                
+                                Drop deals here): 0 deals
+Stage 7 (Financing
+                        
+                            0
+                                                                                                                                                                                                
+                                    / 5
+                                
+                                                    
+                    
+                
+                    
+                
+                
+                    0
+                    /
+                    5
+                
+                
+                    
+                
+            
+                    
+                    
+                                                                                                
+                                                    
+                                
+                                Drop deals here): 0 deals
+Stage 8 (Closing
+                        
+                            0
+                                                                                                                                                                                                
+                                    / 5
+                                
+                                                    
+                    
+                
+                    
+                
+                
+                    0
+                    /
+                    5
+                
+                
+                    
+                
+            
+                    
+                    
+                                                                                                
+                                                    
+                                
+                                Drop deals here): 0 deals
+Stage 9 (Closed/Owned – 90-Day Plan
+                        
+                            0
+                                                                                                                                                                                                
+                                    / 10
+                                
+                                                    
+                    
+                
+                    
+                
+                
+                    0
+                    /
+                    10
+                
+                
+                    
+                
+            
+                    
+                    
+                                                                                                
+                                                    
+                                
+                                Drop deals here): 0 deals
+Stage 10 (Closed/Owned – Stable Operations
+                        
+                            0
+                                                    
+                    
+                    
+                    
+                                                                                                
+                                                    
+                                
+                                Drop deals here): 0 deals
+Stage 11 (Unavailable
+                        
+                            0
+                                                    
+                    
+                    
+                    
+                                                                                                
+                                                    
+                                
+                                Drop deals here): 0 deals
+✅ Test Case 2.1 Completed
+Pipeline drag-and-drop functionality tested

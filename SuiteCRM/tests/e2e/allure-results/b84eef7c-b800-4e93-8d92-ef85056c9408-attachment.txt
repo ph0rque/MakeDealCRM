@@ -1,0 +1,2 @@
+Login successful
+ℹ Bulk role assignment test - see stakeholder-bulk.spec.js for bulk operations

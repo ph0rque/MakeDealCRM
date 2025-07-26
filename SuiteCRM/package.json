@@ -4,7 +4,22 @@
   "description": "End-to-end tests for SuiteCRM Deals module",
   "scripts": {
     "test": "node test_deals_e2e_playwright.js",
-    "test:headed": "node test_deals_e2e_playwright.js"
+    "test:headed": "node test_deals_e2e_playwright.js",
+    "test:e2e": "cd tests/e2e && npm test",
+    "test:e2e:ui": "cd tests/e2e && npm run test:ui",
+    "test:e2e:headed": "cd tests/e2e && npm run test:headed",
+    "test:e2e:debug": "cd tests/e2e && npm run test:debug",
+    "test:e2e:chrome": "cd tests/e2e && npm run test:chrome",
+    "test:e2e:firefox": "cd tests/e2e && npm run test:firefox",
+    "test:e2e:mobile": "cd tests/e2e && npm run test:mobile",
+    "test:e2e:smoke": "cd tests/e2e && npm run test:smoke",
+    "test:e2e:critical": "cd tests/e2e && npm run test:critical",
+    "test:e2e:deals": "cd tests/e2e && npm run test:deals",
+    "test:e2e:install": "cd tests/e2e && npm install",
+    "test:e2e:browsers": "cd tests/e2e && npm run install:browsers",
+    "test:e2e:report": "cd tests/e2e && npm run report",
+    "test:e2e:check": "cd tests/e2e && npm run check:env",
+    "test:e2e:clean": "cd tests/e2e && npm run clean"
   },
   "devDependencies": {
     "@playwright/test": "^1.40.0",

@@ -1,0 +1,2 @@
+Login successful
+ℹ Role-based filtering test - implementation depends on UI features

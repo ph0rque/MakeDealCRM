@@ -1,0 +1,1 @@
+Test "should update deal status through workflow @regression" took 992ms

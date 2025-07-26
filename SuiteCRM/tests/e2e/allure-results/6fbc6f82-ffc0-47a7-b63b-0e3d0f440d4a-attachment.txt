@@ -1,0 +1,1 @@
+Test "should navigate between modules" took 653ms

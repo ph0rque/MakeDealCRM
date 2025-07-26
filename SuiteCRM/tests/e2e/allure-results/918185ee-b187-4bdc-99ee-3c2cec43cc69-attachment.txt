@@ -1,0 +1,1 @@
+Test "should capture console logs" took 521ms

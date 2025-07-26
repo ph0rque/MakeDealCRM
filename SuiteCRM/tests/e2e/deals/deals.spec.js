@@ -1,4 +1,7 @@
-const { test, expect } = require('@playwright/test');
+const { test } = require('@playwright/test');
+const { expect } = require('../lib/helpers/custom-matchers');
+const AssertionsHelper = require('../lib/helpers/assertions.helper');
+const VisualRegressionHelper = require('../lib/helpers/visual-regression.helper');
 
 // Test data
 const testDeal = {
@@ -29,18 +32,32 @@ async function navigateToDeals(page) {
 }
 
 test.describe('Deals Module Tests', () => {
+  let assertionsHelper;
+  let visualHelper;
+  
   test.beforeEach(async ({ page }) => {
     await login(page);
+    assertionsHelper = new AssertionsHelper(page);
+    visualHelper = new VisualRegressionHelper(page);
   });
 
   test('Create a new deal', async ({ page }) => {
+    // Start performance monitoring
+    const startTime = Date.now();
+    
     await navigateToDeals(page);
     
-    // Click Create button
-    await page.click('a:has-text("Create")');
-    await page.waitForSelector('h2:has-text("Create Deal")');
+    // Assert page load performance
+    await expect(page).toMeetPerformanceThresholds({
+      loadTime: 5000,
+      domContentLoaded: 3000
+    });
     
-    // Fill in basic information
+    // Click Create button with UI state verification
+    await page.click('a:has-text("Create")');
+    await assertionsHelper.assertVisibilityChange('h2:has-text("Create Deal")', true);
+    
+    // Fill in basic information with form state tracking
     await page.fill('input[name="name"]', testDeal.name);
     await page.selectOption('select[name="status"]', testDeal.status);
     await page.selectOption('select[name="source"]', testDeal.source);
@@ -52,15 +69,47 @@ test.describe('Deals Module Tests', () => {
     await page.fill('input[name="target_multiple_c"]', testDeal.target_multiple);
     await page.fill('input[name="asking_price_c"]', testDeal.asking_price);
     
+    // Take screenshot before save
+    await visualHelper.assertElementScreenshot('form[name="EditView"]', 'deal-form-before-save');
+    
     // Save the deal
     await page.click('input[value="Save"]');
     
-    // Verify we're on the detail view
-    await page.waitForSelector('h2:has-text("' + testDeal.name + '")');
+    // Verify UI update to detail view
+    await expect(page.locator('h2')).toShowUIUpdate({
+      text: testDeal.name,
+      visible: true
+    });
     
-    // Verify calculated valuation
-    const valuation = await page.textContent('.field-value:has-text("$9,000,000")');
-    expect(valuation).toBeTruthy();
+    // Verify data persistence in database
+    const dealId = await page.evaluate(() => {
+      const url = new URL(window.location.href);
+      return url.searchParams.get('record');
+    });
+    
+    if (dealId) {
+      await expect(page).toHavePersistedInDatabase('opportunities', {
+        id: dealId,
+        name: testDeal.name
+      }, {
+        expectedFields: {
+          deal_value: testDeal.deal_value,
+          ttm_revenue_c: testDeal.ttm_revenue,
+          ttm_ebitda_c: testDeal.ttm_ebitda
+        }
+      });
+      
+      // Verify audit log entry
+      await expect(page).toHaveCorrectAuditLog('Deals', dealId, 'create');
+    }
+    
+    // Verify calculated valuation with enhanced assertion
+    await assertionsHelper.assertText('.field-value', '$9,000,000', {
+      message: 'Calculated valuation should be displayed correctly'
+    });
+    
+    // Take screenshot of completed deal
+    await visualHelper.assertElementScreenshot('.detail-view', 'deal-detail-view-complete');
   });
 
   test('Duplicate detection works', async ({ page }) => {
@@ -70,25 +119,45 @@ test.describe('Deals Module Tests', () => {
     // Enter existing deal name
     await page.fill('input[name="name"]', testDeal.name);
     
-    // Wait for duplicate check
-    await page.waitForTimeout(1000);
+    // Assert UI shows duplicate detection in real-time
+    await expect(page.locator('.duplicate-check-container')).toShowUIUpdate({
+      visible: true
+    }, { timeout: 3000 });
     
-    // Check for duplicate warning
-    const duplicateWarning = await page.locator('.duplicate-check-container').isVisible();
-    expect(duplicateWarning).toBeTruthy();
+    // Take screenshot of duplicate warning
+    await visualHelper.assertElementScreenshot('.duplicate-check-container', 'duplicate-warning-display');
+    
+    // Verify warning message content
+    await assertionsHelper.assertText('.duplicate-check-container', 'duplicate', {
+      message: 'Duplicate warning should be displayed'
+    });
   });
 
   test('List view displays deals correctly', async ({ page }) => {
     await navigateToDeals(page);
     
-    // Check for list view elements
-    await expect(page.locator('.list-view-rounded-corners')).toBeVisible();
+    // Assert page load performance for list view
+    await expect(page).toMeetPerformanceThresholds({
+      loadTime: 4000,
+      domContentLoaded: 2500
+    });
     
-    // Check for summary statistics
-    await expect(page.locator('.summary-stats')).toBeVisible();
+    // Check for list view elements with enhanced assertions
+    await assertionsHelper.assertVisible('.list-view-rounded-corners', 'List view container should be visible');
     
-    // Check for our test deal in the list
-    await expect(page.locator('td:has-text("' + testDeal.name + '")')).toBeVisible();
+    // Verify summary statistics with UI state assertion
+    await expect(page.locator('.summary-stats')).toShowUIUpdate({
+      visible: true,
+      count: 1
+    });
+    
+    // Assert table visual consistency
+    await visualHelper.assertTableVisualConsistency('.list-view-rounded-corners', 'deals-list-view');
+    
+    // Check for our test deal in the list with enhanced text assertion
+    await assertionsHelper.assertText('td', testDeal.name, {
+      message: 'Test deal should appear in the list view'
+    });
   });
 
   test('Quick filter by stage works', async ({ page }) => {
@@ -301,26 +370,46 @@ test.describe('Deals Module Tests', () => {
   });
 
   test('Performance - list view loads quickly', async ({ page }) => {
-    const startTime = Date.now();
-    await navigateToDeals(page);
-    const endTime = Date.now();
+    // Use enhanced performance assertions
+    await assertionsHelper.assertPageLoadPerformance({ threshold: 3000 });
     
-    const loadTime = endTime - startTime;
-    expect(loadTime).toBeLessThan(3000); // Should load in under 3 seconds
+    // Navigate and measure specific operation performance
+    await assertionsHelper.assertDomPerformance(async () => {
+      await navigateToDeals(page);
+    }, {
+      threshold: 3000,
+      operationName: 'Navigate to deals list'
+    });
+    
+    // Assert memory usage is reasonable
+    await assertionsHelper.assertMemoryUsage({ maxHeapSize: 50 * 1024 * 1024 }); // 50MB
+    
+    // Verify API response performance for any AJAX calls
+    await assertionsHelper.assertApiResponsePerformance('/index.php', { threshold: 2000 });
   });
 
   test('Responsive design - mobile view', async ({ page }) => {
-    // Set mobile viewport
-    await page.setViewportSize({ width: 375, height: 667 });
-    
+    // Test responsive design across multiple breakpoints
     await navigateToDeals(page);
     
-    // Check mobile menu
-    await page.click('.navbar-toggle');
-    await expect(page.locator('.navbar-collapse')).toBeVisible();
+    // Assert responsive design with visual regression testing
+    await visualHelper.assertResponsiveDesign('deals-list-responsive', [
+      { name: 'mobile', width: 375, height: 667 },
+      { name: 'tablet', width: 768, height: 1024 },
+      { name: 'desktop', width: 1280, height: 720 }
+    ]);
     
-    // Check list view adapts
-    await expect(page.locator('.list-view-rounded-corners')).toBeVisible();
+    // Set mobile viewport for specific mobile tests
+    await page.setViewportSize({ width: 375, height: 667 });
+    
+    // Check mobile menu with UI state assertions
+    await page.click('.navbar-toggle');
+    await expect(page.locator('.navbar-collapse')).toShowUIUpdate({
+      visible: true
+    });
+    
+    // Verify list view adapts to mobile with visual consistency
+    await expect(page.locator('.list-view-rounded-corners')).toMaintainVisualConsistency('mobile-list-view');
   });
 });
 

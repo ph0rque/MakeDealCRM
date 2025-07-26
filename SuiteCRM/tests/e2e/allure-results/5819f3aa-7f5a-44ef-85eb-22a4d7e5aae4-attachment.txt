@@ -1,0 +1,1 @@
+Test "should create a basic deal @smoke @critical" took 400ms

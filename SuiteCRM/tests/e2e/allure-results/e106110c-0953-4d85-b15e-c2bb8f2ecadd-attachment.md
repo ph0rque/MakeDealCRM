@@ -1,0 +1,384 @@
+# Page snapshot
+
+```yaml
+- iframe
+- navigation:
+  - list:
+    - listitem:
+      - link "":
+        - /url: index.php?module=Home&action=index
+    - listitem:
+      - link "Deals":
+        - /url: "#"
+    - listitem:
+      - link "Collaboration":
+        - /url: "#"
+    - listitem:
+      - link "Activities":
+        - /url: "#"
+    - listitem:
+      - link "All":
+        - /url: "#"
+  - list:
+    - listitem: CREATE
+    - listitem:
+      - button "" [expanded]
+    - listitem
+    - listitem:
+      - button ""
+    - listitem:
+      - button " Administrator " [expanded]
+- text: 
+- list:
+  - link "Pipeline View":
+    - /url: "?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DPipelines%26action%3DKanbanView"
+- heading "Recently Viewed" [level=2]
+- list:
+  - link " Administrator":
+    - /url: index.php?module=Users&action=DetailView&record=1
+  - link:
+    - /url: index.php?module=Users&action=EditView&record=1
+  - link " Test McTeste...":
+    - /url: index.php?module=Users&action=DetailView&record=6da48a7a-c1fa-98d6-aeb8-68813610149b
+  - link:
+    - /url: index.php?module=Users&action=EditView&record=6da48a7a-c1fa-98d6-aeb8-68813610149b
+  - link " Suzette Mcki...":
+    - /url: "?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DLeads%26action%3DDetailView%26record%3D11774499-d3a9-e775-a330-688014099ab3"
+  - link:
+    - /url: "?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DLeads%26action%3DEditView%26record%3D11774499-d3a9-e775-a330-688014099ab3"
+  - link " South Sea Pl...":
+    - /url: "?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DOpportunities%26action%3DDetailView%26record%3Dba8184f5-5164-273c-07f0-6880133b8e60"
+  - link:
+    - /url: "?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DOpportunities%26action%3DEditView%26record%3Dba8184f5-5164-273c-07f0-6880133b8e60"
+  - link " Create new p...":
+    - /url: index.php?module=Project&action=DetailView&record=90d452a7-a9ef-1f19-d001-68801458a389
+  - link:
+    - /url: index.php?module=Project&action=EditView&record=90d452a7-a9ef-1f19-d001-68801458a389
+- list
+- paragraph:
+  - text: "Note: To send record assignment notifications, an SMTP server must be configured in"
+  - link "Email Settings":
+    - /url: index.php?module=EmailMan&action=config
+  - text: .
+- list:
+  - link "SUITECRM DASHBOARD":
+    - /url: "#tab_content_0"
+  - listitem:
+    - link "ACTIONS":
+      - /url: "#"
+- table:
+  - rowgroup:
+    - row:
+      - cell:
+        - list:
+          - listitem
+          - listitem:
+            - table:
+              - rowgroup:
+                - row " My Calls Edit SuiteCRM Dashlet Refresh SuiteCRM Dashlet Delete SuiteCRM Dashlet":
+                  - cell " My Calls":
+                    - heading " My Calls" [level=3]
+                  - cell "Edit SuiteCRM Dashlet Refresh SuiteCRM Dashlet Delete SuiteCRM Dashlet":
+                    - link "Edit SuiteCRM Dashlet":
+                      - /url: javascript:void(0)
+                      - text: 
+                    - link "Refresh SuiteCRM Dashlet":
+                      - /url: javascript:void(0)
+                      - text: 
+                    - link "Delete SuiteCRM Dashlet":
+                      - /url: javascript:void(0)
+                      - text: 
+            - table:
+              - rowgroup:
+                - row "  (0 - 0 of 0)  ":
+                  - cell "  (0 - 0 of 0)  ":
+                    - table:
+                      - rowgroup:
+                        - row "  (0 - 0 of 0)  ":
+                          - cell
+                          - cell "  (0 - 0 of 0)  ":
+                            - button "" [disabled]
+                            - button "" [disabled]
+                            - text: (0 - 0 of 0)
+                            - button "" [disabled]
+                            - button "" [disabled]
+                - row "Close Subject  Related to Start Date  Accept? Status ":
+                  - columnheader "Close"
+                  - columnheader "Subject ":
+                    - link "Subject":
+                      - /url: "#"
+                    - text: 
+                  - columnheader "Related to"
+                  - columnheader "Start Date ":
+                    - link "Start Date":
+                      - /url: "#"
+                    - text: 
+                  - columnheader "Accept?"
+                  - columnheader "Status ":
+                    - link "Status":
+                      - /url: "#"
+                    - text: 
+                  - cell
+              - rowgroup:
+                - row "No Data":
+                  - cell "No Data":
+                    - emphasis: No Data
+          - listitem:
+            - table:
+              - rowgroup:
+                - row " My Meetings Edit SuiteCRM Dashlet Refresh SuiteCRM Dashlet Delete SuiteCRM Dashlet":
+                  - cell " My Meetings":
+                    - heading " My Meetings" [level=3]
+                  - cell "Edit SuiteCRM Dashlet Refresh SuiteCRM Dashlet Delete SuiteCRM Dashlet":
+                    - link "Edit SuiteCRM Dashlet":
+                      - /url: javascript:void(0)
+                      - text: 
+                    - link "Refresh SuiteCRM Dashlet":
+                      - /url: javascript:void(0)
+                      - text: 
+                    - link "Delete SuiteCRM Dashlet":
+                      - /url: javascript:void(0)
+                      - text: 
+            - table:
+              - rowgroup:
+                - row "  (0 - 0 of 0)  ":
+                  - cell "  (0 - 0 of 0)  ":
+                    - table:
+                      - rowgroup:
+                        - row "  (0 - 0 of 0)  ":
+                          - cell
+                          - cell "  (0 - 0 of 0)  ":
+                            - button "" [disabled]
+                            - button "" [disabled]
+                            - text: (0 - 0 of 0)
+                            - button "" [disabled]
+                            - button "" [disabled]
+                - row "Close Subject  Related to Start Date  Accept?":
+                  - columnheader "Close"
+                  - columnheader "Subject ":
+                    - link "Subject":
+                      - /url: "#"
+                    - text: 
+                  - columnheader "Related to"
+                  - columnheader "Start Date ":
+                    - link "Start Date":
+                      - /url: "#"
+                    - text: 
+                  - columnheader "Accept?"
+                  - cell
+              - rowgroup:
+                - row "No Data":
+                  - cell "No Data":
+                    - emphasis: No Data
+          - listitem:
+            - table:
+              - rowgroup:
+                - row " My Top Open Opportunities Edit SuiteCRM Dashlet Refresh SuiteCRM Dashlet Delete SuiteCRM Dashlet":
+                  - cell " My Top Open Opportunities":
+                    - heading " My Top Open Opportunities" [level=3]
+                  - cell "Edit SuiteCRM Dashlet Refresh SuiteCRM Dashlet Delete SuiteCRM Dashlet":
+                    - link "Edit SuiteCRM Dashlet":
+                      - /url: javascript:void(0)
+                      - text: 
+                    - link "Refresh SuiteCRM Dashlet":
+                      - /url: javascript:void(0)
+                      - text: 
+                    - link "Delete SuiteCRM Dashlet":
+                      - /url: javascript:void(0)
+                      - text: 
+            - table:
+              - rowgroup:
+                - row "  (1 - 4 of 4)  ":
+                  - cell "  (1 - 4 of 4)  ":
+                    - table:
+                      - rowgroup:
+                        - row "  (1 - 4 of 4)  ":
+                          - cell
+                          - cell "  (1 - 4 of 4)  ":
+                            - button "" [disabled]
+                            - button "" [disabled]
+                            - text: (1 - 4 of 4)
+                            - button "" [disabled]
+                            - button "" [disabled]
+                - row "Opportunity Name  Account Name  Amount  Expected Close Date ":
+                  - columnheader "Opportunity Name ":
+                    - link "Opportunity Name":
+                      - /url: "#"
+                    - text: 
+                  - columnheader "Account Name ":
+                    - link "Account Name":
+                      - /url: "#"
+                    - text: 
+                  - columnheader "Amount ":
+                    - link "Amount":
+                      - /url: "#"
+                    - text: 
+                  - columnheader "Expected Close Date ":
+                    - link "Expected Close Date":
+                      - /url: "#"
+                    - text: 
+                  - cell
+              - rowgroup:
+                - row "Test Deal 1753478646515 $0.00  ":
+                  - cell "Test Deal 1753478646515":
+                    - link "Test Deal 1753478646515":
+                      - /url: index.php?action=DetailView&module=Opportunities&record=de607621-c6ce-f270-81a1-6883f578e1a9&offset=1&stamp=1753546128063200400
+                  - cell
+                  - cell "$0.00"
+                  - cell
+                  - cell " ":
+                    - link "":
+                      - /url: index.php?action=EditView&module=Opportunities&record=de607621-c6ce-f270-81a1-6883f578e1a9&offset=1&stamp=1753546128063200400&return_module=Home&return_action=index
+                    - link "":
+                      - /url: index.php?action=DetailView&module=Opportunities&record=de607621-c6ce-f270-81a1-6883f578e1a9&offset=1&stamp=1753546128063200400&return_module=Home&return_action=index
+                - row "Test Deal 1753477942418 $0.00  ":
+                  - cell "Test Deal 1753477942418":
+                    - link "Test Deal 1753477942418":
+                      - /url: index.php?action=DetailView&module=Opportunities&record=9fc79fef-c702-1126-483e-6883f3f49c82&offset=2&stamp=1753546128063200400
+                  - cell
+                  - cell "$0.00"
+                  - cell
+                  - cell " ":
+                    - link "":
+                      - /url: index.php?action=EditView&module=Opportunities&record=9fc79fef-c702-1126-483e-6883f3f49c82&offset=2&stamp=1753546128063200400&return_module=Home&return_action=index
+                    - link "":
+                      - /url: index.php?action=DetailView&module=Opportunities&record=9fc79fef-c702-1126-483e-6883f3f49c82&offset=2&stamp=1753546128063200400&return_module=Home&return_action=index
+                - row "Test Deal 1753476380888 $0.00  ":
+                  - cell "Test Deal 1753476380888":
+                    - link "Test Deal 1753476380888":
+                      - /url: index.php?action=DetailView&module=Opportunities&record=2399691b-4f09-7f75-ab25-6883ede14fd1&offset=3&stamp=1753546128063200400
+                  - cell
+                  - cell "$0.00"
+                  - cell
+                  - cell " ":
+                    - link "":
+                      - /url: index.php?action=EditView&module=Opportunities&record=2399691b-4f09-7f75-ab25-6883ede14fd1&offset=3&stamp=1753546128063200400&return_module=Home&return_action=index
+                    - link "":
+                      - /url: index.php?action=DetailView&module=Opportunities&record=2399691b-4f09-7f75-ab25-6883ede14fd1&offset=3&stamp=1753546128063200400&return_module=Home&return_action=index
+                - row "Test Deal 1753472999089 $0.00  ":
+                  - cell "Test Deal 1753472999089":
+                    - link "Test Deal 1753472999089":
+                      - /url: index.php?action=DetailView&module=Opportunities&record=4da55490-0a9d-55b6-7233-6883df90c3c5&offset=4&stamp=1753546128063200400
+                  - cell
+                  - cell "$0.00"
+                  - cell
+                  - cell " ":
+                    - link "":
+                      - /url: index.php?action=EditView&module=Opportunities&record=4da55490-0a9d-55b6-7233-6883df90c3c5&offset=4&stamp=1753546128063200400&return_module=Home&return_action=index
+                    - link "":
+                      - /url: index.php?action=DetailView&module=Opportunities&record=4da55490-0a9d-55b6-7233-6883df90c3c5&offset=4&stamp=1753546128063200400&return_module=Home&return_action=index
+          - listitem:
+            - table:
+              - rowgroup:
+                - row " My Accounts Edit SuiteCRM Dashlet Refresh SuiteCRM Dashlet Delete SuiteCRM Dashlet":
+                  - cell " My Accounts":
+                    - heading " My Accounts" [level=3]
+                  - cell "Edit SuiteCRM Dashlet Refresh SuiteCRM Dashlet Delete SuiteCRM Dashlet":
+                    - link "Edit SuiteCRM Dashlet":
+                      - /url: javascript:void(0)
+                      - text: 
+                    - link "Refresh SuiteCRM Dashlet":
+                      - /url: javascript:void(0)
+                      - text: 
+                    - link "Delete SuiteCRM Dashlet":
+                      - /url: javascript:void(0)
+                      - text: 
+            - table:
+              - rowgroup:
+                - row "  (0 - 0 of 0)  ":
+                  - cell "  (0 - 0 of 0)  ":
+                    - table:
+                      - rowgroup:
+                        - row "  (0 - 0 of 0)  ":
+                          - cell
+                          - cell "  (0 - 0 of 0)  ":
+                            - button "" [disabled]
+                            - button "" [disabled]
+                            - text: (0 - 0 of 0)
+                            - button "" [disabled]
+                            - button "" [disabled]
+                - row "Name  Type  Website  Phone  Billing Country ":
+                  - columnheader "Name ":
+                    - link "Name":
+                      - /url: "#"
+                    - text: 
+                  - columnheader "Type ":
+                    - link "Type":
+                      - /url: "#"
+                    - text: 
+                  - columnheader "Website ":
+                    - link "Website":
+                      - /url: "#"
+                    - text: 
+                  - columnheader "Phone ":
+                    - link "Phone":
+                      - /url: "#"
+                    - text: 
+                  - columnheader "Billing Country ":
+                    - link "Billing Country":
+                      - /url: "#"
+                    - text: 
+                  - cell
+              - rowgroup:
+                - row "No Data":
+                  - cell "No Data":
+                    - emphasis: No Data
+          - listitem:
+            - table:
+              - rowgroup:
+                - row " My Leads Edit SuiteCRM Dashlet Refresh SuiteCRM Dashlet Delete SuiteCRM Dashlet":
+                  - cell " My Leads":
+                    - heading " My Leads" [level=3]
+                  - cell "Edit SuiteCRM Dashlet Refresh SuiteCRM Dashlet Delete SuiteCRM Dashlet":
+                    - link "Edit SuiteCRM Dashlet":
+                      - /url: javascript:void(0)
+                      - text: 
+                    - link "Refresh SuiteCRM Dashlet":
+                      - /url: javascript:void(0)
+                      - text: 
+                    - link "Delete SuiteCRM Dashlet":
+                      - /url: javascript:void(0)
+                      - text: 
+            - table:
+              - rowgroup:
+                - row "  (0 - 0 of 0)  ":
+                  - cell "  (0 - 0 of 0)  ":
+                    - table:
+                      - rowgroup:
+                        - row "  (0 - 0 of 0)  ":
+                          - cell
+                          - cell "  (0 - 0 of 0)  ":
+                            - button "" [disabled]
+                            - button "" [disabled]
+                            - text: (0 - 0 of 0)
+                            - button "" [disabled]
+                            - button "" [disabled]
+                - row "Name  Job Title  Office Phone  Email Address":
+                  - columnheader "Name ":
+                    - link "Name":
+                      - /url: "#"
+                    - text: 
+                  - columnheader "Job Title ":
+                    - link "Job Title":
+                      - /url: "#"
+                    - text: 
+                  - columnheader "Office Phone ":
+                    - link "Office Phone":
+                      - /url: "#"
+                    - text: 
+                  - columnheader "Email Address"
+                  - cell
+              - rowgroup:
+                - row "No Data":
+                  - cell "No Data":
+                    - emphasis: No Data
+          - listitem
+      - cell:
+        - list:
+          - listitem
+          - listitem
+- contentinfo:
+  - text: "© Supercharged by SuiteCRM © Powered By SugarCRM  Server response time: 0.42 seconds."
+  - link "Back to top":
+    - /url: javascript:void(0)
+```

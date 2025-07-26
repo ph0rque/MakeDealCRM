@@ -1,0 +1,3 @@
+Login successful
+Navigated to Deals via direct URL: Deals
+✓ Step 1: Navigated to Deals module

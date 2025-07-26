@@ -1,0 +1,41 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - "rules/*.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # - alertmanager:9093
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'suitecrm'
+    static_configs:
+      - targets: ['suitecrm-ci:80']
+    metrics_path: '/api/metrics'
+    scrape_interval: 30s
+    scrape_timeout: 10s
+
+  - job_name: 'mysql'
+    static_configs:
+      - targets: ['mysql-ci:3306']
+    scrape_interval: 30s
+
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis-ci:6379']
+    scrape_interval: 30s
+
+  - job_name: 'playwright-tests'
+    static_configs:
+      - targets: ['playwright:8080']
+    metrics_path: '/metrics'
+    scrape_interval: 60s
+    honor_labels: true

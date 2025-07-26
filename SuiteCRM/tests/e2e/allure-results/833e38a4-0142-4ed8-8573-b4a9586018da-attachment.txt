@@ -1,0 +1,1 @@
+Test "should load the application" took 498ms

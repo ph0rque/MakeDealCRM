@@ -1,0 +1,1 @@
+Test "should have proper ARIA labels" took 561ms

@@ -1,0 +1,18 @@
+{
+  "name": "makedalcrm-page-objects",
+  "version": "1.0.0",
+  "description": "Page Object Models for MakeDealCRM E2E Testing",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test --config=../playwright.config.js"
+  },
+  "keywords": [
+    "playwright",
+    "page-objects",
+    "e2e-testing",
+    "makedalcrm"
+  ],
+  "dependencies": {
+    "@playwright/test": "^1.40.0"
+  }
+}

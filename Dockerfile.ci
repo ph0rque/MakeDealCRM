@@ -1,0 +1,112 @@
+FROM php:8.1-apache
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    libzip-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libmcrypt-dev \
+    libicu-dev \
+    libxslt-dev \
+    zip \
+    unzip \
+    cron \
+    supervisor \
+    default-mysql-client \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) \
+        gd \
+        pdo_mysql \
+        mysqli \
+        mbstring \
+        xml \
+        zip \
+        bcmath \
+        intl \
+        xsl \
+        soap \
+        opcache
+
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Configure PHP for CI environment
+RUN { \
+    echo 'memory_limit = 512M'; \
+    echo 'max_execution_time = 300'; \
+    echo 'max_input_vars = 3000'; \
+    echo 'upload_max_filesize = 32M'; \
+    echo 'post_max_size = 32M'; \
+    echo 'display_errors = Off'; \
+    echo 'log_errors = On'; \
+    echo 'error_log = /var/log/php_errors.log'; \
+    echo 'date.timezone = UTC'; \
+} > /usr/local/etc/php/conf.d/ci.ini
+
+# Configure OPcache for better performance
+RUN { \
+    echo 'opcache.enable=1'; \
+    echo 'opcache.memory_consumption=128'; \
+    echo 'opcache.interned_strings_buffer=8'; \
+    echo 'opcache.max_accelerated_files=4000'; \
+    echo 'opcache.revalidate_freq=60'; \
+    echo 'opcache.fast_shutdown=1'; \
+    echo 'opcache.enable_cli=1'; \
+} > /usr/local/etc/php/conf.d/opcache.ini
+
+# Configure Apache
+RUN a2enmod rewrite headers expires deflate
+COPY scripts/apache/vhost-ci.conf /etc/apache2/sites-available/000-default.conf
+
+# Set working directory
+WORKDIR /var/www/html
+
+# Copy application files
+COPY SuiteCRM/ .
+
+# Set proper permissions
+RUN chown -R www-data:www-data /var/www/html \
+    && find /var/www/html -type d -exec chmod 755 {} \; \
+    && find /var/www/html -type f -exec chmod 644 {} \; \
+    && chmod -R 775 cache custom modules themes upload include/utils
+
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader --no-interaction
+
+# Copy CI-specific configuration
+COPY scripts/config/config_override.ci.php config_override.php
+
+# Copy supervisor configuration for background processes
+COPY scripts/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Copy health check script
+COPY scripts/health-check.sh /usr/local/bin/health-check.sh
+RUN chmod +x /usr/local/bin/health-check.sh
+
+# Copy initialization scripts
+COPY scripts/init/ /docker-entrypoint-init.d/
+RUN chmod +x /docker-entrypoint-init.d/*.sh
+
+# Create log directories
+RUN mkdir -p /var/log/suitecrm /var/log/supervisor \
+    && chown www-data:www-data /var/log/suitecrm
+
+# Copy entrypoint script
+COPY scripts/docker-entrypoint-ci.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD /usr/local/bin/health-check.sh
+
+# Expose ports
+EXPOSE 80
+
+# Set entrypoint
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+CMD ["apache2-foreground"]

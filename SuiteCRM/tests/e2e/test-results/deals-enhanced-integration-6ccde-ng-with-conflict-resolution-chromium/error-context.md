@@ -1,0 +1,182 @@
+# Page snapshot
+
+```yaml
+- navigation:
+  - list:
+    - listitem:
+      - link "":
+        - /url: index.php?module=Home&action=index
+    - listitem:
+      - link "Deals":
+        - /url: index.php?module=Deals&action=index
+    - listitem:
+      - link "Deals":
+        - /url: "#"
+    - listitem:
+      - link "Collaboration":
+        - /url: "#"
+    - listitem:
+      - link "Activities":
+        - /url: "#"
+    - listitem:
+      - link "All":
+        - /url: "#"
+  - list:
+    - listitem: CREATE
+    - listitem:
+      - button "" [expanded]
+    - listitem
+    - listitem:
+      - button ""
+    - listitem:
+      - button " Administrator " [expanded]
+- text: 
+- list:
+  - link "Create Deal":
+    - /url: index.php?module=Deals&action=EditView&return_module=Deals&return_action=pipeline
+  - link "Pipeline View":
+    - /url: index.php?module=Deals&action=pipeline
+  - link " Advanced Search":
+    - /url: index.php?module=Deals&action=index&search_form=true&advanced=true
+  - link "Deal List":
+    - /url: index.php?module=Deals&action=index&return_module=Deals&return_action=pipeline
+  - link "Reports":
+    - /url: "?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DReports%26action%3Dindex%26query_module%3DDeals"
+  - link "Pipeline Analytics":
+    - /url: index.php?module=Deals&action=analytics
+  - link " Import":
+    - /url: index.php?module=Import&action=Step1&import_module=Deals&return_module=Deals&return_action=pipeline
+  - link "Export":
+    - /url: index.php?module=Deals&action=export
+  - link "Bulk Operations":
+    - /url: index.php?module=Deals&action=bulk_operations
+  - link "Configure Module":
+    - /url: index.php?module=Deals&action=configure
+  - link "Pipeline View":
+    - /url: "?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DPipelines%26action%3DKanbanView"
+- heading "Recently Viewed" [level=2]
+- list:
+  - link " Administrator":
+    - /url: index.php?module=Users&action=DetailView&record=1
+  - link:
+    - /url: index.php?module=Users&action=EditView&record=1
+  - link " Test McTeste...":
+    - /url: index.php?module=Users&action=DetailView&record=6da48a7a-c1fa-98d6-aeb8-68813610149b
+  - link:
+    - /url: index.php?module=Users&action=EditView&record=6da48a7a-c1fa-98d6-aeb8-68813610149b
+  - link " Suzette Mcki...":
+    - /url: "?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DLeads%26action%3DDetailView%26record%3D11774499-d3a9-e775-a330-688014099ab3"
+  - link:
+    - /url: "?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DLeads%26action%3DEditView%26record%3D11774499-d3a9-e775-a330-688014099ab3"
+  - link " Create new p...":
+    - /url: index.php?module=Project&action=DetailView&record=90d452a7-a9ef-1f19-d001-68801458a389
+  - link:
+    - /url: index.php?module=Project&action=EditView&record=90d452a7-a9ef-1f19-d001-68801458a389
+- list
+- paragraph:
+  - text: "Note: To send record assignment notifications, an SMTP server must be configured in"
+  - link "Email Settings":
+    - /url: index.php?module=EmailMan&action=config
+  - text: .
+- link "Skip to pipeline board":
+  - /url: "#pipeline-board"
+- main "Deal Pipeline":
+  - heading "Deal Pipeline" [level=2]
+  - toolbar "Pipeline actions":
+    - button ""
+    - button ""
+    - text:  v1
+    - button "Refresh pipeline board": Refresh
+    - button "Toggle compact view": Compact View
+    - button "Toggle focus filter": Show Focused
+    - button "Manage stakeholders": Manage Stakeholders
+  - region "Pipeline board":
+    - list "Sourcing stage":
+      - heading "Sourcing" [level=3]
+      - text: 2 / 20 2 / 20 
+      - group "Sourcing":
+        - 'listitem "Deal: Basic Deal 1753550406603"':
+          - heading "Basic Deal 1753550406603" [level=4]:
+            - link "Basic Deal 1753550406603":
+              - /url: index.php?module=Opportunities&action=DetailView&record=618fc365-77cf-00cb-4330-68850ed71701
+          - button "Mark Basic Deal 1753550406603 as focused"
+          - text: " 0d Assigned to: Administrator"
+          - progressbar "Checklist completion progress": 71%  10/14  4 tasks remaining
+        - 'listitem "Deal: E2E Test Deal 1753550401000"':
+          - heading "E2E Test Deal 1753550401000" [level=4]:
+            - link "E2E Test Deal 1753550401000":
+              - /url: index.php?module=Opportunities&action=DetailView&record=ea071c90-68b0-93f1-11a4-68850e9f6eca
+          - button "Mark E2E Test Deal 1753550401000 as focused"
+          - text: " 0d Assigned to: Administrator"
+          - progressbar "Checklist completion progress": 80%  8/10 On Track  2 tasks remaining
+    - list "Screening stage":
+      - heading "Screening" [level=3]
+      - text: 1 / 15 1 / 15 
+      - group "Screening":
+        - 'listitem "Deal: Acme Manufacturing Co"':
+          - heading "Acme Manufacturing Co" [level=4]:
+            - link "Acme Manufacturing Co":
+              - /url: index.php?module=Opportunities&action=DetailView&record=77a6f099-7afc-50ff-c098-68850bb7a48b
+          - button "Mark Acme Manufacturing Co as focused"
+          - text: " 0d Assigned to: Administrator"
+          - progressbar "Checklist completion progress": 75%  9/12 Overdue (2) Due Today (1)  3 tasks remaining
+    - list "Analysis & Outreach stage":
+      - heading "Analysis & Outreach" [level=3]
+      - text: 0 / 10 0 / 10 
+      - group "Analysis & Outreach":
+        - listitem:
+          - paragraph: Drop deals here
+    - list "Due Diligence stage":
+      - heading "Due Diligence" [level=3]
+      - text: 0 / 8 0 / 8 
+      - group "Due Diligence":
+        - listitem:
+          - paragraph: Drop deals here
+    - list "Valuation & Structuring stage":
+      - heading "Valuation & Structuring" [level=3]
+      - text: 0 / 6 0 / 6 
+      - group "Valuation & Structuring":
+        - listitem:
+          - paragraph: Drop deals here
+    - list "LOI / Negotiation stage":
+      - heading "LOI / Negotiation" [level=3]
+      - text: 0 / 5 0 / 5 
+      - group "LOI / Negotiation":
+        - listitem:
+          - paragraph: Drop deals here
+    - list "Financing stage":
+      - heading "Financing" [level=3]
+      - text: 0 / 5 0 / 5 
+      - group "Financing":
+        - listitem:
+          - paragraph: Drop deals here
+    - list "Closing stage":
+      - heading "Closing" [level=3]
+      - text: 0 / 5 0 / 5 
+      - group "Closing":
+        - listitem:
+          - paragraph: Drop deals here
+    - list "Closed/Owned – 90-Day Plan stage":
+      - heading "Closed/Owned – 90-Day Plan" [level=3]
+      - text: 0 / 10 0 / 10 
+      - group "Closed/Owned – 90-Day Plan":
+        - listitem:
+          - paragraph: Drop deals here
+    - list "Closed/Owned – Stable Operations stage":
+      - heading "Closed/Owned – Stable Operations" [level=3]
+      - text: "0"
+      - group "Closed/Owned – Stable Operations":
+        - listitem:
+          - paragraph: Drop deals here
+    - list "Unavailable stage":
+      - heading "Unavailable" [level=3]
+      - text: "0"
+      - group "Unavailable":
+        - listitem:
+          - paragraph: Drop deals here
+  - text: Use Tab to navigate, Enter to select, Space to focus
+- contentinfo:
+  - text: "© Supercharged by SuiteCRM © Powered By SugarCRM  Server response time: 0.27 seconds."
+  - link "Back to top":
+    - /url: javascript:void(0)
+```

@@ -1,0 +1,1 @@
+Test "should authenticate successfully" took 505ms

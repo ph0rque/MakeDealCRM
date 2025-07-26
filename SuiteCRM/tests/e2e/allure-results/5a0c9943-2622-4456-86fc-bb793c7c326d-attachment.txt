@@ -1,0 +1,6 @@
+Login successful
+Navigated to Deals via direct URL: Deals
+✓ Step 1: Navigated to Deals module
+✓ Step 2: Clicked Create Deal button
+✓ Step 3: Filled in all required fields
+✓ Step 4: Saved the new deal

@@ -118,7 +118,7 @@ var DealsEditView = {
         
         $.each(duplicates, function(index, deal) {
             html += '<tr>';
-            html += '<td><a href="index.php?module=Deals&action=DetailView&record=' + deal.id + '" target="_blank">' + deal.name + '</a></td>';
+            html += '<td><a href="index.php?module=Deals&action=DetailView&record=' + deal.id + '">' + deal.name + '</a></td>';
             html += '<td>' + (deal.account_name || '-') + '</td>';
             html += '<td>' + (deal.amount_formatted || '-') + '</td>';
             html += '<td>' + (deal.sales_stage || '-') + '</td>';
@@ -200,7 +200,7 @@ var DealsEditView = {
     },
     
     viewDuplicate: function(duplicateId) {
-        window.open('index.php?module=Deals&action=DetailView&record=' + duplicateId, '_blank');
+        window.location.href = 'index.php?module=Deals&action=DetailView&record=' + duplicateId;
     },
     
     continueWithDuplicate: function() {

@@ -135,8 +135,8 @@ class DealsViewPipeline extends SugarView
                     c.focus_flag_c,
                     c.focus_order_c,
                     c.focus_date_c
-                FROM opportunities d
-                LEFT JOIN opportunities_cstm c ON d.id = c.id_c
+                FROM deals d
+                LEFT JOIN deals_cstm c ON d.id = c.id_c
                 LEFT JOIN users u ON d.assigned_user_id = u.id
                 LEFT JOIN accounts a ON d.account_id = a.id
                 WHERE d.deleted = 0
@@ -335,7 +335,7 @@ class DealsViewPipeline extends SugarView
         global $db;
         
         // Determine performance mode based on total deals
-        $query = "SELECT COUNT(*) as count FROM opportunities o 
+        $query = "SELECT COUNT(*) as count FROM deals o 
                  WHERE o.deleted = 0 
                  AND o.sales_stage NOT IN ('Closed Won', 'Closed Lost')";
         
@@ -395,8 +395,8 @@ class DealsViewPipeline extends SugarView
                     c.focus_date_c,
                     CONCAT(u.first_name, ' ', u.last_name) as assigned_user_name,
                     a.name as account_name
-                FROM opportunities d
-                LEFT JOIN opportunities_cstm c ON d.id = c.id_c
+                FROM deals d
+                LEFT JOIN deals_cstm c ON d.id = c.id_c
                 LEFT JOIN users u ON d.assigned_user_id = u.id AND u.deleted = 0
                 LEFT JOIN accounts a ON d.account_id = a.id AND a.deleted = 0
                 WHERE d.deleted = 0

@@ -1,0 +1,1 @@
+Test "should integrate with contacts module" took 868ms

@@ -1,0 +1,5 @@
+Login successful
+⚠ Pipeline accessibility test failed: page.waitForSelector: Timeout 5000ms exceeded.
+Call log:
+  - waiting for locator('.pipeline-board') to be visible
+

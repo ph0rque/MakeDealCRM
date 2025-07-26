@@ -1,0 +1,445 @@
+name: E2E Tests
+
+on:
+  push:
+    branches: [ main, develop, feature-*, release-* ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    # Run tests daily at 6 AM UTC
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+    inputs:
+      test_suite:
+        description: 'Test suite to run'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+          - 'all'
+          - 'smoke'
+          - 'regression'
+          - 'critical'
+          - 'deals'
+      browser:
+        description: 'Browser to test'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+          - 'all'
+          - 'chromium'
+          - 'firefox'
+          - 'webkit'
+      workers:
+        description: 'Number of parallel workers'
+        required: false
+        default: '4'
+        type: string
+
+env:
+  NODE_VERSION: '18'
+  PLAYWRIGHT_VERSION: '1.54.1'
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      shards: ${{ steps.calculate-shards.outputs.shards }}
+      test-files: ${{ steps.get-tests.outputs.files }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: 'SuiteCRM/tests/e2e/package-lock.json'
+
+      - name: Get test files
+        id: get-tests
+        run: |
+          cd SuiteCRM/tests/e2e
+          files=$(find . -name "*.spec.js" | wc -l)
+          echo "files=$files" >> $GITHUB_OUTPUT
+
+      - name: Calculate optimal shards
+        id: calculate-shards
+        run: |
+          test_files=${{ steps.get-tests.outputs.files }}
+          # Calculate shards based on test count (aim for ~10 tests per shard)
+          shards=$(( ($test_files + 9) / 10 ))
+          # Cap at 8 shards for cost optimization
+          if [ $shards -gt 8 ]; then shards=8; fi
+          # Minimum 2 shards
+          if [ $shards -lt 2 ]; then shards=2; fi
+          echo "shards=$shards" >> $GITHUB_OUTPUT
+          echo "Calculated $shards shards for $test_files test files"
+
+  test:
+    needs: setup
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: ${{ fromJSON(format('[{0}]', join(range(1, fromJSON(needs.setup.outputs.shards) + 1), ','))) }}
+        browser: ${{ github.event.inputs.browser == 'all' && fromJSON('["chromium", "firefox", "webkit"]') || fromJSON(format('["{0}"]', github.event.inputs.browser || 'chromium')) }}
+    
+    container:
+      image: mcr.microsoft.com/playwright:v${{ env.PLAYWRIGHT_VERSION }}-jammy
+      options: --ipc=host
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: suitecrm_test
+          MYSQL_USER: suitecrm
+          MYSQL_PASSWORD: suitecrm
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd="redis-cli ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    env:
+      # Database configuration
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: suitecrm_test
+      DB_USER: suitecrm
+      DB_PASSWORD: suitecrm
+      
+      # Redis configuration
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      
+      # Test configuration
+      BASE_URL: http://localhost:8080
+      CI: true
+      HEADLESS: true
+      WORKERS: ${{ github.event.inputs.workers || '4' }}
+      SHARD_INDEX: ${{ matrix.shard }}
+      SHARD_COUNT: ${{ needs.setup.outputs.shards }}
+      BROWSER: ${{ matrix.browser }}
+      
+      # Build metadata
+      BUILD_NUMBER: ${{ github.run_number }}
+      BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      GIT_COMMIT: ${{ github.sha }}
+      GIT_BRANCH: ${{ github.ref_name }}
+      
+      # Admin credentials
+      ADMIN_USERNAME: admin
+      ADMIN_PASSWORD: admin123
+      TEST_USERNAME: testuser
+      TEST_PASSWORD: testpass123
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: 'SuiteCRM/tests/e2e/package-lock.json'
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
+      - name: Install dependencies
+        run: |
+          cd SuiteCRM/tests/e2e
+          npm ci
+
+      - name: Install Playwright browsers
+        run: |
+          cd SuiteCRM/tests/e2e
+          npx playwright install ${{ matrix.browser }}
+
+      - name: Wait for services
+        run: |
+          # Wait for MySQL
+          timeout 60s bash -c 'until nc -z mysql 3306; do sleep 1; done'
+          # Wait for Redis
+          timeout 30s bash -c 'until nc -z redis 6379; do sleep 1; done'
+
+      - name: Setup SuiteCRM
+        run: |
+          cd SuiteCRM
+          # Copy environment configuration
+          cp config_override.php.example config_override.php
+          
+          # Set database configuration
+          sed -i "s/'db_host_name' => 'localhost'/'db_host_name' => 'mysql'/g" config_override.php
+          sed -i "s/'db_name' => 'suitecrm'/'db_name' => 'suitecrm_test'/g" config_override.php
+          sed -i "s/'db_user_name' => 'root'/'db_user_name' => 'suitecrm'/g" config_override.php
+          sed -i "s/'db_password' => ''/'db_password' => 'suitecrm'/g" config_override.php
+          
+          # Install composer dependencies
+          composer install --no-dev --optimize-autoloader
+
+      - name: Start SuiteCRM server
+        run: |
+          cd SuiteCRM
+          nohup php -S 0.0.0.0:8080 > server.log 2>&1 &
+          sleep 10
+          # Health check
+          curl -f http://localhost:8080 || (cat server.log && exit 1)
+
+      - name: Run health check
+        run: |
+          cd SuiteCRM/tests/e2e
+          npm run health:check
+
+      - name: Run E2E tests
+        run: |
+          cd SuiteCRM/tests/e2e
+          case "${{ github.event.inputs.test_suite || 'all' }}" in
+            "smoke")
+              npx playwright test --grep @smoke --project=${{ matrix.browser }} --shard=${{ matrix.shard }}/${{ needs.setup.outputs.shards }}
+              ;;
+            "regression")
+              npx playwright test --grep @regression --project=${{ matrix.browser }} --shard=${{ matrix.shard }}/${{ needs.setup.outputs.shards }}
+              ;;
+            "critical")
+              npx playwright test --grep @critical --project=${{ matrix.browser }} --shard=${{ matrix.shard }}/${{ needs.setup.outputs.shards }}
+              ;;
+            "deals")
+              npx playwright test deals/ --project=${{ matrix.browser }} --shard=${{ matrix.shard }}/${{ needs.setup.outputs.shards }}
+              ;;
+            *)
+              npx playwright test --project=${{ matrix.browser }} --shard=${{ matrix.shard }}/${{ needs.setup.outputs.shards }}
+              ;;
+          esac
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results-${{ matrix.browser }}-shard-${{ matrix.shard }}
+          path: |
+            SuiteCRM/tests/e2e/test-results/
+            !SuiteCRM/tests/e2e/test-results/html-report/
+          retention-days: 30
+
+      - name: Upload HTML report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: html-report-${{ matrix.browser }}-shard-${{ matrix.shard }}
+          path: SuiteCRM/tests/e2e/test-results/html-report/
+          retention-days: 7
+
+      - name: Upload screenshots and videos
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: test-artifacts-${{ matrix.browser }}-shard-${{ matrix.shard }}
+          path: |
+            SuiteCRM/tests/e2e/test-results/screenshots/
+            SuiteCRM/tests/e2e/test-results/videos/
+          retention-days: 14
+
+      - name: Archive server logs
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: server-logs-${{ matrix.browser }}-shard-${{ matrix.shard }}
+          path: SuiteCRM/server.log
+          retention-days: 7
+
+  consolidate-results:
+    needs: [setup, test]
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: 'SuiteCRM/tests/e2e/package-lock.json'
+
+      - name: Install dependencies
+        run: |
+          cd SuiteCRM/tests/e2e
+          npm ci
+
+      - name: Download all test results
+        uses: actions/download-artifact@v4
+        with:
+          path: downloaded-artifacts/
+          pattern: test-results-*
+
+      - name: Download HTML reports
+        uses: actions/download-artifact@v4
+        with:
+          path: downloaded-reports/
+          pattern: html-report-*
+
+      - name: Consolidate test results
+        run: |
+          cd SuiteCRM/tests/e2e
+          node scripts/consolidate-results.js ../../downloaded-artifacts/
+
+      - name: Generate Allure report
+        run: |
+          cd SuiteCRM/tests/e2e
+          npm run allure:generate
+
+      - name: Analyze test trends
+        run: |
+          cd SuiteCRM/tests/e2e
+          npm run trend:analyze
+
+      - name: Upload consolidated report
+        uses: actions/upload-artifact@v4
+        with:
+          name: consolidated-test-report
+          path: |
+            SuiteCRM/tests/e2e/test-results/consolidated-report.html
+            SuiteCRM/tests/e2e/test-results/consolidated-report.json
+            SuiteCRM/tests/e2e/test-results/performance-summary.json
+            SuiteCRM/tests/e2e/test-results/trend-analysis.json
+          retention-days: 90
+
+      - name: Upload Allure report
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: SuiteCRM/tests/e2e/test-results/allure-report/
+          retention-days: 30
+
+      - name: Publish test results to GitHub Pages
+        if: github.ref == 'refs/heads/main'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: SuiteCRM/tests/e2e/test-results/allure-report
+          destination_dir: test-reports/${{ github.run_number }}
+
+      - name: Comment PR with test results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = 'SuiteCRM/tests/e2e/test-results/consolidated-report.json';
+            
+            if (!fs.existsSync(path)) {
+              console.log('No consolidated report found');
+              return;
+            }
+            
+            const report = JSON.parse(fs.readFileSync(path, 'utf8'));
+            const { summary } = report;
+            
+            const body = `## 🧪 E2E Test Results
+            
+            | Metric | Value |
+            |--------|-------|
+            | Total Tests | ${summary.total} |
+            | ✅ Passed | ${summary.passed} |
+            | ❌ Failed | ${summary.failed} |
+            | ⏭️ Skipped | ${summary.skipped} |
+            | 🔄 Flaky | ${summary.flaky} |
+            | 📊 Pass Rate | ${((summary.passed / summary.total) * 100).toFixed(1)}% |
+            | ⏱️ Duration | ${Math.round(summary.duration / 1000)}s |
+            
+            ${summary.failed > 0 ? '⚠️ **Some tests failed. Please check the detailed report.**' : '✅ **All tests passed!**'}
+            
+            [View Detailed Report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+
+      - name: Send Slack notification
+        if: always()
+        run: |
+          cd SuiteCRM/tests/e2e
+          npm run notify:slack
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+
+      - name: Send email notification
+        if: failure()
+        run: |
+          cd SuiteCRM/tests/e2e
+          npm run notify:email
+        env:
+          EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+          EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+
+  performance-benchmark:
+    needs: [setup, test]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.event_name == 'schedule'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Download performance data
+        uses: actions/download-artifact@v4
+        with:
+          path: performance-data/
+          pattern: test-results-*
+
+      - name: Run performance analysis
+        run: |
+          cd SuiteCRM/tests/e2e
+          npm ci
+          node scripts/performance-benchmark.js ../../performance-data/
+
+      - name: Store performance trends
+        run: |
+          # Store performance data for trending
+          mkdir -p performance-history
+          cp SuiteCRM/tests/e2e/test-results/performance-summary.json performance-history/performance-${{ github.run_number }}.json
+
+      - name: Upload performance history
+        uses: actions/upload-artifact@v4
+        with:
+          name: performance-history
+          path: performance-history/
+          retention-days: 365

@@ -1,0 +1,2 @@
+Login successful
+ℹ Role history test - implementation depends on audit features
