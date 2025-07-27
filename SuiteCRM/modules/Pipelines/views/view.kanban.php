@@ -133,7 +133,7 @@ class PipelinesViewKanban extends SugarView
                     a.name as account_name,
                     u.user_name as assigned_user_name,
                     CONCAT(u.first_name, ' ', u.last_name) as assigned_user_full_name
-                  FROM deals d
+                  FROM opportunities d
                   LEFT JOIN accounts a ON d.account_id = a.id AND a.deleted = 0
                   LEFT JOIN users u ON d.assigned_user_id = u.id AND u.deleted = 0
                   WHERE {$where}

@@ -43,8 +43,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 $mod_strings = array(
-    'LBL_MODULE_NAME' => 'Opportunities',
-    'LBL_MODULE_TITLE' => 'Opportunities: Home',
+    'LBL_MODULE_NAME' => 'Deals',
+    'LBL_MODULE_TITLE' => 'Deals: Home',
     'LBL_SEARCH_FORM_TITLE' => 'Opportunity Search',
     'LBL_LIST_FORM_TITLE' => 'Opportunity List',
     'LBL_OPPORTUNITY_NAME' => 'Opportunity Name:',
@@ -78,12 +78,12 @@ $mod_strings = array(
     'LBL_DUPLICATE' => 'Possible Duplicate Opportunity',
     'MSG_DUPLICATE' => 'The opportunity record you are about to create might be a duplicate of a opportunity record that already exists. Opportunity records containing similar names are listed below.<br>Click Save to continue creating this new opportunity, or click Cancel to return to the module without creating the opportunity.',
     'LBL_NEW_FORM_TITLE' => 'Create Opportunity',
-    'LNK_NEW_OPPORTUNITY' => 'Create Opportunity',
-    'LNK_OPPORTUNITY_LIST' => 'View Opportunities',
+    'LNK_NEW_OPPORTUNITY' => 'Create Deal',
+    'LNK_OPPORTUNITY_LIST' => 'View Deals',
     'ERR_DELETE_RECORD' => 'A record number must be specified to delete the opportunity.',
-    'LBL_TOP_OPPORTUNITIES' => 'My Top Open Opportunities',
+    'LBL_TOP_OPPORTUNITIES' => 'My Top Open Deals',
     'OPPORTUNITY_REMOVE_PROJECT_CONFIRM' => 'Are you sure you want to remove this opportunity from the project?',
-    'LBL_DEFAULT_SUBPANEL_TITLE' => 'Opportunities',
+    'LBL_DEFAULT_SUBPANEL_TITLE' => 'Deals',
     'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
     'LBL_HISTORY_SUBPANEL_TITLE' => 'History',
 
@@ -93,8 +93,8 @@ $mod_strings = array(
     'LBL_PROJECTS_SUBPANEL_TITLE' => 'Projects',
     'LBL_ASSIGNED_TO_NAME' => 'Assigned to:',
     'LBL_LIST_ASSIGNED_TO_NAME' => 'Assigned User',
-    'LBL_MY_CLOSED_OPPORTUNITIES' => 'My Closed Opportunities',
-    'LBL_TOTAL_OPPORTUNITIES' => 'Total Opportunities',
+    'LBL_MY_CLOSED_OPPORTUNITIES' => 'My Closed Deals',
+    'LBL_TOTAL_OPPORTUNITIES' => 'Total Deals',
     'LBL_CLOSED_WON_OPPORTUNITIES' => 'Closed Won Opportunities',
     'LBL_ASSIGNED_TO_ID' => 'Assigned User:',
     'LBL_MODIFIED_NAME' => 'Modified by User Name',
@@ -102,7 +102,7 @@ $mod_strings = array(
     'LBL_MODIFIED_USER' => 'Modified User',
     'LBL_CAMPAIGN_OPPORTUNITY' => 'Campaigns',
     'LBL_PROJECT_SUBPANEL_TITLE' => 'Projects',
-    'LNK_IMPORT_OPPORTUNITIES' => 'Import Opportunities',
+    'LNK_IMPORT_OPPORTUNITIES' => 'Import Deals',
     'LBL_EDITLAYOUT' => 'Edit Layout' /*for 508 compliance fix*/,
 
     // SNIP

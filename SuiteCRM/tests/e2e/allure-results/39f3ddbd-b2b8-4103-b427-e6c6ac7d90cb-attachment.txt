@@ -1,0 +1,219 @@
+Browser: JQMIGRATE: Migrate is installed, version 3.4.0
+Browser: [DOM] Found 2 elements with non-unique id #form: (More info: https://goo.gl/9p2vKq) %o %o
+Browser: JQMIGRATE: Migrate is installed, version 3.4.0
+Login successful
+Browser: JQMIGRATE: Migrate is installed, version 3.4.0
+
+=== Analyzing Pipeline Structure ===
+Pipeline Structure: {
+  "containerFound": true,
+  "containerClasses": "pipeline-kanban-container",
+  "stageCount": 70,
+  "stageClasses": [
+    "pipeline-stages-container",
+    "pipeline-stage-column",
+    "stage-header",
+    "stage-title",
+    "stage-probability",
+    "stage-metrics",
+    "stage-value",
+    "stage-deals",
+    "pipeline-stage-column",
+    "stage-header",
+    "stage-title",
+    "stage-probability",
+    "stage-metrics",
+    "stage-value",
+    "stage-deals",
+    "pipeline-stage-column",
+    "stage-header",
+    "stage-title",
+    "stage-probability",
+    "stage-metrics",
+    "stage-value",
+    "stage-deals",
+    "stage-empty",
+    "pipeline-stage-column",
+    "stage-header",
+    "stage-title",
+    "stage-probability",
+    "stage-metrics",
+    "stage-value",
+    "stage-deals",
+    "pipeline-stage-column",
+    "stage-header",
+    "stage-title",
+    "stage-probability",
+    "stage-metrics",
+    "stage-value",
+    "stage-deals",
+    "stage-empty",
+    "pipeline-stage-column",
+    "stage-header",
+    "stage-title",
+    "stage-probability",
+    "stage-metrics",
+    "stage-value",
+    "stage-deals",
+    "stage-empty",
+    "pipeline-stage-column",
+    "stage-header",
+    "stage-title",
+    "stage-probability",
+    "stage-metrics",
+    "stage-value",
+    "stage-deals",
+    "stage-empty",
+    "pipeline-stage-column",
+    "stage-header",
+    "stage-title",
+    "stage-probability",
+    "stage-metrics",
+    "stage-value",
+    "stage-deals",
+    "stage-empty",
+    "pipeline-stage-column",
+    "stage-header",
+    "stage-title",
+    "stage-probability",
+    "stage-metrics",
+    "stage-value",
+    "stage-deals",
+    "stage-empty"
+  ],
+  "dealCount": 3,
+  "dealClasses": "deal-card health-medium",
+  "dropZoneCount": 74,
+  "dropZoneClasses": [
+    "dropdown-menu mobile_menu",
+    "dropdown-menu",
+    "dropdown-menu",
+    "dropdown-toggle grouptab",
+    "dropdown-menu",
+    "dropdown-toggle grouptab",
+    "dropdown-menu",
+    "dropdown-toggle grouptab",
+    "dropdown-menu",
+    "dropdown-toggle grouptab",
+    "dropdown-menu",
+    "create dropdown nav navbar-nav quickcreatetop",
+    "dropdown-toggle",
+    "dropdown-menu",
+    "dropdown nav navbar-nav navbar-search",
+    "dropdown-toggle btn btn-default searchbutton suitepicon suitepicon-action-search",
+    "dropdown-menu",
+    "searchformdropdown",
+    "dropdown nav navbar-nav desktop_notifications",
+    "alertsButton btn dropdown-toggle suitepicon suitepicon-action-alerts",
+    "dropdown-menu",
+    "dropdown nav navbar-nav globalLinks-mobile",
+    "dropdown-toggle btn btn-default usermenucollapsed",
+    "dropdown-menu user-dropdown user-menu",
+    "create dropdown nav navbar-nav quickcreatetop",
+    "dropdown-toggle",
+    "dropdown-menu",
+    "dropdown nav navbar-nav navbar-search",
+    "dropdown-toggle btn btn-default searchbutton suitepicon suitepicon-action-search",
+    "dropdown-menu",
+    "searchformdropdown",
+    "dropdown nav navbar-nav desktop_notifications",
+    "alertsButton btn dropdown-toggle suitepicon suitepicon-action-alerts",
+    "dropdown-menu",
+    "dropdown nav navbar-nav globalLinks-mobile",
+    "dropdown-toggle btn btn-default usermenucollapsed",
+    "dropdown-menu user-dropdown user-menu",
+    "create dropdown nav navbar-nav quickcreatetop",
+    "dropdown-toggle",
+    "dropdown-menu",
+    "dropdown nav navbar-nav navbar-search",
+    "dropdown-toggle btn btn-default searchbutton suitepicon suitepicon-action-search",
+    "dropdown-menu",
+    "searchformdropdown",
+    "dropdown nav navbar-nav desktop_notifications",
+    "alertsButton btn dropdown-toggle suitepicon suitepicon-action-alerts",
+    "dropdown-menu",
+    "dropdown nav navbar-nav globalLinks-desktop",
+    "dropdown-toggle user-menu-button",
+    "dropdown-menu user-dropdown user-menu",
+    "dropdown",
+    "btn btn-sm btn-outline-secondary dropdown-toggle",
+    "dropdown-menu",
+    "dropdown-item",
+    "dropdown-item",
+    "dropdown-item",
+    "dropdown-divider",
+    "dropdown-item",
+    "dropdown",
+    "btn btn-sm btn-outline-secondary dropdown-toggle",
+    "dropdown-menu",
+    "dropdown-item",
+    "dropdown-item",
+    "dropdown-item",
+    "dropdown-divider",
+    "dropdown-item",
+    "dropdown",
+    "btn btn-sm btn-outline-secondary dropdown-toggle",
+    "dropdown-menu",
+    "dropdown-item",
+    "dropdown-item",
+    "dropdown-item",
+    "dropdown-divider",
+    "dropdown-item"
+  ],
+  "draggableDeals": [
+    {
+      "draggable": true,
+      "hasDragEvents": false,
+      "classes": "deal-card health-medium"
+    },
+    {
+      "draggable": true,
+      "hasDragEvents": false,
+      "classes": "deal-card health-high"
+    },
+    {
+      "draggable": true,
+      "hasDragEvents": false,
+      "classes": "deal-card health-high"
+    }
+  ]
+}
+Found 21 stages with selector: [data-stage]
+First stage info: {
+  classes: 'pipeline-stage-column',
+  id: '',
+  dataAttrs: [ 'stage' ],
+  innerHTML: '<div class="stage-header">\n' +
+    '            <div class="stage-title">\n' +
+    '                <h3>Sourcing</h3>\n' +
+    '                <div class="stage-probability">10%</div>\n' +
+    '            </div>\n' +
+    '            <div class="s'
+}
+Found 70 stages with selector: div[class*="stage"]
+First stage info: {
+  classes: 'pipeline-stages-container',
+  id: '',
+  dataAttrs: [],
+  innerHTML: '<div class="pipeline-stage-column" data-stage="sourcing"><div class="stage-header">\n' +
+    '            <div class="stage-title">\n' +
+    '                <h3>Sourcing</h3>\n' +
+    '                <div class="stage-probabilit'
+}
+
+=== Looking for Drop Zones ===
+Found 9 drop zones with selector: .stage-deals
+
+Drag & Drop Implementation: {
+  implemented: true,
+  draggable: true,
+  hasDataTransfer: true,
+  eventListeners: { dragstart: false, dragend: false, dragover: false, drop: false }
+}
+
+=== SUMMARY ===
+Pipeline Loads: ✅
+Stages Found: ✅ (70)
+Deals Found: ✅ (3)
+Drop Zones Found: ✅ (74)
+Drag & Drop Ready: ✅

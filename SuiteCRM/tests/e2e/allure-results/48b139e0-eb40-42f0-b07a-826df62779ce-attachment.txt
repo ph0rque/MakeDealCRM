@@ -1,0 +1,52 @@
+Login successful
+
+=== Testing Pipeline View Access ===
+
+Trying Direct URL...
+Current URL: http://localhost:8080/index.php?module=Deals&action=pipeline
+✓ Found pipeline indicator: #pipeline-container
+Page headers found: [
+  'ACTIONS',
+  'Recently Viewed',
+  '\n                M&A Deal Pipeline\n                \n              ',
+  'M&A Deal Pipeline',
+  'M&A Deal Pipeline'
+]
+Error messages found: [
+  'Note: To send record assignment notifications, an SMTP server must be configured in Email Settings.'
+]
+
+Trying Menu Navigation...
+✗ Menu Navigation failed: locator.click: Test timeout of 30000ms exceeded.
+Call log:
+  - waiting for locator('a:has-text("Pipeline"):visible').first()
+    - locator resolved to <a data-action-name="Pipeline" href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DPipelines%26action%3DKanbanView">…</a>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is visible, enabled and stable
+      - scrolling into view if needed
+      - done scrolling
+      - <a id="moduleTab_3_Deals" href="index.php?module=Deals&action=index&parentTab=Deals">Deals</a> from <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">…</nav> subtree intercepts pointer events
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is visible, enabled and stable
+      - scrolling into view if needed
+      - done scrolling
+      - <a id="moduleTab_3_Deals" href="index.php?module=Deals&action=index&parentTab=Deals">Deals</a> from <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">…</nav> subtree intercepts pointer events
+    - retrying click action
+      - waiting 100ms
+    43 × waiting for element to be visible, enabled and stable
+       - element is visible, enabled and stable
+       - scrolling into view if needed
+       - done scrolling
+       - <a id="moduleTab_3_Deals" href="index.php?module=Deals&action=index&parentTab=Deals">Deals</a> from <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">…</nav> subtree intercepts pointer events
+     - retrying click action
+       - waiting 500ms
+
+
+Trying Alternative Pipeline URL...
+✗ Alternative Pipeline URL failed: page.goto: Target page, context or browser has been closed
+
+Trying Custom Pipeline URL...
+✗ Custom Pipeline URL failed: page.goto: Target page, context or browser has been closed

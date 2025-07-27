@@ -1,0 +1,13 @@
+Login successful
+
+=== TEST SUMMARY REPORT ===
+
+Total issues found: 1
+
+Issues by type:
+
+Drag and Drop Issue: 1 issues
+  1. {
+  "type": "Drag and Drop Issue",
+  "error": "No drop zones found"
+}

@@ -73,25 +73,25 @@ foreach ($test_deals as $deal_data) {
     $deal->date_entered = date('Y-m-d H:i:s');
     $deal->date_modified = date('Y-m-d H:i:s');
     
-    // Save the deal
+    // Save the deal (this inserts into opportunities table)
     $deal->save();
     
-    // Now add custom fields
+    // Now add custom fields to opportunities_cstm
     if ($deal->id) {
         // Check if custom record exists
-        $check_query = "SELECT id_c FROM deals_cstm WHERE id_c = '{$deal->id}'";
+        $check_query = "SELECT id_c FROM opportunities_cstm WHERE id_c = '{$deal->id}'";
         $check_result = $db->query($check_query);
         
         if ($db->fetchByAssoc($check_result)) {
             // Update existing
-            $update_query = "UPDATE deals_cstm 
+            $update_query = "UPDATE opportunities_cstm 
                            SET pipeline_stage_c = '{$deal_data['pipeline_stage']}',
                                stage_entered_date_c = NOW()
                            WHERE id_c = '{$deal->id}'";
             $db->query($update_query);
         } else {
             // Insert new
-            $insert_query = "INSERT INTO deals_cstm (id_c, pipeline_stage_c, stage_entered_date_c)
+            $insert_query = "INSERT INTO opportunities_cstm (id_c, pipeline_stage_c, stage_entered_date_c)
                            VALUES ('{$deal->id}', '{$deal_data['pipeline_stage']}', NOW())";
             $db->query($insert_query);
         }

@@ -379,34 +379,34 @@ class PipelineKanbanView {
     
     addDropZoneListeners() {
         document.addEventListener('dragover', (e) => {
-            const stageDeals = e.target.closest('.stage-deals');
-            if (stageDeals && this.draggedDeal) {
+            const stageBody = e.target.closest('.stage-body');
+            if (stageBody && this.draggedDeal) {
                 e.preventDefault();
                 e.dataTransfer.dropEffect = 'move';
                 
                 // Add visual indicators
-                stageDeals.classList.add('drop-indicator');
+                stageBody.classList.add('drop-indicator');
                 
                 // Show validation feedback
-                const targetStage = stageDeals.dataset.stage;
+                const targetStage = stageBody.dataset.stage;
                 this.showDropValidation(targetStage);
             }
         });
         
         document.addEventListener('dragleave', (e) => {
-            const stageDeals = e.target.closest('.stage-deals');
-            if (stageDeals) {
-                stageDeals.classList.remove('drop-indicator');
+            const stageBody = e.target.closest('.stage-body');
+            if (stageBody) {
+                stageBody.classList.remove('drop-indicator');
                 this.hideDropValidation();
             }
         });
         
         document.addEventListener('drop', (e) => {
-            const stageDeals = e.target.closest('.stage-deals');
-            if (stageDeals && this.draggedDeal) {
+            const stageBody = e.target.closest('.stage-body');
+            if (stageBody && this.draggedDeal) {
                 e.preventDefault();
                 
-                const targetStage = stageDeals.dataset.stage;
+                const targetStage = stageBody.dataset.stage;
                 const dealId = this.draggedDeal.id;
                 const fromStage = this.draggedDeal.fromStage;
                 
@@ -415,7 +415,7 @@ class PipelineKanbanView {
                 }
                 
                 // Clean up
-                stageDeals.classList.remove('drop-indicator');
+                stageBody.classList.remove('drop-indicator');
                 this.hideDropValidation();
             }
         });

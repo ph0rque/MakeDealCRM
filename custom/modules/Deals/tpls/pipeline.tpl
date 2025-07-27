@@ -248,7 +248,7 @@
                     if (sourceStage !== targetStage) {
                         // Move the deal card visually
                         var dealCard = jQuery('.deal-card[data-deal-id="' + dealId + '"]');
-                        var targetContainer = jQuery(this).find('.stage-deals, .deals-container, [class*="deals"]');
+                        var targetContainer = jQuery(this).find('.stage-body');
                         
                         if (dealCard.length && targetContainer.length) {
                             dealCard.detach().appendTo(targetContainer);
@@ -267,8 +267,8 @@
         } else {
             console.log('jQuery UI available, using jQuery UI sortable');
             // Use jQuery UI if available
-            jQuery('.stage-deals').sortable({
-                connectWith: '.stage-deals',
+            jQuery('.stage-body').sortable({
+                connectWith: '.stage-body',
                 helper: 'clone',
                 start: function(event, ui) {
                     console.log('jQuery UI drag started');

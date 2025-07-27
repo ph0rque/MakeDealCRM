@@ -1,0 +1,83 @@
+Login successful
+
+=== Testing Drag and Drop ===
+Found 3 draggable elements with selector: .deal-card
+Testing drag for deal: 
+            
+                
+                    Sample TechCorp Acquisiti...
+                    #sample-0
+                
+                $25.0M
+            
+            
+            
+                
+                TechCorp Inc
+            
+            
+            
+                
+                    Days in Stage:
+                    15d
+                
+                
+                    Probability:
+                    10%
+                
+                
+                    Health:
+                    
+                        💛 75%
+                    
+                
+            
+            
+            
+                
+                    
+                
+                10% Complete
+            
+            
+            
+                
+                
+                
+                👤
+            
+            
+            
+                
+                    
+                
+                
+                
+                    
+                
+                
+                
+                    
+                        
+                    
+                    
+                        
+                             Details
+                        
+                        
+                             Stage History
+                        
+                        
+                             Activities
+                        
+                        
+                        
+                        
+                             Force Move
+                        
+                        
+                    
+                
+            
+        
+No drop zones found

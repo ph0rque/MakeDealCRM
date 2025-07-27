@@ -256,7 +256,7 @@ Resources:
           cd /opt/makedealcrm
           
           # Clone repository
-          git clone https://github.com/yourusername/MakeDealCRM.git .
+          git clone https://github.com/ph0rque/MakeDealCRM.git .
           
           # Create environment file
           cat > .env <<EOF
@@ -265,9 +265,11 @@ Resources:
           DB_NAME=makedealcrm
           DB_USER=makedealcrm
           # Get the secret JSON and extract password field
-          SECRET_JSON=$(aws secretsmanager get-secret-value --secret-id ${DBPasswordSecret} --query SecretString --output text)
+          SECRET_JSON=$(aws secretsmanager get-secret-value --secret-id ${DBPasswordSecret} --query SecretString --output text --region ${AWS::Region})
           DB_PASSWORD=$(echo $SECRET_JSON | grep -o '"password":"[^"]*' | grep -o '[^"]*$')
-          SITE_URL=https://${DomainName}
+          # Use HTTP initially until SSL is configured
+          # We'll update this after EIP association
+          SITE_URL=http://$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)
           ADMIN_EMAIL=${AdminEmail}
           ADMIN_USER=admin
           ADMIN_PASSWORD=$(openssl rand -base64 12)
@@ -275,15 +277,30 @@ Resources:
           AWS_REGION=${AWS::Region}
           EOF
           
+          # Wait for database to be ready
+          echo "Waiting for database to be ready..."
+          sleep 60
+          
           # Start application
           cd aws-deploy/docker
           docker-compose up -d
           
-          # Configure CloudWatch
-          /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
-            -a fetch-config \
-            -m ec2 \
-            -s -c ssm:${CloudWatchConfig}
+          # Update SITE_URL after EIP is associated (wait a bit for association)
+          sleep 30
+          EIP=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)
+          sed -i "s|SITE_URL=.*|SITE_URL=http://$EIP|" /opt/makedealcrm/.env
+          docker-compose restart
+          
+          # Save deployment status
+          echo "Application started at $(date)" > /var/log/makedealcrm-deploy.log
+          
+          # Configure CloudWatch if config exists
+          if aws ssm get-parameter --name ${CloudWatchConfig} --region ${AWS::Region} &>/dev/null; then
+            /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
+              -a fetch-config \
+              -m ec2 \
+              -s -c ssm:${CloudWatchConfig}
+          fi
       Tags:
         - Key: Name
           Value: !Sub ${AWS::StackName}-app-server

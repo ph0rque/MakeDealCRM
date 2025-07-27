@@ -216,7 +216,73 @@ async function startDeployment() {
         const result = await response.json();
         
         if (!result.success) {
-            alert('Failed to start deployment: ' + result.error);
+            // Handle different error scenarios
+            if (result.requiresStackDeletion) {
+                // Stack is in ROLLBACK_COMPLETE state
+                const modalHtml = `
+                <div class="modal fade" id="stackDeletionModal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header bg-warning">
+                                <h5 class="modal-title"><i class="fas fa-exclamation-triangle me-2"></i>Stack Deletion Required</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="alert alert-warning">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    The CloudFormation stack <strong>${result.stackName}</strong> is in <strong>${result.stackStatus}</strong> state.
+                                    This means a previous deployment failed and the stack must be deleted before you can redeploy.
+                                </div>
+                                
+                                <h6>To resolve this issue:</h6>
+                                <ol>
+                                    <li>Open your AWS Console or use AWS CLI</li>
+                                    <li>Delete the existing stack using the command below:</li>
+                                    <li>Wait for deletion to complete (usually 5-10 minutes)</li>
+                                    <li>Retry the deployment</li>
+                                </ol>
+                                
+                                <div class="bg-dark text-light p-3 rounded mt-3">
+                                    <code id="deleteCommand">${result.deleteCommand}</code>
+                                    <button class="btn btn-sm btn-secondary float-end" onclick="copyToClipboard('deleteCommand')">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                                
+                                <div class="mt-3">
+                                    <p><strong>Alternative:</strong> Use our cleanup script:</p>
+                                    <div class="bg-dark text-light p-3 rounded">
+                                        <code>cd SuiteCRM/aws-deploy/scripts && ./delete-deployment.sh ${result.stackName}</code>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="https://console.aws.amazon.com/cloudformation/" target="_blank" class="btn btn-primary">
+                                    <i class="fas fa-external-link-alt me-2"></i>Open AWS Console
+                                </a>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+                
+                // Add modal to page if not exists
+                if (!document.getElementById('stackDeletionModal')) {
+                    document.body.insertAdjacentHTML('beforeend', modalHtml);
+                }
+                
+                // Show modal
+                const modal = new bootstrap.Modal(document.getElementById('stackDeletionModal'));
+                modal.show();
+                
+            } else if (result.stackInProgress) {
+                // Stack operation in progress
+                alert(`The CloudFormation stack has an operation in progress (${result.stackStatus}). Please wait for it to complete before retrying.`);
+            } else {
+                // Other errors
+                alert('Failed to start deployment: ' + result.error);
+            }
+            
             changeStep(-1); // Go back to review step
             return;
         }
@@ -263,6 +329,9 @@ async function startDeployment() {
                             // Deployment succeeded
                             deploymentConfig.deploymentInfo = statusResult.deploymentInfo;
                             deploymentConfig.adminPassword = statusResult.adminPassword;
+                            
+                            // Add deployment info logging for debugging
+                            console.log('Deployment Info:', statusResult.deploymentInfo);
                             
                             setTimeout(() => {
                                 generateAccessDetails();

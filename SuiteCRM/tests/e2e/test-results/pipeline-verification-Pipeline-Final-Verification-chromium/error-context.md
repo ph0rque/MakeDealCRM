@@ -1,0 +1,157 @@
+# Page snapshot
+
+```yaml
+- navigation:
+  - list:
+    - listitem:
+      - link "":
+        - /url: index.php?module=Home&action=index
+    - listitem:
+      - link "Deals":
+        - /url: index.php?module=Deals&action=index
+    - listitem:
+      - link "Deals":
+        - /url: "#"
+    - listitem:
+      - link "Collaboration":
+        - /url: "#"
+    - listitem:
+      - link "Activities":
+        - /url: "#"
+    - listitem:
+      - link "All":
+        - /url: "#"
+  - list:
+    - listitem: CREATE
+    - listitem:
+      - button "" [expanded]
+    - listitem
+    - listitem:
+      - button ""
+    - listitem:
+      - button " Administrator " [expanded]
+- text: 
+- list:
+  - link "Create Deal":
+    - /url: index.php?module=Deals&action=EditView&return_module=Deals&return_action=pipeline
+  - link "Pipeline View":
+    - /url: index.php?module=Deals&action=pipeline
+  - link " Advanced Search":
+    - /url: index.php?module=Deals&action=index&search_form=true&advanced=true
+  - link "Deal List":
+    - /url: index.php?module=Deals&action=index&return_module=Deals&return_action=pipeline
+  - link "Reports":
+    - /url: "?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DReports%26action%3Dindex%26query_module%3DDeals"
+  - link "Pipeline Analytics":
+    - /url: index.php?module=Deals&action=analytics
+  - link " Import":
+    - /url: index.php?module=Import&action=Step1&import_module=Deals&return_module=Deals&return_action=pipeline
+  - link "Export":
+    - /url: index.php?module=Deals&action=export
+  - link "Bulk Operations":
+    - /url: index.php?module=Deals&action=bulk_operations
+  - link "Configure Module":
+    - /url: index.php?module=Deals&action=configure
+  - link "Pipeline View":
+    - /url: "?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DPipelines%26action%3DKanbanView"
+- heading "Recently Viewed" [level=2]
+- list:
+  - link "SUCCESS Test...":
+    - /url: index.php?module=Deals&action=DetailView&record=2cba41f4-b255-64d7-5419-68856bccb8d4
+  - link:
+    - /url: index.php?module=Deals&action=EditView&record=2cba41f4-b255-64d7-5419-68856bccb8d4
+  - link "E2E Test Dea...":
+    - /url: index.php?module=Deals&action=DetailView&record=3686ef52-bb73-d952-36b7-68850fcbde12
+  - link:
+    - /url: index.php?module=Deals&action=EditView&record=3686ef52-bb73-d952-36b7-68850fcbde12
+  - link " Administrator":
+    - /url: index.php?module=Users&action=DetailView&record=1
+  - link:
+    - /url: index.php?module=Users&action=EditView&record=1
+  - link " Test McTeste...":
+    - /url: index.php?module=Users&action=DetailView&record=6da48a7a-c1fa-98d6-aeb8-68813610149b
+  - link:
+    - /url: index.php?module=Users&action=EditView&record=6da48a7a-c1fa-98d6-aeb8-68813610149b
+  - link " Suzette Mcki...":
+    - /url: "?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DLeads%26action%3DDetailView%26record%3D11774499-d3a9-e775-a330-688014099ab3"
+  - link:
+    - /url: "?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DLeads%26action%3DEditView%26record%3D11774499-d3a9-e775-a330-688014099ab3"
+- list
+- paragraph:
+  - text: "Note: To send record assignment notifications, an SMTP server must be configured in"
+  - link "Email Settings":
+    - /url: index.php?module=EmailMan&action=config
+  - text: .
+- heading "M&A Deal Pipeline" [level=2]
+- heading "M&A Deal Pipeline" [level=2]
+- button "Refresh"
+- text: "Updated: 11:12:03 AM 3 Active Deals $145.0M Pipeline Value 12 Avg Days/Stage 0% Stale Deals 0 WIP Violations"
+- heading "Sourcing" [level=3]
+- text: 10% 1 / 50 $25.0M 2%
+- heading "Sample TechCorp Acquisiti..." [level=4]
+- text: "#sample-0 $25.0M TechCorp Inc Days in Stage: 15d Probability: 10% Health: 💛 75% 10% Complete 👤"
+- button
+- button
+- button
+- button "Add Deal"
+- heading "Screening" [level=3]
+- text: 20% 1 / 25 $45.0M 4%
+- heading "Sample DataSystems Merger" [level=4]
+- text: "#sample-0 $45.0M DataSystems LLC Days in Stage: 8d Probability: 20% Health: 💚 82% 20% Complete 👤"
+- button
+- button
+- button
+- button "Add Deal"
+- heading "Analysis & Outreach" [level=3]
+- text: 30% 0 / 15 $0 0%
+- paragraph: No deals in Analysis & Outreach
+- button "Add Deal"
+- heading "Term Sheet" [level=3]
+- text: 50% 1 / 10 $75.0M 10%
+- heading "Sample CloudTech Deal" [level=4]
+- text: "#sample-0 $75.0M CloudTech Solutions Days in Stage: 12d Probability: 50% Health: 💚 88% 50% Complete 👤"
+- button
+- button
+- button
+- button "Add Deal"
+- heading "Due Diligence" [level=3]
+- text: 70% 0 / 8 $0 0%
+- paragraph: No deals in Due Diligence
+- button "Add Deal"
+- heading "Final Negotiation" [level=3]
+- text: 85% 0 / 5 $0 0%
+- paragraph: No deals in Final Negotiation
+- button "Add Deal"
+- heading "Closing" [level=3]
+- text: 95% 0 / 5 $0 0%
+- paragraph: No deals in Closing
+- button "Add Deal"
+- heading "Closed Won" [level=3]
+- text: 100% 0 $0 0%
+- paragraph: No deals in Closed Won
+- button "Add Deal"
+- heading "Closed Lost" [level=3]
+- text: 0% 0 $0 0%
+- paragraph: No deals in Closed Lost
+- button "Add Deal"
+- text: "View:"
+- combobox:
+  - option "All Deals" [selected]
+  - option "My Deals"
+  - option "Team Deals"
+  - option "Stale Deals"
+  - option "High Value (>$10M)"
+- text: "Sort by:"
+- combobox:
+  - option "Last Modified" [selected]
+  - option "Deal Value"
+  - option "Days in Stage"
+  - option "Health Score"
+  - option "Probability"
+- checkbox "Auto-refresh (30s)" [checked]
+- text: Auto-refresh (30s) Stale Warning Stale Critical High Health Low Health WIP Exceeded
+- contentinfo:
+  - text: "© Supercharged by SuiteCRM © Powered By SugarCRM  Server response time: 0.16 seconds."
+  - link "Back to top":
+    - /url: javascript:void(0)
+```

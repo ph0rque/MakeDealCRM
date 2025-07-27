@@ -44,7 +44,35 @@ class PipelinesViewKanban extends SugarView
         // Initialize the view
         echo '<script type="text/javascript">
             document.addEventListener("DOMContentLoaded", function() {
-                // Pipeline view is automatically initialized by PipelineKanbanView.js
+                window.pipelineView = new PipelineKanbanView({
+                    stages: window.pipelineStages || [],
+                    deals: window.pipelineDeals || [],
+                    wipLimits: window.wipLimits || {},
+                    currentUser: window.currentUser || {},
+                    permissions: window.pipelinePermissions || {},
+                    containerId: "pipeline-container",
+                    callbacks: {
+                        onNewDeal: function(stage) {
+                            // Map pipeline stages to sales stages
+                            const stageMapping = {
+                                \'sourcing\': \'Prospecting\',
+                                \'screening\': \'Qualification\',
+                                \'analysis_outreach\': \'Needs Analysis\',
+                                \'term_sheet\': \'Proposal/Price Quote\',
+                                \'due_diligence\': \'Value Proposition\',
+                                \'final_negotiation\': \'Negotiation/Review\',
+                                \'closing\': \'Negotiation/Review\',
+                                \'closed_won\': \'Closed Won\',
+                                \'closed_lost\': \'Closed Lost\'
+                            };
+                            const salesStage = stageMapping[stage] || \'Prospecting\';
+                            window.location.href = \'index.php?module=Deals&action=EditView&return_module=Pipelines&return_action=KanbanView&sales_stage=\' + encodeURIComponent(salesStage);
+                        },
+                        onShowDetails: function(dealId) {
+                            window.location.href = \'index.php?module=Deals&action=DetailView&record=\' + dealId;
+                        }
+                    }
+                });
             });
         </script>';
     }
@@ -133,7 +161,7 @@ class PipelinesViewKanban extends SugarView
                     a.name as account_name,
                     u.user_name as assigned_user_name,
                     CONCAT(u.first_name, ' ', u.last_name) as assigned_user_full_name
-                  FROM deals d
+                  FROM opportunities d
                   LEFT JOIN accounts a ON d.account_id = a.id AND a.deleted = 0
                   LEFT JOIN users u ON d.assigned_user_id = u.id AND u.deleted = 0
                   WHERE {$where}
@@ -158,7 +186,7 @@ class PipelinesViewKanban extends SugarView
         
         $limits = [];
         
-        $query = "SELECT stage, wip_limit FROM mdeal_pipeline_stages WHERE deleted = 0";
+        $query = "SELECT stage, wip_limit FROM pipeline_stages WHERE deleted = 0";
         $result = $db->query($query);
         
         while ($row = $db->fetchByAssoc($result)) {
@@ -175,10 +203,10 @@ class PipelinesViewKanban extends SugarView
         global $current_user;
         
         return [
-            'canCreate' => ACLController::checkAccess('mdeal_Deals', 'edit', true),
-            'canEdit' => ACLController::checkAccess('mdeal_Deals', 'edit', true),
-            'canDelete' => ACLController::checkAccess('mdeal_Deals', 'delete', true),
-            'canExport' => ACLController::checkAccess('mdeal_Deals', 'export', true),
+            'canCreate' => ACLController::checkAccess('Deals', 'edit', true),
+            'canEdit' => ACLController::checkAccess('Deals', 'edit', true),
+            'canDelete' => ACLController::checkAccess('Deals', 'delete', true),
+            'canExport' => ACLController::checkAccess('Deals', 'export', true),
             'isAdmin' => $current_user->isAdmin()
         ];
     }

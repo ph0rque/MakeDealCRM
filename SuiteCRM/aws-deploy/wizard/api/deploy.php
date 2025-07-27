@@ -137,6 +137,43 @@ function handleStartDeployment($input) {
     $config = $input['instanceConfig'];
     $features = $input['features'];
     
+    // Check if stack already exists and its state
+    $stackName = "makedealcrm-{$config['instanceName']}";
+    $stackCheckCmd = sprintf(
+        'AWS_ACCESS_KEY_ID=%s AWS_SECRET_ACCESS_KEY=%s AWS_DEFAULT_REGION=%s aws cloudformation describe-stacks --stack-name %s --query "Stacks[0].StackStatus" --output text 2>/dev/null',
+        escapeshellarg($credentials['accessKey']),
+        escapeshellarg($credentials['secretKey']),
+        escapeshellarg($credentials['region']),
+        escapeshellarg($stackName)
+    );
+    
+    exec($stackCheckCmd, $output, $returnCode);
+    
+    if ($returnCode === 0 && !empty($output[0])) {
+        $stackStatus = $output[0];
+        
+        // Check if stack is in a state that requires deletion
+        if (in_array($stackStatus, ['ROLLBACK_COMPLETE', 'UPDATE_ROLLBACK_COMPLETE'])) {
+            sendJsonResponse([
+                'success' => false,
+                'error' => "The CloudFormation stack '$stackName' is in $stackStatus state and must be deleted before redeployment.",
+                'requiresStackDeletion' => true,
+                'stackName' => $stackName,
+                'stackStatus' => $stackStatus,
+                'deleteCommand' => "aws cloudformation delete-stack --stack-name $stackName --region {$credentials['region']}"
+            ]);
+            return;
+        } elseif (in_array($stackStatus, ['CREATE_IN_PROGRESS', 'UPDATE_IN_PROGRESS', 'DELETE_IN_PROGRESS'])) {
+            sendJsonResponse([
+                'success' => false,
+                'error' => "The CloudFormation stack '$stackName' has an operation in progress ($stackStatus). Please wait for it to complete.",
+                'stackInProgress' => true,
+                'stackStatus' => $stackStatus
+            ]);
+            return;
+        }
+    }
+    
     // Generate deployment ID
     $deploymentId = uniqid('deploy_');
     

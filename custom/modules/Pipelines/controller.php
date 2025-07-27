@@ -101,8 +101,8 @@ class PipelinesController extends SugarController
                     c.focus_order_c,
                     a.name as account_name,
                     CONCAT(u.first_name, ' ', u.last_name) as assigned_user_name
-                FROM deals d
-                LEFT JOIN deals_cstm c ON d.id = c.id_c
+                FROM opportunities d
+                LEFT JOIN opportunities_cstm c ON d.id = c.id_c
                 LEFT JOIN accounts a ON d.account_id = a.id AND a.deleted = 0
                 LEFT JOIN users u ON d.assigned_user_id = u.id AND u.deleted = 0
                 WHERE d.deleted = 0
@@ -140,8 +140,8 @@ class PipelinesController extends SugarController
                     $stageQuery = "SELECT 
                         COUNT(*) as count,
                         SUM(d.amount) as total_amount
-                    FROM deals d
-                    LEFT JOIN deals_cstm c ON d.id = c.id_c
+                    FROM opportunities d
+                    LEFT JOIN opportunities_cstm c ON d.id = c.id_c
                     WHERE d.deleted = 0
                     AND (d.sales_stage NOT IN ('Closed Won', 'Closed Lost') OR d.sales_stage IS NULL)
                     AND IFNULL(c.pipeline_stage_c, 'sourcing') = '{$stageKey}'";

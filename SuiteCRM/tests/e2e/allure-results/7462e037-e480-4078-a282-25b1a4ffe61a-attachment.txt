@@ -1,0 +1,7 @@
+Login successful
+
+=== TEST SUMMARY REPORT ===
+
+Total issues found: 0
+
+Issues by type:

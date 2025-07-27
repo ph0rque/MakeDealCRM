@@ -1,0 +1,45 @@
+Login successful
+
+=== Testing Pipeline Stage Configuration ===
+Found 21 stages with selector: [data-stage]
+Stage: { name: 'Unknown', dealCount: 1, dataStage: 'sourcing' }
+Stage: {
+  name: 'Sample TechCorp Acquisiti...',
+  dealCount: 1,
+  dataStage: 'sourcing'
+}
+Stage: {
+  name: 'Sample TechCorp Acquisiti...',
+  dealCount: 0,
+  dataStage: 'sourcing'
+}
+Stage: { name: 'Unknown', dealCount: 1, dataStage: 'screening' }
+Stage: {
+  name: 'Sample DataSystems Merger',
+  dealCount: 1,
+  dataStage: 'screening'
+}
+Stage: {
+  name: 'Sample DataSystems Merger',
+  dealCount: 0,
+  dataStage: 'screening'
+}
+Stage: {
+  name: 'Analysis & Outreach',
+  dealCount: 0,
+  dataStage: 'analysis_outreach'
+}
+Could not parse stage
+Could not parse stage
+Could not parse stage
+Could not parse stage
+Could not parse stage
+Could not parse stage
+Could not parse stage
+Could not parse stage
+Could not parse stage
+Could not parse stage
+Could not parse stage
+Could not parse stage
+Could not parse stage
+Could not parse stage

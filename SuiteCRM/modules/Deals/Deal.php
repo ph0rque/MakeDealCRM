@@ -22,8 +22,10 @@ class Deal extends SugarBean
     public $object_name = 'Deal';
     public $module_dir = 'Deals';
     public $table_name = 'opportunities';
+    public $custom_fields = true;
     public $new_schema = true;
     public $importable = true;
+    public $acl_category = 'Deals';
     
     // Basic fields
     public $id;
@@ -67,6 +69,11 @@ class Deal extends SugarBean
     {
         parent::__construct();
         $this->disable_row_level_security = false;
+        
+        // Initialize custom fields
+        if ($this->custom_fields) {
+            $this->setupCustomFields($this->module_dir);
+        }
     }
     
     /**

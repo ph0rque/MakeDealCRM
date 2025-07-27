@@ -52,6 +52,14 @@ class DealsController extends SugarController
     }
     
     /**
+     * Display the Edit view
+     */
+    public function action_EditView()
+    {
+        $this->view = 'edit';
+    }
+    
+    /**
      * Display the Financial Dashboard view
      */
     public function action_financialdashboard()

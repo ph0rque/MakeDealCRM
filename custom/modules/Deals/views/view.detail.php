@@ -8,10 +8,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$suitecrm_root = dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/SuiteCRM';
-require_once($suitecrm_root . '/modules/Opportunities/views/view.detail.php');
+require_once('include/MVC/View/views/view.detail.php');
 
-class DealsViewDetail extends OpportunitiesViewDetail
+class DealsViewDetail extends ViewDetail
 {
     public function __construct()
     {
@@ -28,6 +27,9 @@ class DealsViewDetail extends OpportunitiesViewDetail
         // Add checklist CSS and JavaScript
         $this->includeChecklistAssets();
         
+        // Add financial dashboard to the view
+        $this->addFinancialDashboard();
+        
         // Call parent display
         parent::display();
         
@@ -36,6 +38,32 @@ class DealsViewDetail extends OpportunitiesViewDetail
         
         // Add checklist panel to the detail view
         $this->addChecklistPanel();
+    }
+    
+    /**
+     * Add financial dashboard to the detail view
+     */
+    protected function addFinancialDashboard()
+    {
+        // Check if we have the required fields
+        if ($this->bean) {
+            // Assign fields to Smarty template
+            $this->ss->assign('fields', $this->bean->toArray());
+            
+            // Load module strings
+            global $mod_strings;
+            $this->ss->assign('MOD', $mod_strings);
+            
+            // Check if template exists before trying to fetch it
+            $templatePath = 'custom/modules/Deals/tpls/FinancialDashboard.tpl';
+            if (file_exists($templatePath)) {
+                // Process the financial dashboard template
+                $dashboardHtml = $this->ss->fetch($templatePath);
+                
+                // Output the dashboard HTML
+                echo $dashboardHtml;
+            }
+        }
     }
     
     /**

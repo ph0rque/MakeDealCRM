@@ -107,10 +107,41 @@ validate_parameters() {
 deploy_stack() {
     print_status "Deploying CloudFormation stack: $STACK_NAME"
     
-    # Check if stack exists
+    # Check if stack exists and its state
+    STACK_EXISTS=false
+    STACK_STATUS=""
+    
     if aws cloudformation describe-stacks --stack-name $STACK_NAME --region $REGION &> /dev/null; then
-        ACTION="update-stack"
-        print_status "Stack exists, updating..."
+        STACK_EXISTS=true
+        STACK_STATUS=$(aws cloudformation describe-stacks --stack-name $STACK_NAME --region $REGION --query 'Stacks[0].StackStatus' --output text)
+        print_status "Stack exists with status: $STACK_STATUS"
+        
+        # Check if stack is in a state that requires deletion
+        case "$STACK_STATUS" in
+            "ROLLBACK_COMPLETE"|"UPDATE_ROLLBACK_COMPLETE")
+                print_error "Stack is in $STACK_STATUS state and must be deleted before redeployment"
+                print_warning "Please run: aws cloudformation delete-stack --stack-name $STACK_NAME --region $REGION"
+                print_warning "Then wait for deletion to complete and run this script again"
+                exit 1
+                ;;
+            "DELETE_FAILED")
+                print_error "Stack deletion previously failed. Manual intervention required."
+                print_warning "Please check AWS Console for issues and manually delete resources if needed"
+                exit 1
+                ;;
+            "CREATE_IN_PROGRESS"|"UPDATE_IN_PROGRESS"|"DELETE_IN_PROGRESS"|"ROLLBACK_IN_PROGRESS")
+                print_error "Stack operation in progress. Please wait for completion."
+                exit 1
+                ;;
+            "CREATE_COMPLETE"|"UPDATE_COMPLETE"|"UPDATE_ROLLBACK_COMPLETE")
+                ACTION="update-stack"
+                print_status "Stack ready for update"
+                ;;
+            *)
+                print_error "Stack is in unexpected state: $STACK_STATUS"
+                exit 1
+                ;;
+        esac
     else
         ACTION="create-stack"
         print_status "Creating new stack..."
