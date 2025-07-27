@@ -92,6 +92,12 @@ node_modules/
 *.sw?
 # OS specific
 
+# AWS deployment sensitive files
+SuiteCRM/aws-deploy/deployments/
+SuiteCRM/aws-deploy/scripts/admin-credentials.txt
+SuiteCRM/aws-deploy/scripts/*.pem
+*.pem
+
 # Task files
 # tasks.json
 # tasks/ 
