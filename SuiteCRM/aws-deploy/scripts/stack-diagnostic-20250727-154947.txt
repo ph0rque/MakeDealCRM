@@ -1,0 +1,9 @@
+Stack Diagnostic Report
+======================
+Stack Name: makedealcrm-production
+Region: us-east-1
+Status: ROLLBACK_COMPLETE
+Generated: Sun Jul 27 15:49:47 CDT 2025
+
+Failed Events:
+[]
