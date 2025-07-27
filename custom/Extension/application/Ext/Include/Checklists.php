@@ -22,3 +22,7 @@ $beanFiles['DealChecklist'] = 'custom/modules/DealChecklists/DealChecklist.php';
 $moduleList[] = 'ChecklistTemplates';
 $moduleList[] = 'ChecklistItems';
 $moduleList[] = 'DealChecklists';
+
+// Add module tabs
+$modInvisList[] = 'ChecklistItems';  // Hide ChecklistItems from main menu
+$modInvisList[] = 'DealChecklists';   // Hide DealChecklists from main menu

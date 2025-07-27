@@ -1,7 +1,6 @@
 <?php
 /**
- * Deals module List View
- * Simple list view that extends the base opportunities list
+ * Deal List View - Simple version without export functionality
  */
 
 if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
@@ -14,7 +13,7 @@ class DealsViewList extends OpportunitiesViewList
     {
         parent::__construct();
     }
-
+    
     /**
      * Display the list view
      */

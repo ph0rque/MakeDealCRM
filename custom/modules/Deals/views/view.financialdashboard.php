@@ -65,10 +65,21 @@ class DealsViewFinancialdashboard extends ViewDetail
     private function addDashboardAssets()
     {
         echo '<link rel="stylesheet" type="text/css" href="custom/modules/Deals/css/financial-dashboard.css">';
+        echo '<link rel="stylesheet" type="text/css" href="custom/modules/Deals/css/financial-editor.css">';
         echo '<script type="text/javascript" src="custom/modules/Deals/js/financial-dashboard-framework.js"></script>';
         echo '<script type="text/javascript" src="custom/modules/Deals/js/financial-calculation-engine.js"></script>';
         echo '<script type="text/javascript" src="custom/modules/Deals/js/financial-dashboard-widgets.js"></script>';
+        echo '<script type="text/javascript" src="custom/modules/Deals/js/financial-editor.js"></script>';
         echo '<script type="text/javascript" src="custom/modules/Deals/js/financial-dashboard-init.js"></script>';
+        
+        // Initialize the editor
+        echo '<script type="text/javascript">
+            $(document).ready(function() {
+                if (typeof FinancialEditor !== "undefined") {
+                    FinancialEditor.init("' . $this->bean->id . '");
+                }
+            });
+        </script>';
     }
 
     /**
@@ -76,28 +87,52 @@ class DealsViewFinancialdashboard extends ViewDetail
      */
     private function getFinancialData()
     {
-        $data = array(
+        require_once('custom/modules/Deals/services/FinancialCalculator.php');
+        $calculator = new FinancialCalculator();
+        
+        // Gather raw data
+        $rawData = array(
             'dealId' => $this->bean->id,
-            'askingPrice' => floatval($this->bean->amount),
-            'annualRevenue' => $this->getCustomFieldValue('annual_revenue_c'),
-            'monthlyRevenue' => $this->getMonthlyRevenueData(),
-            'operatingExpenses' => $this->getCustomFieldValue('operating_expenses_c'),
-            'addBacks' => $this->getCustomFieldValue('add_backs_c'),
-            'ownerCompensation' => $this->getCustomFieldValue('owner_compensation_c'),
-            'ownerBenefits' => $this->getCustomFieldValue('owner_benefits_c'),
-            'nonEssentialExpenses' => $this->getCustomFieldValue('non_essential_expenses_c'),
-            'targetMultiple' => $this->getCustomFieldValue('target_multiple_c', 3.5),
-            'industryMultiple' => $this->getIndustryMultiple(),
-            'valuationMethod' => $this->getCustomFieldValue('valuation_method_c', 'ebitda'),
-            'capitalExpenditures' => $this->getCustomFieldValue('capital_expenditures_c'),
-            'estimatedTaxes' => $this->getCustomFieldValue('estimated_taxes_c'),
-            'normalizedSalary' => $this->getCustomFieldValue('normalized_salary_c', 50000),
-            'growthRate' => $this->getCustomFieldValue('growth_rate_c', 0.03),
-            'holdPeriod' => $this->getCustomFieldValue('hold_period_c', 5),
-            'debtStructure' => $this->getDebtStructure(),
-            'currentAssets' => $this->getCustomFieldValue('current_assets_c'),
-            'currentLiabilities' => $this->getCustomFieldValue('current_liabilities_c'),
+            'asking_price' => floatval($this->bean->amount),
+            'annual_revenue' => $this->getCustomFieldValue('annual_revenue_c'),
+            'monthly_revenue' => $this->getMonthlyRevenueData(),
+            'operating_expenses' => $this->getCustomFieldValue('operating_expenses_c'),
+            'add_backs' => $this->getCustomFieldValue('add_backs_c'),
+            'owner_compensation' => $this->getCustomFieldValue('owner_compensation_c'),
+            'owner_benefits' => $this->getCustomFieldValue('owner_benefits_c'),
+            'non_essential_expenses' => $this->getCustomFieldValue('non_essential_expenses_c'),
+            'target_multiple' => $this->getCustomFieldValue('target_multiple_c', 3.5),
+            'industry_multiple' => $this->getIndustryMultiple(),
+            'valuation_method' => $this->getCustomFieldValue('valuation_method_c', 'ebitda'),
+            'capital_expenditures' => $this->getCustomFieldValue('capital_expenditures_c'),
+            'estimated_taxes' => $this->getCustomFieldValue('estimated_taxes_c'),
+            'normalized_salary' => $this->getCustomFieldValue('normalized_salary_c', 50000),
+            'growth_rate' => $this->getCustomFieldValue('growth_rate_c', 0.03),
+            'hold_period' => $this->getCustomFieldValue('hold_period_c', 5),
+            'debt_structure' => $this->getDebtStructure(),
+            'current_assets' => $this->getCustomFieldValue('current_assets_c'),
+            'current_liabilities' => $this->getCustomFieldValue('current_liabilities_c'),
+            'equity_investment' => $this->getCustomFieldValue('equity_c'),
         );
+        
+        // Calculate all metrics using FinancialCalculator
+        $calculatedMetrics = $calculator->calculateAllMetrics($rawData);
+        
+        // Merge raw data with calculated metrics for dashboard
+        $data = array_merge($rawData, array(
+            'calculated_metrics' => $calculatedMetrics,
+            'formatted_metrics' => array(
+                'ttm_revenue' => $calculator->formatCurrency($calculatedMetrics['ttm_revenue'] ?? 0),
+                'ttm_ebitda' => $calculator->formatCurrency($calculatedMetrics['ttm_ebitda'] ?? 0),
+                'sde' => $calculator->formatCurrency($calculatedMetrics['sde'] ?? 0),
+                'ebitda_margin' => $calculator->formatPercentage($calculatedMetrics['ebitda_margin'] ?? 0),
+                'proposed_valuation' => $calculator->formatCurrency($calculatedMetrics['proposed_valuation'] ?? 0),
+                'implied_multiple' => $calculator->formatMultiple($calculatedMetrics['implied_multiple'] ?? 0),
+                'roi' => $calculator->formatPercentage($calculatedMetrics['roi'] ?? 0),
+                'dscr' => number_format($calculatedMetrics['dscr'] ?? 0, 2) . 'x',
+                'payback_period' => number_format($calculatedMetrics['payback_period'] ?? 0, 1) . ' years'
+            )
+        ));
 
         return $data;
     }

@@ -1,0 +1,55 @@
+{
+  "name": "makedealcrm-e2e-tests",
+  "version": "1.0.0",
+  "description": "E2E Test Suite for MakeDealCRM",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:ui": "playwright test --ui",
+    "test:checklists": "playwright test checklists/",
+    "test:stakeholders": "playwright test stakeholders/",
+    "test:financial": "playwright test financial/",
+    "test:email": "playwright test email-integration/",
+    "test:pipeline": "playwright test pipeline/",
+    "test:auth": "playwright test auth/",
+    "test:deals": "playwright test deals/",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:regression": "playwright test --grep @regression",
+    "test:chromium": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=firefox",
+    "test:webkit": "playwright test --project=webkit",
+    "test:mobile": "playwright test --project='Mobile Chrome' --project='Mobile Safari'",
+    "report": "playwright show-report reports/html",
+    "trace": "playwright show-trace",
+    "codegen": "playwright codegen http://localhost:8080",
+    "install": "playwright install --with-deps",
+    "lint": "eslint . --ext .ts,.js",
+    "lint:fix": "eslint . --ext .ts,.js --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "clean": "rm -rf test-results reports node_modules/.cache",
+    "pretest": "npm run clean",
+    "posttest": "npm run report"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.45.0",
+    "dotenv": "^16.0.3",
+    "faker": "^5.5.3",
+    "moment": "^2.29.4"
+  },
+  "devDependencies": {
+    "@types/faker": "^5.5.9",
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-playwright": "^0.15.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

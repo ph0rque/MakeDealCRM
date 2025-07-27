@@ -373,20 +373,31 @@ var DueDiligenceExportManager = {
             requestData.deal_id = dealData;
         }
         
+        // Use the correct action endpoint
+        var actionUrl = 'index.php?module=Deals&action=';
+        if (options.format === 'pdf') {
+            actionUrl += 'exportPDF';
+        } else {
+            actionUrl += 'exportExcel';
+        }
+        
         $.ajax({
-            url: 'index.php?module=Deals&action=export',
+            url: actionUrl,
             method: 'POST',
             data: requestData,
-            xhrFields: {
-                responseType: exportType === 'batch' ? 'json' : 'blob'
-            },
-            success: function(response, status, xhr) {
+            dataType: 'json',
+            success: function(response) {
                 this.hideProgress();
                 
-                if (exportType === 'batch') {
-                    this.handleBatchExportResponse(response);
+                if (response.success && response.download_url) {
+                    // Trigger download
+                    window.location.href = response.download_url;
+                    this.showSuccess('Export generated successfully');
+                    
+                    // Log export
+                    this.logExport(requestData);
                 } else {
-                    this.handleSingleExportResponse(response, xhr);
+                    this.showError(response.message || 'Export failed');
                 }
                 
                 dialog.dialog('close');

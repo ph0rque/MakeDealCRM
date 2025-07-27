@@ -25,11 +25,17 @@ class DealsViewDetail extends OpportunitiesViewDetail
         // Add export CSS and JavaScript
         $this->includeExportAssets();
         
+        // Add checklist CSS and JavaScript
+        $this->includeChecklistAssets();
+        
         // Call parent display
         parent::display();
         
         // Add export buttons to the detail view
         $this->addExportButtons();
+        
+        // Add checklist panel to the detail view
+        $this->addChecklistPanel();
     }
     
     /**
@@ -146,6 +152,60 @@ class DealsViewDetail extends OpportunitiesViewDetail
         }
         
         return true;
+    }
+    
+    /**
+     * Include CSS and JavaScript for checklist functionality
+     */
+    protected function includeChecklistAssets()
+    {
+        global $sugar_config;
+        
+        $checklist_css_url = $sugar_config['site_url'] . '/custom/modules/Deals/css/checklist.css';
+        $checklist_js_url = $sugar_config['site_url'] . '/custom/modules/Deals/js/checklist.js';
+        
+        echo "<link rel='stylesheet' type='text/css' href='{$checklist_css_url}' />\n";
+        echo "<script type='text/javascript' src='{$checklist_js_url}'></script>\n";
+    }
+    
+    /**
+     * Add checklist panel to the detail view
+     */
+    protected function addChecklistPanel()
+    {
+        $dealId = $this->bean->id;
+        $dealName = htmlspecialchars($this->bean->name ?? 'Deal');
+        
+        // Create the checklist container
+        $checklistHtml = '<div id="deal-checklist-container" class="checklist-panel" data-deal-id="' . $dealId . '">';
+        $checklistHtml .= '<div class="checklist-header">';
+        $checklistHtml .= '<h3>📋 Due Diligence Checklist</h3>';
+        $checklistHtml .= '<div class="checklist-actions">';
+        $checklistHtml .= '<button type="button" class="btn btn-sm btn-primary" onclick="DealChecklist.refreshChecklist(\'' . $dealId . '\')">Refresh</button>';
+        $checklistHtml .= '<button type="button" class="btn btn-sm btn-secondary" onclick="DealChecklist.toggleAllSections()">Expand/Collapse All</button>';
+        $checklistHtml .= '</div>';
+        $checklistHtml .= '</div>';
+        $checklistHtml .= '<div id="checklist-content" class="checklist-content">';
+        $checklistHtml .= '<div class="loading-spinner">Loading checklist...</div>';
+        $checklistHtml .= '</div>';
+        $checklistHtml .= '</div>';
+        
+        // Inject the checklist panel via JavaScript
+        echo "<script type='text/javascript'>
+            $(document).ready(function() {
+                // Find the detail view container
+                var detailView = $('.detail-view').first();
+                if (detailView.length > 0) {
+                    // Add checklist after the main detail view
+                    detailView.after('" . str_replace(["\n", "\r", "'"], ['', '', "\\'"], $checklistHtml) . "');
+                    
+                    // Initialize the checklist
+                    if (typeof DealChecklist !== 'undefined') {
+                        DealChecklist.init('{$dealId}');
+                    }
+                }
+            });
+        </script>";
     }
 }
 ?>

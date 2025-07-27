@@ -64,5 +64,4 @@
 3. `/custom/modules/Deals/views/view.pipeline.php` - Complete pipeline view implementation
 4. `/custom/modules/Deals/tpls/pipeline.tpl` - Pipeline HTML template
 5. `/custom/modules/Deals/tpls/deals.css` - Pipeline styling
-6. `/test_drag_drop_working.js` - Browser console test script
-7. `/test_deals_regression.php` - PHP regression test script
+6. `/test_deals_regression.php` - PHP regression test script

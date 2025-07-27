@@ -68,7 +68,7 @@ MakeDealCRM is a customized SuiteCRM implementation tailored for commercial real
 ## 🛠️ Technical Architecture
 
 ### Custom Modules
-- **mdeal_Deals**: Enhanced deals module with pipeline visualization
+- **Deals**: Enhanced deals module with pipeline visualization
 - **Pipelines**: Pipeline automation and stage management
 - **Checklists**: Due diligence task management
 - **Stakeholder Integration**: Communication and relationship tracking

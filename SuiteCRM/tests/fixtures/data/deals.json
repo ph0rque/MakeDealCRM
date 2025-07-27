@@ -1,0 +1,187 @@
+{
+  "test_deals": [
+    {
+      "name": "Acme Manufacturing Acquisition",
+      "status": "due_diligence",
+      "source": "Broker",
+      "deal_value": 15000000,
+      "ttm_revenue_c": 25000000,
+      "ttm_ebitda_c": 5000000,
+      "sde_c": 5500000,
+      "target_multiple_c": 4.5,
+      "asking_price_c": 22500000,
+      "focus_c": "Manufacturing",
+      "equity_c": 4500000,
+      "senior_debt_c": 7500000,
+      "seller_note_c": 3000000,
+      "description": "Leading manufacturer of industrial components with strong market position",
+      "contacts": [
+        {
+          "first_name": "John",
+          "last_name": "Smith",
+          "title": "Owner/CEO",
+          "email1": "john.smith@acmemfg.com",
+          "phone_work": "(555) 123-4567"
+        },
+        {
+          "first_name": "Sarah",
+          "last_name": "Johnson",
+          "title": "CFO",
+          "email1": "sarah.johnson@acmemfg.com",
+          "phone_work": "(555) 123-4568"
+        }
+      ]
+    },
+    {
+      "name": "TechStart SaaS Platform",
+      "status": "loi_submitted",
+      "source": "Direct",
+      "deal_value": 8000000,
+      "ttm_revenue_c": 4000000,
+      "ttm_ebitda_c": 1200000,
+      "sde_c": 1400000,
+      "target_multiple_c": 6.5,
+      "asking_price_c": 9000000,
+      "focus_c": "Technology",
+      "equity_c": 2400000,
+      "senior_debt_c": 4000000,
+      "seller_note_c": 1600000,
+      "description": "B2B SaaS platform with recurring revenue model",
+      "contacts": [
+        {
+          "first_name": "Mike",
+          "last_name": "Chen",
+          "title": "Founder",
+          "email1": "mike@techstart.com",
+          "phone_work": "(555) 234-5678"
+        }
+      ]
+    },
+    {
+      "name": "Regional Healthcare Services",
+      "status": "initial_contact",
+      "source": "Investment Bank",
+      "deal_value": 25000000,
+      "ttm_revenue_c": 40000000,
+      "ttm_ebitda_c": 6000000,
+      "sde_c": 6500000,
+      "target_multiple_c": 5.0,
+      "asking_price_c": 30000000,
+      "focus_c": "Healthcare",
+      "equity_c": 7500000,
+      "senior_debt_c": 12500000,
+      "seller_note_c": 5000000,
+      "description": "Multi-location healthcare services provider",
+      "contacts": [
+        {
+          "first_name": "Dr. Emily",
+          "last_name": "Williams",
+          "title": "CEO",
+          "email1": "ewilliams@regionalhealthcare.com",
+          "phone_work": "(555) 345-6789"
+        },
+        {
+          "first_name": "Robert",
+          "last_name": "Davis",
+          "title": "Investment Banker",
+          "email1": "rdavis@investmentbank.com",
+          "phone_work": "(555) 456-7890"
+        }
+      ]
+    },
+    {
+      "name": "Retail Chain Consolidation",
+      "status": "closed_won",
+      "source": "Broker",
+      "deal_value": 12000000,
+      "ttm_revenue_c": 30000000,
+      "ttm_ebitda_c": 3000000,
+      "sde_c": 3200000,
+      "target_multiple_c": 4.0,
+      "asking_price_c": 12000000,
+      "focus_c": "Retail",
+      "equity_c": 3600000,
+      "senior_debt_c": 6000000,
+      "seller_note_c": 2400000,
+      "description": "Successfully closed acquisition of regional retail chain",
+      "date_closed": "2024-01-15",
+      "contacts": [
+        {
+          "first_name": "Jennifer",
+          "last_name": "Brown",
+          "title": "Broker",
+          "email1": "jbrown@businessbrokers.com",
+          "phone_work": "(555) 567-8901"
+        }
+      ]
+    },
+    {
+      "name": "Distressed Manufacturing Asset",
+      "status": "closed_lost",
+      "source": "Direct",
+      "deal_value": 5000000,
+      "ttm_revenue_c": 8000000,
+      "ttm_ebitda_c": -500000,
+      "sde_c": 100000,
+      "target_multiple_c": 2.0,
+      "asking_price_c": 3000000,
+      "focus_c": "Manufacturing",
+      "description": "Turnaround opportunity - deal terminated due to environmental issues",
+      "lost_reason": "Environmental compliance issues discovered during due diligence",
+      "contacts": []
+    }
+  ],
+  "at_risk_deals": [
+    {
+      "name": "Stalled Services Acquisition",
+      "status": "due_diligence",
+      "date_in_current_stage": "2024-12-01",
+      "deal_value": 7000000,
+      "description": "Deal has been in due diligence for over 45 days - at risk"
+    },
+    {
+      "name": "Delayed LOI Response",
+      "status": "loi_submitted",
+      "date_in_current_stage": "2024-12-15",
+      "deal_value": 9000000,
+      "description": "LOI submitted 30 days ago with no response - warning status"
+    }
+  ],
+  "pipeline_stages": [
+    {
+      "stage": "Sourcing",
+      "deals": 8,
+      "total_value": 45000000
+    },
+    {
+      "stage": "Initial Contact",
+      "deals": 6,
+      "total_value": 38000000
+    },
+    {
+      "stage": "NDA Signed",
+      "deals": 5,
+      "total_value": 32000000
+    },
+    {
+      "stage": "Indicative Offer",
+      "deals": 4,
+      "total_value": 28000000
+    },
+    {
+      "stage": "LOI Submitted",
+      "deals": 3,
+      "total_value": 22000000
+    },
+    {
+      "stage": "Due Diligence",
+      "deals": 2,
+      "total_value": 18000000
+    },
+    {
+      "stage": "Definitive Agreement",
+      "deals": 1,
+      "total_value": 12000000
+    }
+  ]
+}

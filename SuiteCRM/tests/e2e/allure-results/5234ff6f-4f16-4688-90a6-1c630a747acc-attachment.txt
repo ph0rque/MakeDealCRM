@@ -1,0 +1,4 @@
+Login successful
+Navigated to Deals via menu
+✓ Step 1: Navigated to Deals module
+✓ Step 2: Clicked Create Deal button

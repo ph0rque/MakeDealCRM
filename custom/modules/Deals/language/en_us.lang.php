@@ -117,6 +117,9 @@ $mod_strings['LBL_MEETINGS_SUBPANEL_TITLE'] = 'Meetings';
 $mod_strings['LBL_CALLS_SUBPANEL_TITLE'] = 'Calls';
 $mod_strings['LBL_EMAILS_SUBPANEL_TITLE'] = 'Emails';
 $mod_strings['LBL_CHECKLIST_ITEMS_SUBPANEL_TITLE'] = 'Checklist Items';
+$mod_strings['LBL_APPLY_CHECKLIST_TEMPLATE'] = 'Apply Checklist Template';
+$mod_strings['LBL_MANAGE_TEMPLATES'] = 'Manage Templates';
+$mod_strings['LBL_CHECKLISTS_SUBPANEL_TITLE'] = 'Checklists';
 
 // Search filters
 $mod_strings['LBL_SEARCH_BY_STAGE'] = 'Search by Stage';

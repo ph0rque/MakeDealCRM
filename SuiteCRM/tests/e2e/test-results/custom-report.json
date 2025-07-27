@@ -1,0 +1,248 @@
+{
+  "summary": {
+    "total": 5,
+    "passed": 0,
+    "failed": 4,
+    "skipped": 1,
+    "flaky": 0,
+    "duration": 33788.979999999996,
+    "startTime": "2025-07-26T22:13:47.536Z",
+    "endTime": "2025-07-26T22:14:21.431Z"
+  },
+  "tests": [
+    {
+      "title": "Cleanup test data",
+      "fullTitle": " › chromium › deals/feature1-deal-central-object-fixed.spec.js › Feature 1: Deal as Central Object (Fixed) › Cleanup test data",
+      "file": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/deals/feature1-deal-central-object-fixed.spec.js",
+      "line": 322,
+      "column": 8,
+      "project": "chromium",
+      "status": "skipped",
+      "duration": 0,
+      "retry": 0,
+      "startTime": "2025-07-26T22:13:47.539Z",
+      "endTime": "2025-07-26T22:13:47.539Z",
+      "error": null,
+      "attachments": [],
+      "annotations": [
+        {
+          "type": "skip"
+        }
+      ]
+    },
+    {
+      "title": "Test Case 1.1: E2E Deal Creation and Data Association (Fixed)",
+      "fullTitle": " › chromium › deals/feature1-deal-central-object-fixed.spec.js › Feature 1: Deal as Central Object (Fixed) › Test Case 1.1: E2E Deal Creation and Data Association (Fixed)",
+      "file": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/deals/feature1-deal-central-object-fixed.spec.js",
+      "line": 48,
+      "column": 3,
+      "project": "chromium",
+      "status": "timedOut",
+      "duration": 31438,
+      "retry": 0,
+      "startTime": "2025-07-26T22:13:48.060Z",
+      "endTime": "2025-07-26T22:14:19.498Z",
+      "error": {
+        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+      },
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/test-results/deals-feature1-deal-centra-86f0e-and-Data-Association-Fixed--chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "contentType": "video/webm",
+          "path": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/test-results/deals-feature1-deal-centra-86f0e-and-Data-Association-Fixed--chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/test-results/deals-feature1-deal-centra-86f0e-and-Data-Association-Fixed--chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/test-results/deals-feature1-deal-centra-86f0e-and-Data-Association-Fixed--chromium/trace.zip"
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "Verify deal appears in deals list",
+      "fullTitle": " › chromium › deals/feature1-deal-central-object-fixed.spec.js › Feature 1: Deal as Central Object (Fixed) › Verify deal appears in deals list",
+      "file": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/deals/feature1-deal-central-object-fixed.spec.js",
+      "line": 268,
+      "column": 3,
+      "project": "chromium",
+      "status": "timedOut",
+      "duration": 31406,
+      "retry": 0,
+      "startTime": "2025-07-26T22:13:48.066Z",
+      "endTime": "2025-07-26T22:14:19.472Z",
+      "error": {
+        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+      },
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/test-results/deals-feature1-deal-centra-842aa--deal-appears-in-deals-list-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "contentType": "video/webm",
+          "path": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/test-results/deals-feature1-deal-centra-842aa--deal-appears-in-deals-list-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/test-results/deals-feature1-deal-centra-842aa--deal-appears-in-deals-list-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/test-results/deals-feature1-deal-centra-842aa--deal-appears-in-deals-list-chromium/trace.zip"
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "Basic deal creation workflow",
+      "fullTitle": " › chromium › deals/feature1-deal-central-object-fixed.spec.js › Feature 1: Deal as Central Object (Fixed) › Basic deal creation workflow",
+      "file": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/deals/feature1-deal-central-object-fixed.spec.js",
+      "line": 296,
+      "column": 3,
+      "project": "chromium",
+      "status": "timedOut",
+      "duration": 31635,
+      "retry": 0,
+      "startTime": "2025-07-26T22:13:48.066Z",
+      "endTime": "2025-07-26T22:14:19.701Z",
+      "error": {
+        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+      },
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/test-results/deals-feature1-deal-centra-b78b3-asic-deal-creation-workflow-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "contentType": "video/webm",
+          "path": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/test-results/deals-feature1-deal-centra-b78b3-asic-deal-creation-workflow-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/test-results/deals-feature1-deal-centra-b78b3-asic-deal-creation-workflow-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/test-results/deals-feature1-deal-centra-b78b3-asic-deal-creation-workflow-chromium/trace.zip"
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "Handle missing required fields gracefully",
+      "fullTitle": " › chromium › deals/feature1-deal-central-object-fixed.spec.js › Feature 1: Error Handling › Handle missing required fields gracefully",
+      "file": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/deals/feature1-deal-central-object-fixed.spec.js",
+      "line": 347,
+      "column": 3,
+      "project": "chromium",
+      "status": "timedOut",
+      "duration": 31462,
+      "retry": 0,
+      "startTime": "2025-07-26T22:13:48.076Z",
+      "endTime": "2025-07-26T22:14:19.538Z",
+      "error": {
+        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+      },
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/test-results/deals-feature1-deal-centra-bb5d9--required-fields-gracefully-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "contentType": "video/webm",
+          "path": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/test-results/deals-feature1-deal-centra-bb5d9--required-fields-gracefully-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/test-results/deals-feature1-deal-centra-bb5d9--required-fields-gracefully-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/test-results/deals-feature1-deal-centra-bb5d9--required-fields-gracefully-chromium/trace.zip"
+        }
+      ],
+      "annotations": []
+    }
+  ],
+  "suites": {
+    "chromium": {
+      "total": 5,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "duration": 0
+    }
+  },
+  "environment": {
+    "node": "v24.3.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "ci": false,
+    "buildNumber": "local",
+    "gitCommit": "",
+    "gitBranch": "local"
+  },
+  "performance": {
+    "slowestTests": [
+      {
+        "title": " › chromium › deals/feature1-deal-central-object-fixed.spec.js › Feature 1: Deal as Central Object (Fixed) › Basic deal creation workflow",
+        "duration": 31635,
+        "file": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/deals/feature1-deal-central-object-fixed.spec.js",
+        "project": "chromium"
+      },
+      {
+        "title": " › chromium › deals/feature1-deal-central-object-fixed.spec.js › Feature 1: Error Handling › Handle missing required fields gracefully",
+        "duration": 31462,
+        "file": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/deals/feature1-deal-central-object-fixed.spec.js",
+        "project": "chromium"
+      },
+      {
+        "title": " › chromium › deals/feature1-deal-central-object-fixed.spec.js › Feature 1: Deal as Central Object (Fixed) › Test Case 1.1: E2E Deal Creation and Data Association (Fixed)",
+        "duration": 31438,
+        "file": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/deals/feature1-deal-central-object-fixed.spec.js",
+        "project": "chromium"
+      },
+      {
+        "title": " › chromium › deals/feature1-deal-central-object-fixed.spec.js › Feature 1: Deal as Central Object (Fixed) › Verify deal appears in deals list",
+        "duration": 31406,
+        "file": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/deals/feature1-deal-central-object-fixed.spec.js",
+        "project": "chromium"
+      },
+      {
+        "title": " › chromium › deals/feature1-deal-central-object-fixed.spec.js › Feature 1: Deal as Central Object (Fixed) › Cleanup test data",
+        "duration": 0,
+        "file": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/deals/feature1-deal-central-object-fixed.spec.js",
+        "project": "chromium"
+      }
+    ],
+    "averageTestDuration": 25188.2,
+    "totalExecutionTime": 33788.979999999996
+  }
+}

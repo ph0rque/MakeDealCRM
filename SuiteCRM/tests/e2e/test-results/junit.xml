@@ -1,0 +1,239 @@
+<testsuites id="" name="" tests="5" failures="4" skipped="1" errors="0" time="33.788979999999995">
+<testsuite name="deals/feature1-deal-central-object-fixed.spec.js" timestamp="2025-07-26T22:13:47.535Z" hostname="chromium" tests="5" failures="4" skipped="1" time="125.941" errors="0">
+<testcase name="[chromium] Feature 1: Deal as Central Object (Fixed) › Test Case 1.1: E2E Deal Creation and Data Association (Fixed)" classname="deals/feature1-deal-central-object-fixed.spec.js" time="31.438">
+<failure message="feature1-deal-central-object-fixed.spec.js:48:3 Test Case 1.1: E2E Deal Creation and Data Association (Fixed)" type="FAILURE">
+<![CDATA[  [chromium] › deals/feature1-deal-central-object-fixed.spec.js:48:3 › Feature 1: Deal as Central Object (Fixed) › Test Case 1.1: E2E Deal Creation and Data Association (Fixed) 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.fill: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('input[name="name"]')
+
+
+      59 |     // Step 3: Fill in all required fields for the new deal
+      60 |     // Deal name (required)
+    > 61 |     await page.fill('input[name="name"]', testDealData.name);
+         |                ^
+      62 |     
+      63 |     // Financial data - try multiple possible field names
+      64 |     const financialFields = [
+        at /Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/deals/feature1-deal-central-object-fixed.spec.js:61:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/deals-feature1-deal-centra-86f0e-and-Data-Association-Fixed--chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/deals-feature1-deal-centra-86f0e-and-Data-Association-Fixed--chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/deals-feature1-deal-centra-86f0e-and-Data-Association-Fixed--chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/deals-feature1-deal-centra-86f0e-and-Data-Association-Fixed--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/deals-feature1-deal-centra-86f0e-and-Data-Association-Fixed--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[Login successful
+Navigated to Deals via menu
+✓ Step 1: Navigated to Deals module
+✓ Step 2: Clicked Create Deal button
+
+[[ATTACHMENT|deals-feature1-deal-centra-86f0e-and-Data-Association-Fixed--chromium/test-failed-1.png]]
+
+[[ATTACHMENT|deals-feature1-deal-centra-86f0e-and-Data-Association-Fixed--chromium/video.webm]]
+
+[[ATTACHMENT|deals-feature1-deal-centra-86f0e-and-Data-Association-Fixed--chromium/error-context.md]]
+
+[[ATTACHMENT|deals-feature1-deal-centra-86f0e-and-Data-Association-Fixed--chromium/trace.zip]]
+]]>
+</system-out>
+</testcase>
+<testcase name="[chromium] Feature 1: Deal as Central Object (Fixed) › Verify deal appears in deals list" classname="deals/feature1-deal-central-object-fixed.spec.js" time="31.406">
+<failure message="feature1-deal-central-object-fixed.spec.js:268:3 Verify deal appears in deals list" type="FAILURE">
+<![CDATA[  [chromium] › deals/feature1-deal-central-object-fixed.spec.js:268:3 › Feature 1: Deal as Central Object (Fixed) › Verify deal appears in deals list 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: elementHandle.fill: Test timeout of 30000ms exceeded.
+    Call log:
+        - fill("E2E Test Deal 1753568028053")
+      - attempting fill action
+        2 × waiting for element to be visible, enabled and editable
+          - element is not visible
+        - retrying fill action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and editable
+          - element is not visible
+        - retrying fill action
+          - waiting 100ms
+        45 × waiting for element to be visible, enabled and editable
+           - element is not visible
+         - retrying fill action
+           - waiting 500ms
+
+
+      280 |       const searchField = await page.$('input[name="name_basic"], input[name="search_name"], input[name="query_string"]');
+      281 |       if (searchField) {
+    > 282 |         await searchField.fill(testDealData.name);
+          |                           ^
+      283 |         const searchButton = await page.$('input[value="Search"], button:has-text("Search")');
+      284 |         if (searchButton) {
+      285 |           await searchButton.click();
+        at /Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/deals/feature1-deal-central-object-fixed.spec.js:282:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/deals-feature1-deal-centra-842aa--deal-appears-in-deals-list-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/deals-feature1-deal-centra-842aa--deal-appears-in-deals-list-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/deals-feature1-deal-centra-842aa--deal-appears-in-deals-list-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/deals-feature1-deal-centra-842aa--deal-appears-in-deals-list-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/deals-feature1-deal-centra-842aa--deal-appears-in-deals-list-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[Login successful
+Navigated to Deals via menu
+
+[[ATTACHMENT|deals-feature1-deal-centra-842aa--deal-appears-in-deals-list-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|deals-feature1-deal-centra-842aa--deal-appears-in-deals-list-chromium/video.webm]]
+
+[[ATTACHMENT|deals-feature1-deal-centra-842aa--deal-appears-in-deals-list-chromium/error-context.md]]
+
+[[ATTACHMENT|deals-feature1-deal-centra-842aa--deal-appears-in-deals-list-chromium/trace.zip]]
+]]>
+</system-out>
+</testcase>
+<testcase name="[chromium] Feature 1: Deal as Central Object (Fixed) › Basic deal creation workflow" classname="deals/feature1-deal-central-object-fixed.spec.js" time="31.635">
+<failure message="feature1-deal-central-object-fixed.spec.js:296:3 Basic deal creation workflow" type="FAILURE">
+<![CDATA[  [chromium] › deals/feature1-deal-central-object-fixed.spec.js:296:3 › Feature 1: Deal as Central Object (Fixed) › Basic deal creation workflow 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.fill: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('input[name="name"]')
+
+
+      306 |     
+      307 |     // Fill required fields
+    > 308 |     await page.fill('input[name="name"]', basicDealName);
+          |                ^
+      309 |     
+      310 |     // Save
+      311 |     const saveButton = await page.locator('input[value="Save"]:visible, button:has-text("Save"):visible').first();
+        at /Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/deals/feature1-deal-central-object-fixed.spec.js:308:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/deals-feature1-deal-centra-b78b3-asic-deal-creation-workflow-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/deals-feature1-deal-centra-b78b3-asic-deal-creation-workflow-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/deals-feature1-deal-centra-b78b3-asic-deal-creation-workflow-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/deals-feature1-deal-centra-b78b3-asic-deal-creation-workflow-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/deals-feature1-deal-centra-b78b3-asic-deal-creation-workflow-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[Login successful
+Navigated to Deals via menu
+
+[[ATTACHMENT|deals-feature1-deal-centra-b78b3-asic-deal-creation-workflow-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|deals-feature1-deal-centra-b78b3-asic-deal-creation-workflow-chromium/video.webm]]
+
+[[ATTACHMENT|deals-feature1-deal-centra-b78b3-asic-deal-creation-workflow-chromium/error-context.md]]
+
+[[ATTACHMENT|deals-feature1-deal-centra-b78b3-asic-deal-creation-workflow-chromium/trace.zip]]
+]]>
+</system-out>
+</testcase>
+<testcase name="[chromium] Feature 1: Deal as Central Object (Fixed) › Cleanup test data" classname="deals/feature1-deal-central-object-fixed.spec.js" time="0">
+<properties>
+<property name="skip" value="">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="[chromium] Feature 1: Error Handling › Handle missing required fields gracefully" classname="deals/feature1-deal-central-object-fixed.spec.js" time="31.462">
+<failure message="feature1-deal-central-object-fixed.spec.js:347:3 Handle missing required fields gracefully" type="FAILURE">
+<![CDATA[  [chromium] › deals/feature1-deal-central-object-fixed.spec.js:347:3 › Feature 1: Error Handling › Handle missing required fields gracefully 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('input[value="Save"]:visible, button:has-text("Save"):visible').first()
+
+
+      353 |     // Try to save without required fields
+      354 |     const saveButton = await page.locator('input[value="Save"]:visible, button:has-text("Save"):visible').first();
+    > 355 |     await saveButton.click();
+          |                      ^
+      356 |     
+      357 |     // Check for validation errors or if page stays on edit form
+      358 |     const currentUrl = page.url();
+        at /Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/deals/feature1-deal-central-object-fixed.spec.js:355:22
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/deals-feature1-deal-centra-bb5d9--required-fields-gracefully-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/deals-feature1-deal-centra-bb5d9--required-fields-gracefully-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/deals-feature1-deal-centra-bb5d9--required-fields-gracefully-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/deals-feature1-deal-centra-bb5d9--required-fields-gracefully-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/deals-feature1-deal-centra-bb5d9--required-fields-gracefully-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[Login successful
+Navigated to Deals via menu
+
+[[ATTACHMENT|deals-feature1-deal-centra-bb5d9--required-fields-gracefully-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|deals-feature1-deal-centra-bb5d9--required-fields-gracefully-chromium/video.webm]]
+
+[[ATTACHMENT|deals-feature1-deal-centra-bb5d9--required-fields-gracefully-chromium/error-context.md]]
+
+[[ATTACHMENT|deals-feature1-deal-centra-bb5d9--required-fields-gracefully-chromium/trace.zip]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+</testsuites>

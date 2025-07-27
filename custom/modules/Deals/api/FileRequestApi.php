@@ -21,9 +21,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once 'include/api/SugarApi.php';
 require_once 'include/SugarQuery/SugarQuery.php';
 require_once 'modules/ACL/ACLController.php';
-require_once 'include/OutboundEmail/OutboundEmail.php';
-require_once 'modules/EmailTemplates/EmailTemplate.php';
 require_once 'include/upload_file.php';
+require_once 'custom/modules/Deals/services/EmailProcessorService.php';
 
 class FileRequestApi extends SugarApi
 {
@@ -563,208 +562,17 @@ class FileRequestApi extends SugarApi
             $fileItems[] = $item;
         }
 
-        // Generate email content
-        $emailTemplate = $this->getEmailTemplate($requestData['request_type']);
-        $emailContent = $this->parseEmailTemplate($emailTemplate, $requestData, $deal, $fileItems);
+        // Add file items to request data for template processing
+        $requestData['file_items'] = $fileItems;
 
-        // Send email
-        try {
-            $outboundEmail = new OutboundEmail();
-            $systemSettings = $outboundEmail->getSystemMailerSettings();
-
-            if (!$systemSettings) {
-                return array('success' => false, 'message' => 'Email system not configured');
-            }
-
-            $mail = $systemSettings->create_new_sugar_phpmailer();
-            $mail->setFrom($systemSettings->smtp_from_addr, $systemSettings->smtp_from_name);
-            $mail->addAddress($requestData['recipient_email'], $requestData['recipient_name']);
-            $mail->Subject = $emailContent['subject'];
-            $mail->Body = $emailContent['body_html'];
-            $mail->AltBody = $emailContent['body_text'];
-            $mail->isHTML(true);
-
-            $sent = $mail->send();
-
-            if ($sent) {
-                // Log email sent
-                $this->logEmailSent($requestId, $requestData['recipient_email']);
-                return array('success' => true, 'message' => 'Email sent successfully');
-            } else {
-                return array('success' => false, 'message' => 'Failed to send email: ' . $mail->ErrorInfo);
-            }
-
-        } catch (Exception $e) {
-            return array('success' => false, 'message' => 'Email error: ' . $e->getMessage());
-        }
-    }
-
-    /**
-     * Get email template for request type
-     * 
-     * @param string $requestType
-     * @return array
-     */
-    private function getEmailTemplate($requestType)
-    {
-        // Default template structure
-        $templates = array(
-            'due_diligence' => array(
-                'subject' => 'File Request: Due Diligence Documents for {deal_name}',
-                'body_html' => '<h2>File Request</h2>
-                                <p>Dear {recipient_name},</p>
-                                <p>We are requesting the following documents for our due diligence process regarding <strong>{deal_name}</strong>:</p>
-                                <ul>{file_list}</ul>
-                                <p><strong>Due Date:</strong> {due_date}</p>
-                                <p><strong>Upload Link:</strong> <a href="{upload_url}">Click here to upload files</a></p>
-                                <p>If you have any questions, please don\'t hesitate to contact us.</p>
-                                <p>Best regards,<br>{user_name}</p>',
-                'body_text' => 'File Request: Due Diligence Documents for {deal_name}
-
-Dear {recipient_name},
-
-We are requesting the following documents for our due diligence process regarding {deal_name}:
-
-{file_list_text}
-
-Due Date: {due_date}
-Upload Link: {upload_url}
-
-If you have any questions, please don\'t hesitate to contact us.
-
-Best regards,
-{user_name}'
-            ),
-            'financial' => array(
-                'subject' => 'Financial Document Request for {deal_name}',
-                'body_html' => '<h2>Financial Document Request</h2>
-                                <p>Dear {recipient_name},</p>
-                                <p>To proceed with the evaluation of <strong>{deal_name}</strong>, we need the following financial documents:</p>
-                                <ul>{file_list}</ul>
-                                <p><strong>Priority:</strong> {priority}</p>
-                                <p><strong>Due Date:</strong> {due_date}</p>
-                                <p><strong>Upload Link:</strong> <a href="{upload_url}">Click here to upload files</a></p>
-                                <p>Thank you for your cooperation.</p>
-                                <p>Best regards,<br>{user_name}</p>',
-                'body_text' => 'Financial Document Request for {deal_name}
-
-Dear {recipient_name},
-
-To proceed with the evaluation of {deal_name}, we need the following financial documents:
-
-{file_list_text}
-
-Priority: {priority}
-Due Date: {due_date}
-Upload Link: {upload_url}
-
-Thank you for your cooperation.
-
-Best regards,
-{user_name}'
-            ),
-            'legal' => array(
-                'subject' => 'Legal Document Request for {deal_name}',
-                'body_html' => '<h2>Legal Document Request</h2>
-                                <p>Dear {recipient_name},</p>
-                                <p>For the legal review of <strong>{deal_name}</strong>, please provide the following documents:</p>
-                                <ul>{file_list}</ul>
-                                <p><strong>Due Date:</strong> {due_date}</p>
-                                <p><strong>Upload Link:</strong> <a href="{upload_url}">Click here to upload files</a></p>
-                                <p>All documents will be treated with strict confidentiality.</p>
-                                <p>Best regards,<br>{user_name}</p>',
-                'body_text' => 'Legal Document Request for {deal_name}
-
-Dear {recipient_name},
-
-For the legal review of {deal_name}, please provide the following documents:
-
-{file_list_text}
-
-Due Date: {due_date}
-Upload Link: {upload_url}
-
-All documents will be treated with strict confidentiality.
-
-Best regards,
-{user_name}'
-            ),
-            'general' => array(
-                'subject' => 'Document Request for {deal_name}',
-                'body_html' => '<h2>Document Request</h2>
-                                <p>Dear {recipient_name},</p>
-                                <p>We are requesting the following documents for <strong>{deal_name}</strong>:</p>
-                                <ul>{file_list}</ul>
-                                <p><strong>Description:</strong> {description}</p>
-                                <p><strong>Due Date:</strong> {due_date}</p>
-                                <p><strong>Upload Link:</strong> <a href="{upload_url}">Click here to upload files</a></p>
-                                <p>Thank you for your assistance.</p>
-                                <p>Best regards,<br>{user_name}</p>',
-                'body_text' => 'Document Request for {deal_name}
-
-Dear {recipient_name},
-
-We are requesting the following documents for {deal_name}:
-
-{file_list_text}
-
-Description: {description}
-Due Date: {due_date}
-Upload Link: {upload_url}
-
-Thank you for your assistance.
-
-Best regards,
-{user_name}'
-            )
-        );
-
-        return $templates[$requestType] ?? $templates['general'];
-    }
-
-    /**
-     * Parse email template with dynamic content
-     * 
-     * @param array $template
-     * @param array $requestData
-     * @param Deal $deal
-     * @param array $fileItems
-     * @return array
-     */
-    private function parseEmailTemplate($template, $requestData, $deal, $fileItems)
-    {
-        global $current_user;
-
-        // Build file list
-        $fileListHtml = '';
-        $fileListText = '';
+        // Send email using EmailProcessorService
+        $emailProcessor = EmailProcessorService::getInstance();
+        $templateType = $requestData['request_type'] ?? 'general';
         
-        foreach ($fileItems as $item) {
-            $required = $item['is_required'] ? ' (Required)' : ' (Optional)';
-            $fileListHtml .= '<li>' . htmlspecialchars($item['file_description'] ?: $item['file_type']) . $required . '</li>';
-            $fileListText .= '- ' . ($item['file_description'] ?: $item['file_type']) . $required . "\n";
-        }
-
-        // Template variables
-        $variables = array(
-            '{deal_name}' => $deal->name,
-            '{recipient_name}' => $requestData['recipient_name'] ?: 'Sir/Madam',
-            '{due_date}' => date('M j, Y', strtotime($requestData['due_date'])),
-            '{priority}' => ucfirst($requestData['priority']),
-            '{description}' => $requestData['description'],
-            '{file_list}' => $fileListHtml,
-            '{file_list_text}' => $fileListText,
-            '{upload_url}' => $this->generateUploadUrl($requestData['upload_token']),
-            '{user_name}' => $current_user->first_name . ' ' . $current_user->last_name
-        );
-
-        // Replace variables in template
-        return array(
-            'subject' => str_replace(array_keys($variables), array_values($variables), $template['subject']),
-            'body_html' => str_replace(array_keys($variables), array_values($variables), $template['body_html']),
-            'body_text' => str_replace(array_keys($variables), array_values($variables), $template['body_text'])
-        );
+        return $emailProcessor->sendFileRequestEmail($requestData, $deal, $templateType);
     }
+
+
 
     /**
      * Process file upload
@@ -886,28 +694,6 @@ Best regards,
         ));
     }
 
-    /**
-     * Log email sent
-     * 
-     * @param string $requestId
-     * @param string $emailAddress
-     */
-    private function logEmailSent($requestId, $emailAddress)
-    {
-        global $db, $current_user;
-        
-        $logId = create_guid();
-        $query = "INSERT INTO deal_file_request_emails 
-                  (id, file_request_id, email_address, sent_by, date_sent)
-                  VALUES (?, ?, ?, ?, NOW())";
-        
-        $db->pQuery($query, array(
-            $logId,
-            $requestId,
-            $emailAddress,
-            $current_user->id
-        ));
-    }
 
     /**
      * Send completion notification

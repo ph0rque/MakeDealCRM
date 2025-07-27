@@ -53,7 +53,6 @@ Templated checklist system ensuring rigor and preventing oversight.
 **Requirements:**
 - Create and save reusable checklist templates
 - Auto-generate tasks from templates with progress tracking
-- File request capability with automated seller emails
 - Export functionality (PDF/Excel) for external stakeholders
 - Percent-complete indicators on Deal cards
 
@@ -68,7 +67,6 @@ Effortless management of multiple external parties per deal.
 
 **Requirements:**
 - Streamlined Contacts section with role tags (Seller, Broker, Attorney, Accountant, Lender)
-- Quick "Introduce" action for templated multi-party emails
 - Last-contact-date badges highlighting stale relationships
 - One-click access to contact information and history
 
@@ -78,14 +76,12 @@ Centralized financial metrics with comparison and analysis tools.
 **Requirements:**
 - Dashboard widget displaying key metrics:
   - Asking Price
-  - TTM Revenue
-  - TTM EBITDA
-  - SDE (Seller's Discretionary Earnings)
+  - Revenue
+  - EBITDA or SDE (Seller's Discretionary Earnings)
   - Proposed Valuation
   - Target Multiple
-- What-if calculator for instant valuation updates
 - Capital Stack section (Equity, Senior Debt, Seller Note) with debt coverage analysis
-- Comparables sidebar with median multiples from private database
+- Comparables sidebar with median multiples from private database (hardcode for now)
 
 ### 6. One-Click AWS Deployment
 Streamlined deployment process for non-technical users.

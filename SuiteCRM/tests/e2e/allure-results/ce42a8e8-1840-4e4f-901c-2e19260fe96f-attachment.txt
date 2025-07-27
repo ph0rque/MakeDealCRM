@@ -1,0 +1,2 @@
+Login successful
+Navigated to Deals via menu

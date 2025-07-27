@@ -1,7 +1,33 @@
 <?php
 /**
- * Deals Workflow Manager
- * Integrates with SuiteCRM's workflow engine for automated processes
+ * Deals Workflow Manager - Comprehensive Deal Automation Engine
+ * 
+ * This class serves as the central orchestrator for all automated workflows
+ * in the Deals module. It implements complex business logic that responds to
+ * deal lifecycle events, automating repetitive tasks and ensuring consistent
+ * processes across the organization.
+ * 
+ * Core Responsibilities:
+ * - Deal creation workflows (team assignment, initial setup)
+ * - Stage transition automation (tasks, notifications, validations)
+ * - Update tracking and response (significant change detection)
+ * - Deletion workflows (archival, cleanup, notifications)
+ * 
+ * Key Features:
+ * - Event-driven architecture for responsiveness
+ * - Comprehensive logging for audit trails
+ * - Configurable rules for different deal types
+ * - Integration with notification systems
+ * - Performance optimized for high-volume environments
+ * 
+ * The workflow manager ensures that critical business processes are
+ * consistently followed, reducing manual work and improving deal
+ * progression efficiency.
+ * 
+ * @package MakeDealCRM
+ * @subpackage Deals
+ * @author MakeDealCRM Development Team
+ * @version 1.0.0
  */
 
 if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
@@ -11,8 +37,18 @@ require_once('modules/ACL/ACLController.php');
 
 class DealWorkflowManager
 {
+    /**
+     * @var bool Whether to log hook execution (controlled by debug level)
+     */
     private $logHook = true;
     
+    /**
+     * Constructor initializes logging preferences
+     * 
+     * Sets up logging based on system configuration. When debug logging is
+     * enabled, the workflow manager provides detailed execution logs that
+     * help with troubleshooting and performance optimization.
+     */
     public function __construct()
     {
         $this->logHook = !empty($GLOBALS['sugar_config']['logger']['level']) && 
@@ -20,7 +56,46 @@ class DealWorkflowManager
     }
     
     /**
-     * Handle deal creation workflow
+     * Handle deal creation workflow - New deal automation
+     * 
+     * Orchestrates all automated actions when a new deal is created. This
+     * comprehensive workflow ensures new deals are properly initialized with
+     * all necessary data, assignments, and tracking mechanisms.
+     * 
+     * Workflow Steps:
+     * 1. Team Assignment:
+     *    - Analyzes deal source (web, campaign, partner, employee)
+     *    - Assigns to appropriate team automatically
+     *    - Balances workload across team members
+     * 
+     * 2. Default Values:
+     *    - Sets probability based on initial stage
+     *    - Applies deal type defaults
+     *    - Initializes tracking fields
+     * 
+     * 3. Checklist Creation:
+     *    - Identifies appropriate checklist templates
+     *    - Creates initial checklist items
+     *    - Sets due dates based on deal timeline
+     * 
+     * 4. Notifications:
+     *    - Alerts assigned team/user
+     *    - Notifies relevant stakeholders
+     *    - Creates welcome tasks
+     * 
+     * 5. Audit Logging:
+     *    - Records creation details
+     *    - Tracks automation decisions
+     *    - Enables workflow analysis
+     * 
+     * This automation significantly reduces manual setup time and ensures
+     * consistent deal initialization across the organization.
+     * 
+     * @param SugarBean $deal The newly created Deal bean
+     * @param string $event The event type (after_save with new record)
+     * @param array $arguments Additional hook arguments
+     * 
+     * @return void
      */
     public function onDealCreate($deal, $event, $arguments = array())
     {
@@ -54,7 +129,51 @@ class DealWorkflowManager
     }
     
     /**
-     * Handle pipeline stage change workflow
+     * Handle pipeline stage change workflow - Stage transition automation
+     * 
+     * Manages complex workflows triggered by pipeline stage transitions. Stage
+     * changes are critical events that often require coordinated actions across
+     * multiple systems and teams.
+     * 
+     * Workflow Components:
+     * 1. Probability Adjustment:
+     *    - Updates probability to match stage defaults
+     *    - Preserves manual overrides when appropriate
+     *    - Ensures forecast accuracy
+     * 
+     * 2. Task Generation:
+     *    - Creates stage-specific action items
+     *    - Assigns to appropriate team members
+     *    - Sets deadlines based on stage SLAs
+     * 
+     * 3. Checklist Updates:
+     *    - Activates stage-specific checklists
+     *    - Marks previous stage items complete
+     *    - Updates progress tracking
+     * 
+     * 4. Notifications:
+     *    - Alerts stakeholders of progression
+     *    - Escalates regressions to management
+     *    - Provides context and next steps
+     * 
+     * 5. Special Transitions:
+     *    - Won deals: Trigger success workflows
+     *    - Lost deals: Initiate loss analysis
+     *    - Regressions: Flag for review
+     * 
+     * 6. Reporting Updates:
+     *    - Updates pipeline metrics
+     *    - Refreshes forecasts
+     *    - Tracks velocity data
+     * 
+     * This comprehensive automation ensures smooth deal progression and
+     * maintains data consistency across all stage transitions.
+     * 
+     * @param SugarBean $deal The Deal bean with stage change
+     * @param string $event The event type (after_save with stage change)
+     * @param array $arguments Contains old_stage, new_stage, user_id
+     * 
+     * @return void
      */
     public function onStageChange($deal, $event, $arguments = array())
     {
@@ -97,7 +216,48 @@ class DealWorkflowManager
     }
     
     /**
-     * Handle deal update workflow
+     * Handle deal update workflow - Change detection and response
+     * 
+     * Monitors deal updates for significant changes that require automated
+     * responses. Not all updates trigger workflows - only those deemed
+     * significant based on business rules.
+     * 
+     * Significant Changes Monitored:
+     * 1. Financial Changes:
+     *    - Deal amount modifications
+     *    - Major increases trigger escalation
+     *    - Decreases may require re-approval
+     * 
+     * 2. Timeline Changes:
+     *    - Close date adjustments
+     *    - Impacts forecasting
+     *    - May require task rescheduling
+     * 
+     * 3. Assignment Changes:
+     *    - New owner notifications
+     *    - Handoff checklists
+     *    - Access updates
+     * 
+     * 4. Probability Changes:
+     *    - Forecast impact analysis
+     *    - Risk assessment updates
+     *    - Management alerts for major drops
+     * 
+     * 5. Stage Changes:
+     *    - Handled by separate onStageChange
+     *    - Included here for completeness
+     * 
+     * Response Actions:
+     * - Send targeted notifications
+     * - Update related records
+     * - Trigger recalculations
+     * - Log changes for audit
+     * 
+     * @param SugarBean $deal The updated Deal bean
+     * @param string $event The event type (after_save with update)
+     * @param array $arguments Additional hook arguments
+     * 
+     * @return void
      */
     public function onDealUpdate($deal, $event, $arguments = array())
     {
@@ -128,7 +288,51 @@ class DealWorkflowManager
     }
     
     /**
-     * Handle deal deletion workflow
+     * Handle deal deletion workflow - Graceful cleanup and archival
+     * 
+     * Manages the complex process of deal deletion, ensuring data integrity
+     * and proper archival for compliance and analysis purposes. Deletion is
+     * treated as a significant event requiring careful handling.
+     * 
+     * Deletion Workflow:
+     * 1. Archival Process:
+     *    - Soft delete related records
+     *    - Preserve audit trail
+     *    - Archive for compliance
+     *    - Enable potential recovery
+     * 
+     * 2. Notification Distribution:
+     *    - Alert stakeholders
+     *    - Include deletion reason
+     *    - Provide final snapshot
+     *    - Archive communications
+     * 
+     * 3. Metrics Update:
+     *    - Remove from active pipeline
+     *    - Update historical data
+     *    - Adjust forecasts
+     *    - Preserve for analysis
+     * 
+     * 4. Task Management:
+     *    - Cancel open tasks
+     *    - Archive completed work
+     *    - Notify task owners
+     *    - Clean up calendars
+     * 
+     * 5. Audit Logging:
+     *    - Record deletion details
+     *    - Capture final state
+     *    - Track who and why
+     *    - Enable compliance reporting
+     * 
+     * This careful approach ensures deleted deals don't leave orphaned data
+     * while maintaining historical records for business intelligence.
+     * 
+     * @param SugarBean $deal The Deal bean being deleted
+     * @param string $event The event type (before_delete)
+     * @param array $arguments Additional hook arguments
+     * 
+     * @return void
      */
     public function onDealDelete($deal, $event, $arguments = array())
     {
@@ -160,6 +364,37 @@ class DealWorkflowManager
     
     /**
      * Auto-assign team based on deal source or criteria
+     * 
+     * Implements intelligent team assignment logic that routes new deals to
+     * the most appropriate team based on various factors. This ensures deals
+     * are handled by teams with the right expertise and capacity.
+     * 
+     * Assignment Rules:
+     * 1. Source-based Routing:
+     *    - Website leads → Web leads team
+     *    - Marketing campaigns → Marketing team
+     *    - Partner referrals → Partner team
+     *    - Employee referrals → Internal team
+     * 
+     * 2. Additional Factors (future enhancement):
+     *    - Deal size thresholds
+     *    - Industry specialization
+     *    - Geographic regions
+     *    - Current team workload
+     * 
+     * Benefits:
+     * - Instant appropriate assignment
+     * - Balanced workload distribution
+     * - Expertise matching
+     * - Reduced manual routing
+     * 
+     * The method queries the teams table to find matching teams and assigns
+     * the deal accordingly. If no matching team is found, the deal remains
+     * unassigned for manual routing.
+     * 
+     * @param SugarBean $deal The Deal bean to assign
+     * 
+     * @return void
      */
     private function autoAssignTeam($deal)
     {
@@ -580,7 +815,46 @@ class DealWorkflowManager
     }
     
     /**
-     * Log workflow execution for audit trail
+     * Log workflow execution for comprehensive audit trail
+     * 
+     * Creates detailed audit records of all workflow executions, providing
+     * visibility into automated actions and enabling troubleshooting,
+     * compliance reporting, and process optimization.
+     * 
+     * Logged Information:
+     * 1. Event Details:
+     *    - Deal ID and event type
+     *    - Timestamp with precision
+     *    - User context (who triggered)
+     *    - System vs. user initiated
+     * 
+     * 2. Event Data:
+     *    - Specific changes made
+     *    - Decisions taken
+     *    - Rules applied
+     *    - Results achieved
+     * 
+     * 3. Performance Metrics:
+     *    - Execution time
+     *    - Resources used
+     *    - Errors encountered
+     * 
+     * Uses:
+     * - Compliance auditing
+     * - Troubleshooting workflows
+     * - Process optimization
+     * - User activity tracking
+     * - System health monitoring
+     * 
+     * The logs are stored in deals_workflow_log table with proper indexing
+     * for efficient querying and reporting. The table is created automatically
+     * if it doesn't exist.
+     * 
+     * @param string $dealId The ID of the deal being processed
+     * @param string $eventType Type of workflow event (e.g., 'deal_create')
+     * @param array $data Additional event-specific data to log
+     * 
+     * @return void
      */
     private function logWorkflowExecution($dealId, $eventType, $data = array())
     {

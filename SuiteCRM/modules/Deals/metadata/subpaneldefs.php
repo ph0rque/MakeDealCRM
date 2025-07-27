@@ -201,6 +201,26 @@ $layout_defs['Deals'] = array(
             ),
         ),
         
+        // Checklists subpanel
+        'checklists' => array(
+            'order' => 95,
+            'module' => 'DealChecklists',
+            'sort_order' => 'desc',
+            'sort_by' => 'date_entered',
+            'subpanel_name' => 'default',
+            'get_subpanel_data' => 'deal_checklists',
+            'add_subpanel_data' => 'deal_id',
+            'title_key' => 'LBL_CHECKLISTS_SUBPANEL_TITLE',
+            'top_buttons' => array(
+                array(
+                    'widget_class' => 'SubPanelTopCustomButton',
+                    'button_id' => 'apply_checklist_template',
+                    'button_label' => 'LBL_APPLY_CHECKLIST_TEMPLATE',
+                    'button_onclick' => 'showChecklistTemplatePopup(\'{$fields.id.value}\'); return false;',
+                ),
+            ),
+        ),
+        
         // SecurityGroups subpanel
         'securitygroups' => array(
             'order' => 100,

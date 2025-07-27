@@ -1,0 +1,167 @@
+{
+  "startTime": 1753568027537,
+  "endTime": 1753568061433,
+  "totalDuration": 33788.979999999996,
+  "testCount": 5,
+  "slowTests": [
+    {
+      "title": " › chromium › deals/feature1-deal-central-object-fixed.spec.js › Feature 1: Deal as Central Object (Fixed) › Test Case 1.1: E2E Deal Creation and Data Association (Fixed)",
+      "file": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/deals/feature1-deal-central-object-fixed.spec.js",
+      "duration": 31438,
+      "project": "chromium",
+      "status": "timedOut"
+    },
+    {
+      "title": " › chromium › deals/feature1-deal-central-object-fixed.spec.js › Feature 1: Deal as Central Object (Fixed) › Verify deal appears in deals list",
+      "file": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/deals/feature1-deal-central-object-fixed.spec.js",
+      "duration": 31406,
+      "project": "chromium",
+      "status": "timedOut"
+    },
+    {
+      "title": " › chromium › deals/feature1-deal-central-object-fixed.spec.js › Feature 1: Deal as Central Object (Fixed) › Basic deal creation workflow",
+      "file": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/deals/feature1-deal-central-object-fixed.spec.js",
+      "duration": 31635,
+      "project": "chromium",
+      "status": "timedOut"
+    },
+    {
+      "title": " › chromium › deals/feature1-deal-central-object-fixed.spec.js › Feature 1: Error Handling › Handle missing required fields gracefully",
+      "file": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/deals/feature1-deal-central-object-fixed.spec.js",
+      "duration": 31462,
+      "project": "chromium",
+      "status": "timedOut"
+    }
+  ],
+  "verySlowTests": [
+    {
+      "title": " › chromium › deals/feature1-deal-central-object-fixed.spec.js › Feature 1: Deal as Central Object (Fixed) › Test Case 1.1: E2E Deal Creation and Data Association (Fixed)",
+      "file": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/deals/feature1-deal-central-object-fixed.spec.js",
+      "duration": 31438,
+      "project": "chromium",
+      "status": "timedOut"
+    },
+    {
+      "title": " › chromium › deals/feature1-deal-central-object-fixed.spec.js › Feature 1: Deal as Central Object (Fixed) › Verify deal appears in deals list",
+      "file": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/deals/feature1-deal-central-object-fixed.spec.js",
+      "duration": 31406,
+      "project": "chromium",
+      "status": "timedOut"
+    },
+    {
+      "title": " › chromium › deals/feature1-deal-central-object-fixed.spec.js › Feature 1: Deal as Central Object (Fixed) › Basic deal creation workflow",
+      "file": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/deals/feature1-deal-central-object-fixed.spec.js",
+      "duration": 31635,
+      "project": "chromium",
+      "status": "timedOut"
+    },
+    {
+      "title": " › chromium › deals/feature1-deal-central-object-fixed.spec.js › Feature 1: Error Handling › Handle missing required fields gracefully",
+      "file": "/Users/andrewgauntlet/Desktop/MakeDealCRM/SuiteCRM/tests/e2e/deals/feature1-deal-central-object-fixed.spec.js",
+      "duration": 31462,
+      "project": "chromium",
+      "status": "timedOut"
+    }
+  ],
+  "flakyTests": [],
+  "systemMetrics": {
+    "startMemory": {
+      "rss": 168394752,
+      "heapTotal": 107102208,
+      "heapUsed": 41921016,
+      "external": 3698093,
+      "arrayBuffers": 72545
+    },
+    "endMemory": {
+      "rss": 96534528,
+      "heapTotal": 110100480,
+      "heapUsed": 66285480,
+      "external": 13297518,
+      "arrayBuffers": 9640577
+    },
+    "peakMemory": {
+      "rss": 63799296,
+      "heapTotal": 109395968,
+      "heapUsed": 60363392,
+      "external": 3818888,
+      "arrayBuffers": 161947
+    },
+    "cpuUsage": [
+      {
+        "timestamp": 1753568032451,
+        "load1m": 26.17578125,
+        "load5m": 20.32568359375,
+        "load15m": 12.078125
+      },
+      {
+        "timestamp": 1753568037439,
+        "load1m": 26.00146484375,
+        "load5m": 20.38623046875,
+        "load15m": 12.14794921875
+      },
+      {
+        "timestamp": 1753568042443,
+        "load1m": 24.6396484375,
+        "load5m": 20.19677734375,
+        "load15m": 12.12939453125
+      },
+      {
+        "timestamp": 1753568047441,
+        "load1m": 22.74658203125,
+        "load5m": 19.8779296875,
+        "load15m": 12.06396484375
+      },
+      {
+        "timestamp": 1753568052443,
+        "load1m": 21.6455078125,
+        "load5m": 19.697265625,
+        "load15m": 12.0458984375
+      },
+      {
+        "timestamp": 1753568057443,
+        "load1m": 20.15234375,
+        "load5m": 19.419921875,
+        "load15m": 11.99267578125
+      }
+    ],
+    "platform": "darwin",
+    "nodeVersion": "v24.3.0",
+    "arch": "arm64"
+  },
+  "trends": {
+    "averageTestDuration": 25188.2,
+    "medianTestDuration": 31438,
+    "testDurations": [
+      0,
+      31406,
+      31438,
+      31462,
+      31635
+    ],
+    "failureRate": 0,
+    "retryRate": 0
+  },
+  "stability": {
+    "consistentlyFailing": [],
+    "intermittentlyFailing": [],
+    "newFailures": []
+  },
+  "insights": {
+    "performance": [
+      {
+        "type": "warning",
+        "message": "Average test duration (25188ms) is above recommended 5s threshold",
+        "recommendation": "Consider optimizing slow tests or breaking them into smaller units"
+      },
+      {
+        "type": "error",
+        "message": "4 tests exceed 30000ms duration",
+        "recommendation": "Review and optimize these tests as they significantly impact CI/CD pipeline performance"
+      }
+    ],
+    "stability": [],
+    "resource": []
+  },
+  "generatedAt": "2025-07-26T22:14:21.433Z",
+  "reportVersion": "1.0.0"
+}

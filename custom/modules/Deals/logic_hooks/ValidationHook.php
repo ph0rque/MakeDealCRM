@@ -1,7 +1,28 @@
 <?php
 /**
- * Validation Logic Hook for Deals Module
- * Integrates comprehensive validation with SuiteCRM's logic hook system
+ * Validation Logic Hook for Deals Module - Comprehensive Data Validation
+ * 
+ * This class serves as the integration point between SuiteCRM's logic hook system
+ * and the comprehensive DealValidator class. It ensures all deal data meets
+ * business requirements and maintains data integrity throughout the system.
+ * 
+ * Validation Layers:
+ * 1. Field-level validation (format, required fields, data types)
+ * 2. Business rule validation (stage transitions, financial calculations)
+ * 3. Cross-field validation (related data consistency)
+ * 4. Security validation (access rights, data visibility)
+ * 
+ * The validation system is designed to:
+ * - Prevent invalid data from entering the system
+ * - Provide clear, actionable error messages
+ * - Support both hard stops (errors) and soft warnings
+ * - Enable field-specific and bulk validation
+ * - Maintain audit trails of validation failures
+ * 
+ * @package MakeDealCRM
+ * @subpackage Deals
+ * @author MakeDealCRM Development Team
+ * @version 1.0.0
  */
 
 if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
@@ -11,7 +32,42 @@ require_once('custom/modules/Deals/validation/DealValidator.php');
 class ValidationHook
 {
     /**
-     * Validate deal data before save
+     * Validate deal data before save - Primary validation entry point
+     * 
+     * This method orchestrates comprehensive validation of deal data before
+     * it's saved to the database. It serves as a gatekeeper ensuring only
+     * valid, complete, and authorized data is persisted.
+     * 
+     * Validation Process:
+     * 1. Check if validation should be skipped (imports, mass updates)
+     * 2. Determine if this is a new record or update
+     * 3. Run validation through DealValidator class
+     * 4. Process validation results:
+     *    - Log all errors and warnings
+     *    - Store validation details on bean
+     *    - Throw exceptions for critical errors
+     * 
+     * Skip Conditions:
+     * - System imports (have their own validation)
+     * - Mass updates (pre-validated)
+     * - Workflow-triggered saves (prevent loops)
+     * - Explicit skip_validation flag
+     * 
+     * Error Handling:
+     * - Critical errors throw exceptions to stop save
+     * - Non-critical errors are logged but allow save
+     * - Warnings are recorded for user information
+     * 
+     * This method ensures data quality while balancing strictness with
+     * usability, allowing administrators to configure validation rules
+     * based on their business needs.
+     * 
+     * @param SugarBean $bean The Deal bean to validate
+     * @param string $event The event type (before_save)
+     * @param array $arguments Additional hook arguments
+     * 
+     * @throws Exception When critical validation errors occur
+     * @return void
      */
     public function validateDealBeforeSave($bean, $event, $arguments)
     {
@@ -66,7 +122,38 @@ class ValidationHook
     }
     
     /**
-     * Check if validation should be skipped
+     * Check if validation should be skipped for this operation
+     * 
+     * Determines whether validation should be bypassed based on the context
+     * of the save operation. This prevents validation loops and allows
+     * certain system operations to proceed without validation.
+     * 
+     * Skip Scenarios:
+     * 1. Explicit skip_validation flag:
+     *    - Set by system operations that pre-validate
+     *    - Used by data migration tools
+     * 
+     * 2. Import operations:
+     *    - Import has its own validation rules
+     *    - Prevents double validation
+     *    - Allows bulk import efficiency
+     * 
+     * 3. Mass updates:
+     *    - Pre-validated at the UI level
+     *    - Prevents validation of partial data
+     * 
+     * 4. Workflow-triggered saves:
+     *    - Prevents infinite loops
+     *    - Workflows assumed to set valid data
+     * 
+     * This intelligent skipping ensures validation doesn't interfere with
+     * legitimate system operations while maintaining data integrity for
+     * normal user operations.
+     * 
+     * @param SugarBean $bean The bean being validated
+     * @param array $arguments Hook arguments to check for skip flags
+     * 
+     * @return bool True if validation should be skipped
      */
     private function shouldSkipValidation($bean, $arguments)
     {
@@ -95,6 +182,33 @@ class ValidationHook
     
     /**
      * Check if errors are critical enough to stop the save process
+     * 
+     * Analyzes validation errors to determine if they're severe enough to
+     * prevent the record from being saved. This allows for a flexible
+     * validation system that can enforce strict rules while allowing
+     * minor issues to be saved with warnings.
+     * 
+     * Critical Error Patterns:
+     * 1. 'required' - Missing required fields
+     * 2. 'security' - Security violations or access issues  
+     * 3. 'access denied' - Permission failures
+     * 4. 'invalid format' - Data format violations
+     * 5. 'exceeds maximum' - Limit violations
+     * 
+     * Non-Critical (Warning) Examples:
+     * - Recommended fields missing
+     * - Business suggestions not followed
+     * - Non-optimal values
+     * 
+     * This classification allows:
+     * - Strict enforcement of data requirements
+     * - Flexibility for business preferences
+     * - Clear communication of issues
+     * - Gradual data quality improvement
+     * 
+     * @param array $errors List of validation error messages
+     * 
+     * @return bool True if any error is critical
      */
     private function hasCriticalErrors($errors)
     {
@@ -119,7 +233,38 @@ class ValidationHook
     }
     
     /**
-     * Validate specific field updates (can be called from AJAX)
+     * Validate specific field updates for real-time validation
+     * 
+     * Provides field-level validation that can be called via AJAX for
+     * immediate user feedback. This enables a responsive UI that validates
+     * data as users type, improving data quality and user experience.
+     * 
+     * Use Cases:
+     * 1. Real-time validation in edit forms
+     * 2. Inline editing in list views
+     * 3. Quick edits in detail views
+     * 4. API field updates
+     * 
+     * Validation Process:
+     * 1. Clone the bean to avoid side effects
+     * 2. Apply the new field value
+     * 3. Run full validation on modified bean
+     * 4. Return targeted results for the field
+     * 
+     * Benefits:
+     * - Immediate user feedback
+     * - Prevents invalid data entry
+     * - Reduces form submission errors
+     * - Improves data quality
+     * 
+     * The method returns a standardized response that can be easily
+     * consumed by JavaScript for UI updates.
+     * 
+     * @param SugarBean $bean The current state of the Deal bean
+     * @param string $fieldName The field being updated
+     * @param mixed $newValue The new value to validate
+     * 
+     * @return array Validation result with 'valid', 'errors', and 'warnings'
      */
     public function validateFieldUpdate($bean, $fieldName, $newValue)
     {
@@ -149,7 +294,40 @@ class ValidationHook
     }
     
     /**
-     * Validate stage transition specifically
+     * Validate pipeline stage transitions with business rules
+     * 
+     * Specialized validation for pipeline stage changes that enforces
+     * business rules specific to deal progression. Stage transitions are
+     * critical moments that often have prerequisites and implications.
+     * 
+     * Validation Includes:
+     * 1. General deal validation with new stage
+     * 2. Stage-specific prerequisites:
+     *    - Required fields for each stage
+     *    - Minimum data quality standards
+     *    - Document requirements
+     * 
+     * 3. Transition rules:
+     *    - Allowed transitions (some stages can't skip)
+     *    - Regression rules (moving backwards)
+     *    - Conditional progressions
+     * 
+     * 4. Automated adjustments:
+     *    - Set probability based on stage
+     *    - Update sales stage
+     *    - Trigger required actions
+     * 
+     * This method can be called:
+     * - During drag-and-drop in pipeline view
+     * - From stage dropdown changes
+     * - Via API stage updates
+     * - Through automated workflows
+     * 
+     * @param SugarBean $bean The Deal bean attempting transition
+     * @param string $oldStage Current stage before transition
+     * @param string $newStage Target stage for transition
+     * 
+     * @return array Validation result with specific transition feedback
      */
     public function validateStageTransition($bean, $oldStage, $newStage)
     {
@@ -195,7 +373,44 @@ class ValidationHook
     }
     
     /**
-     * Validate stage-specific business rules
+     * Validate stage-specific business rules and requirements
+     * 
+     * Implements detailed business logic for each pipeline stage, ensuring
+     * deals meet specific criteria before entering each stage. These rules
+     * reflect real-world requirements for deal progression.
+     * 
+     * Stage Requirements:
+     * 
+     * Due Diligence:
+     * - Account must be specified (know who we're dealing with)
+     * - Deal amount should be known (for resource allocation)
+     * 
+     * Valuation & Structuring:
+     * - Deal amount required (can't value without it)
+     * - Expected close date should be set (timeline planning)
+     * 
+     * LOI/Negotiation:
+     * - Deal amount required (LOI specifies price)
+     * - Probability ≥ 70% (serious negotiations only)
+     * 
+     * Financing/Closing:
+     * - All financial fields required
+     * - Close date mandatory
+     * - High probability expected (≥ 80%)
+     * 
+     * Closed/Won Stages:
+     * - Auto-set probability to 100%
+     * - Auto-set sales stage to "Closed Won"
+     * - Validate final amount is set
+     * 
+     * Unavailable (Lost):
+     * - Auto-set probability to 0%
+     * - Auto-set sales stage to "Closed Lost"
+     * 
+     * @param SugarBean $bean The Deal bean with new stage
+     * @param string $newStage The stage to validate for
+     * 
+     * @return array Validation result with errors and warnings
      */
     private function validateStageSpecificRules($bean, $newStage)
     {
@@ -279,7 +494,34 @@ class ValidationHook
     }
     
     /**
-     * Get validation summary for reporting
+     * Get validation summary for reporting and analysis
+     * 
+     * Retrieves historical validation data for a deal to support reporting
+     * and analysis of data quality trends. This helps identify:
+     * 
+     * - Recurring validation issues
+     * - User training needs  
+     * - System configuration improvements
+     * - Data quality trends over time
+     * 
+     * Summary Includes:
+     * - Recent validation attempts (last 10)
+     * - Success/failure rates
+     * - Common error patterns
+     * - Warning frequency
+     * 
+     * Use Cases:
+     * 1. Deal detail view validation history widget
+     * 2. Data quality dashboards
+     * 3. User training identification
+     * 4. System improvement analysis
+     * 
+     * The data is retrieved from the deals_workflow_log table where
+     * validation results are stored for audit and analysis purposes.
+     * 
+     * @param string $dealId The deal ID to get validation history for
+     * 
+     * @return array List of validation summaries with dates and counts
      */
     public function getValidationSummary($dealId)
     {

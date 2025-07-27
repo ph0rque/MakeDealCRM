@@ -1,0 +1,30 @@
+# Protect API directory
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Allow only POST requests to deploy.php
+    RewriteCond %{REQUEST_METHOD} !^(POST|OPTIONS)$
+    RewriteRule ^deploy\.php$ - [F,L]
+    
+    # Deny access to all other files
+    RewriteRule ^(?!deploy\.php$).* - [F,L]
+</IfModule>
+
+# Deny direct access to other files
+<FilesMatch "^(?!deploy\.php$).*">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Allow deploy.php
+<Files "deploy.php">
+    Order Allow,Deny
+    Allow from all
+</Files>
+
+# Security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "DENY"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>

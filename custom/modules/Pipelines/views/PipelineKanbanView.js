@@ -247,11 +247,11 @@ class PipelineKanbanView {
             </div>
             
             <div class="deal-actions">
-                <button class="btn btn-sm btn-outline-primary view-deal" onclick="window.open('index.php?module=mdeal_Deals&action=DetailView&record=${deal.id}', '_blank')">
+                <button class="btn btn-sm btn-outline-primary view-deal" onclick="window.open('index.php?module=Deals&action=DetailView&record=${deal.id}', '_blank')">
                     <i class="fa fa-eye"></i>
                 </button>
                 ${this.permissions.canEdit ? `
-                <button class="btn btn-sm btn-outline-secondary edit-deal" onclick="window.open('index.php?module=mdeal_Deals&action=EditView&record=${deal.id}', '_blank')">
+                <button class="btn btn-sm btn-outline-secondary edit-deal" onclick="window.open('index.php?module=Deals&action=EditView&record=${deal.id}', '_blank')">
                     <i class="fa fa-edit"></i>
                 </button>
                 ` : ''}
@@ -771,7 +771,10 @@ class PipelineKanbanView {
     
     // API communication
     apiCall(action, data) {
-        return fetch('index.php?module=Pipelines&action=AjaxHandler', {
+        // Determine the correct module based on the action
+        const module = (action === 'executeStageTransition') ? 'Deals' : 'Pipelines';
+        
+        return fetch(`index.php?module=${module}&action=AjaxHandler`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -882,7 +885,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log('Stage transition completed:', dealId, fromStage, '->', toStage);
             },
             onNewDeal: function(stage) {
-                window.location = `index.php?module=mdeal_Deals&action=EditView&stage=${stage}`;
+                window.location = `index.php?module=Deals&action=EditView&stage=${stage}`;
             },
             onShowDetails: function(dealId) {
                 // Show deal details modal or navigate to detail view

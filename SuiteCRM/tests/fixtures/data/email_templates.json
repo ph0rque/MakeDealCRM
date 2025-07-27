@@ -1,0 +1,89 @@
+{
+  "email_templates": [
+    {
+      "category": "Initial Contact",
+      "templates": [
+        {
+          "name": "Initial Outreach - Broker",
+          "subject": "Interest in {DEAL_NAME} Opportunity",
+          "body": "Dear {BROKER_NAME},\n\nI hope this email finds you well. I am writing to express our interest in the {DEAL_NAME} opportunity that you are representing.\n\n{COMPANY_NAME} is an active acquirer in the {INDUSTRY} space, and based on our preliminary review, this opportunity appears to align well with our investment criteria.\n\nWe would appreciate the opportunity to learn more about this business. Could we schedule a brief call this week to discuss the opportunity in more detail?\n\nKey areas of interest:\n- Business overview and history\n- Financial performance summary\n- Growth opportunities\n- Reason for sale\n\nI look forward to speaking with you soon.\n\nBest regards,\n{USER_NAME}\n{USER_TITLE}\n{COMPANY_NAME}\n{USER_PHONE}\n{USER_EMAIL}"
+        },
+        {
+          "name": "Initial Outreach - Direct to Seller",
+          "subject": "Acquisition Interest in {COMPANY_NAME}",
+          "body": "Dear {SELLER_NAME},\n\nI am reaching out on behalf of {BUYER_COMPANY}, a [describe buyer] with a strong track record of acquiring and growing businesses in the {INDUSTRY} sector.\n\nWe have been following {SELLER_COMPANY} and are impressed by what you have built. We believe there could be a strong strategic fit between our organizations.\n\nWe would welcome the opportunity to explore a potential acquisition that would:\n- Provide liquidity for you and your shareholders\n- Ensure continuity for your employees and customers\n- Position the business for continued growth\n\nWould you be open to a confidential conversation to explore this opportunity? I am happy to sign an NDA and would ensure complete discretion throughout any discussions.\n\nI look forward to hearing from you.\n\nSincerely,\n{USER_NAME}\n{USER_TITLE}\n{BUYER_COMPANY}"
+        }
+      ]
+    },
+    {
+      "category": "NDA Process",
+      "templates": [
+        {
+          "name": "NDA Request",
+          "subject": "NDA for {DEAL_NAME} - {COMPANY_NAME}",
+          "body": "Dear {RECIPIENT_NAME},\n\nThank you for the information on {DEAL_NAME}. We are very interested in learning more about this opportunity.\n\nTo proceed with our evaluation, we would like to execute a Non-Disclosure Agreement. I have attached our standard mutual NDA for your review.\n\nKey terms:\n- Mutual confidentiality obligations\n- 2-year term\n- Standard exceptions for publicly available information\n- Governed by {STATE} law\n\nPlease review and let me know if you have any questions or would like to propose any modifications. Once we have an executed NDA in place, we would appreciate receiving the Confidential Information Memorandum and financial information.\n\nBest regards,\n{USER_NAME}"
+        },
+        {
+          "name": "NDA Follow-up",
+          "subject": "Following up: NDA for {DEAL_NAME}",
+          "body": "Dear {RECIPIENT_NAME},\n\nI wanted to follow up on the NDA I sent last week for {DEAL_NAME}. We remain very interested in this opportunity and are eager to move forward with our evaluation.\n\nHave you had a chance to review the NDA? If you have any questions or concerns about any of the terms, I would be happy to discuss them with you.\n\nWe are prepared to move quickly once we receive the additional information.\n\nPlease let me know the status at your earliest convenience.\n\nThank you,\n{USER_NAME}"
+        }
+      ]
+    },
+    {
+      "category": "Due Diligence",
+      "templates": [
+        {
+          "name": "Due Diligence Kickoff",
+          "subject": "Due Diligence Process - {DEAL_NAME}",
+          "body": "Dear {SELLER_NAME},\n\nThank you for accepting our LOI for {DEAL_NAME}. We are excited to move forward with the due diligence process.\n\nTo facilitate an efficient process, I wanted to outline our approach:\n\n1. Data Room Access: Please provide access to your virtual data room or let us know if you would prefer us to set one up.\n\n2. Initial Document Request: I have attached our initial due diligence request list. We understand that some items may not be applicable or readily available, and we can discuss priorities.\n\n3. Management Meetings: We would like to schedule meetings with key management team members. Please let us know availability over the next two weeks.\n\n4. Site Visits: We would like to visit your main facilities. Please suggest some potential dates.\n\n5. Professional Advisors: We will be engaging [QoE firm] for a Quality of Earnings analysis and [Law firm] for legal due diligence.\n\nOur goal is to complete due diligence within [30-45] days. We will keep you updated on our progress and any additional information needs.\n\nPlease let me know if you have any questions about the process.\n\nBest regards,\n{USER_NAME}"
+        },
+        {
+          "name": "Due Diligence Status Update",
+          "subject": "DD Update - {DEAL_NAME} - Week {WEEK_NUMBER}",
+          "body": "Dear {SELLER_NAME},\n\nI wanted to provide you with a weekly update on our due diligence progress for {DEAL_NAME}.\n\nCompleted this week:\n- {COMPLETED_ITEM_1}\n- {COMPLETED_ITEM_2}\n- {COMPLETED_ITEM_3}\n\nIn progress:\n- {IN_PROGRESS_1}\n- {IN_PROGRESS_2}\n\nUpcoming:\n- {UPCOMING_1}\n- {UPCOMING_2}\n\nOutstanding items needed:\n- {NEEDED_1}\n- {NEEDED_2}\n\nWe remain on track for our target closing date of {CLOSING_DATE}. The process is going smoothly, and we appreciate your team's responsiveness.\n\nPlease let me know if you have any questions or concerns.\n\nBest regards,\n{USER_NAME}"
+        }
+      ]
+    },
+    {
+      "category": "LOI/Offer",
+      "templates": [
+        {
+          "name": "LOI Submission",
+          "subject": "Letter of Intent - {DEAL_NAME}",
+          "body": "Dear {SELLER_NAME},\n\nWe are pleased to submit the attached Letter of Intent to acquire {DEAL_NAME}.\n\nKey terms of our proposal:\n- Purchase Price: ${PURCHASE_PRICE}\n- Structure: {DEAL_STRUCTURE}\n- Closing Timeline: {TIMELINE}\n- Due Diligence Period: {DD_PERIOD}\n- Exclusivity Period: {EXCLUSIVITY}\n\nThis offer reflects our strong interest in {DEAL_NAME} and our commitment to completing this transaction. We believe our proposal provides excellent value while ensuring a smooth transition for all stakeholders.\n\nWe are prepared to move quickly and have the necessary resources in place to complete this transaction.\n\nI would welcome the opportunity to discuss this proposal with you. Please let me know your availability for a call this week.\n\nWe look forward to your response.\n\nSincerely,\n{USER_NAME}\n{USER_TITLE}\n{COMPANY_NAME}"
+        },
+        {
+          "name": "Revised Offer",
+          "subject": "Revised Proposal - {DEAL_NAME}",
+          "body": "Dear {SELLER_NAME},\n\nThank you for the feedback on our initial proposal for {DEAL_NAME}. After careful consideration of your comments and further analysis, we are pleased to submit a revised offer.\n\nRevised terms:\n- Purchase Price: ${REVISED_PRICE} (increased from ${ORIGINAL_PRICE})\n- {OTHER_REVISION_1}\n- {OTHER_REVISION_2}\n\nThese revisions reflect:\n- Our continued strong interest in the business\n- The value we see in {SPECIFIC_VALUE_DRIVER}\n- Our desire to reach a mutually beneficial agreement\n\nAll other terms from our original LOI remain the same. We believe this revised proposal addresses your key concerns while allowing us to move forward with confidence.\n\nPlease review and let us know your thoughts. We remain committed to completing this transaction and look forward to your response.\n\nBest regards,\n{USER_NAME}"
+        }
+      ]
+    },
+    {
+      "category": "Deal Closing",
+      "templates": [
+        {
+          "name": "Closing Coordination",
+          "subject": "Closing Logistics - {DEAL_NAME} - {CLOSING_DATE}",
+          "body": "Team,\n\nAs we approach the closing date for {DEAL_NAME}, I wanted to coordinate the final logistics.\n\nClosing Date: {CLOSING_DATE}\nTime: {CLOSING_TIME}\nLocation: {CLOSING_LOCATION}\n\nPre-closing items (to be completed by {DATE}):\n- Final purchase agreement execution\n- Financing documents finalized\n- Wire transfer instructions confirmed\n- Escrow agent coordination\n- Third-party consents obtained\n\nClosing day agenda:\n1. Final document review (9:00 AM)\n2. Execution of documents (10:00 AM)\n3. Wire transfer confirmation (11:00 AM)\n4. Closing confirmation (12:00 PM)\n\nPost-closing items:\n- Employee announcements\n- Customer notifications\n- Press release (if applicable)\n- Integration kickoff meeting\n\nPlease confirm your availability and let me know if you have any questions.\n\nBest regards,\n{USER_NAME}"
+        },
+        {
+          "name": "Deal Announcement",
+          "subject": "Exciting News - {BUYER_COMPANY} Acquires {SELLER_COMPANY}",
+          "body": "Dear {RECIPIENT_NAME},\n\nI am thrilled to announce that {BUYER_COMPANY} has completed the acquisition of {SELLER_COMPANY}, effective {CLOSING_DATE}.\n\nThis acquisition represents an important milestone in our growth strategy and strengthens our position in the {INDUSTRY} market. {SELLER_COMPANY}'s {KEY_STRENGTH} perfectly complements our existing capabilities.\n\nKey highlights:\n- {HIGHLIGHT_1}\n- {HIGHLIGHT_2}\n- {HIGHLIGHT_3}\n\nFor customers: You will continue to receive the same excellent products/services, now with additional resources and support.\n\nFor employees: We are excited to welcome the {SELLER_COMPANY} team and look forward to growing together.\n\nWe will be sharing more details about our integration plans in the coming weeks. In the meantime, please feel free to reach out with any questions.\n\nBest regards,\n{USER_NAME}\n{USER_TITLE}\n{BUYER_COMPANY}"
+        }
+      ]
+    }
+  ],
+  "email_signatures": [
+    {
+      "name": "Standard Business",
+      "signature": "\n\n{USER_NAME}\n{USER_TITLE}\n{COMPANY_NAME}\n\nDirect: {USER_PHONE}\nMobile: {USER_MOBILE}\nEmail: {USER_EMAIL}\n{COMPANY_WEBSITE}"
+    },
+    {
+      "name": "Formal Legal",
+      "signature": "\n\nSincerely,\n\n{USER_NAME}\n{USER_TITLE}\n{COMPANY_NAME}\n{COMPANY_ADDRESS}\n\nTel: {USER_PHONE}\nFax: {COMPANY_FAX}\nEmail: {USER_EMAIL}\n\nCONFIDENTIALITY NOTICE: This email and any attachments are confidential and may be legally privileged."
+    }
+  ]
+}

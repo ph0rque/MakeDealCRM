@@ -106,3 +106,7 @@ If ANY answer is "No", you MUST combine operations into a single message!
 ## Introspection
 
 - **Please ask questions and confirm assumptions before generating code.**
+
+## Architecture Decision
+
+- **We are using Deals module instead of Opportunities**

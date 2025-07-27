@@ -1,10 +1,12 @@
 <?php
 /**
- * Deals module Detail View
- * Custom layout with stage progress and quick actions
+ * Deal Detail View with Export Functionality
+ * Extends the standard detail view to include export buttons
  */
 
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/MVC/View/views/view.detail.php');
 
@@ -13,156 +15,161 @@ class DealsViewDetail extends ViewDetail
     public function __construct()
     {
         parent::__construct();
+        $this->useForSubpanel = true;
+        $this->useModuleQuickCreateTemplate = true;
     }
 
-    /**
-     * Display the detail view with custom enhancements
-     */
     public function display()
     {
-        global $mod_strings, $app_strings;
+        // Add export CSS and JavaScript
+        $this->includeExportAssets();
         
-        // Add custom CSS and JavaScript
-        echo '<link rel="stylesheet" type="text/css" href="modules/Deals/tpls/deals.css">';
-        echo '<script type="text/javascript" src="modules/Deals/javascript/DealsDetailView.js"></script>';
+        // Add financial dashboard to the view
+        $this->addFinancialDashboard();
         
-        // Add stage progress visualization
-        $this->displayStageProgress();
-        
-        // Add quick actions panel
-        $this->displayQuickActions();
-        
+        // Call parent display
         parent::display();
         
-        // Add activity timeline
-        $this->displayActivityTimeline();
+        // Add export buttons to the detail view
+        $this->addExportButtons();
     }
-
+    
     /**
-     * Display sales stage progress bar
+     * Add financial dashboard to the detail view
      */
-    protected function displayStageProgress()
+    protected function addFinancialDashboard()
     {
-        $stages = array(
-            'Prospecting' => 10,
-            'Qualification' => 20,
-            'Needs Analysis' => 30,
-            'Value Proposition' => 40,
-            'Id. Decision Makers' => 50,
-            'Perception Analysis' => 60,
-            'Proposal/Price Quote' => 70,
-            'Negotiation/Review' => 80,
-            'Closed Won' => 100,
-            'Closed Lost' => 0
-        );
-        
-        $currentStage = $this->bean->sales_stage;
-        $progress = isset($stages[$currentStage]) ? $stages[$currentStage] : 0;
-        
-        echo '<div class="stage-progress-container">';
-        echo '<h4>' . $GLOBALS['mod_strings']['LBL_SALES_STAGE_PROGRESS'] . '</h4>';
-        echo '<div class="stage-progress-bar">';
-        echo '<div class="stage-progress-fill" style="width: ' . $progress . '%;">';
-        echo $currentStage . ' (' . $progress . '%)';
-        echo '</div>';
-        echo '</div>';
-        echo '<div class="stage-info">';
-        echo '<small>Deal Amount: ' . $this->bean->amount . ' | Probability: ' . $this->bean->probability . '%</small>';
-        echo '</div>';
-        echo '</div>';
-    }
-
-    /**
-     * Display quick actions panel
-     */
-    protected function displayQuickActions()
-    {
-        global $mod_strings, $current_user;
-        
-        echo '<div class="quick-actions-panel">';
-        echo '<h4>' . $mod_strings['LBL_QUICK_ACTIONS'] . '</h4>';
-        
-        // Log Call button
-        echo '<button type="button" class="button quick-action-button" onclick="DealsDetailView.logCall(\'' . $this->bean->id . '\');">';
-        echo '<img src="themes/default/images/CreateCalls.gif" border="0" align="absmiddle"> ' . $mod_strings['LBL_LOG_CALL'];
-        echo '</button>';
-        
-        // Schedule Meeting button
-        echo '<button type="button" class="button quick-action-button" onclick="DealsDetailView.scheduleMeeting(\'' . $this->bean->id . '\');">';
-        echo '<img src="themes/default/images/CreateMeetings.gif" border="0" align="absmiddle"> ' . $mod_strings['LBL_SCHEDULE_MEETING'];
-        echo '</button>';
-        
-        // Create Task button
-        echo '<button type="button" class="button quick-action-button" onclick="DealsDetailView.createTask(\'' . $this->bean->id . '\');">';
-        echo '<img src="themes/default/images/CreateTasks.gif" border="0" align="absmiddle"> ' . $mod_strings['LBL_CREATE_TASK'];
-        echo '</button>';
-        
-        // Send Email button
-        echo '<button type="button" class="button quick-action-button" onclick="DealsDetailView.sendEmail(\'' . $this->bean->id . '\');">';
-        echo '<img src="themes/default/images/CreateEmails.gif" border="0" align="absmiddle"> ' . $mod_strings['LBL_SEND_EMAIL'];
-        echo '</button>';
-        
-        // Convert to Quote button (if in appropriate stage)
-        if (!in_array($this->bean->sales_stage, array('Closed Won', 'Closed Lost'))) {
-            echo '<button type="button" class="button quick-action-button" onclick="DealsDetailView.convertToQuote(\'' . $this->bean->id . '\');">';
-            echo '<img src="themes/default/images/CreateQuotes.gif" border="0" align="absmiddle"> ' . $mod_strings['LBL_CONVERT_TO_QUOTE'];
-            echo '</button>';
+        // Check if we have the required fields
+        if ($this->bean) {
+            // Assign fields to Smarty template
+            $this->ss->assign('fields', $this->bean->toArray());
+            
+            // Load module strings
+            global $mod_strings;
+            $this->ss->assign('MOD', $mod_strings);
+            
+            // Process the financial dashboard template
+            $dashboardHtml = $this->ss->fetch('custom/modules/Deals/tpls/FinancialDashboard.tpl');
+            
+            // Output the dashboard HTML
+            echo $dashboardHtml;
         }
-        
-        echo '</div>';
     }
-
+    
     /**
-     * Display activity timeline
+     * Include CSS and JavaScript for export functionality
      */
-    protected function displayActivityTimeline()
+    protected function includeExportAssets()
     {
-        echo '<div class="activity-timeline-container" id="activityTimeline">';
-        echo '<h4>' . $GLOBALS['mod_strings']['LBL_ACTIVITY_TIMELINE'] . '</h4>';
-        echo '<div class="activity-timeline" id="timelineContent">';
-        echo '<div class="loading-indicator">Loading activities...</div>';
-        echo '</div>';
-        echo '</div>';
+        global $sugar_config;
         
-        // Initialize timeline
-        echo '<script type="text/javascript">
-            $(document).ready(function() {
-                DealsDetailView.loadActivityTimeline("' . $this->bean->id . '");
-            });
-        </script>';
+        $css_url = $sugar_config['site_url'] . '/custom/modules/Deals/css/export-styles.css';
+        $js_url = $sugar_config['site_url'] . '/custom/modules/Deals/js/export-manager.js';
+        
+        echo "<link rel='stylesheet' type='text/css' href='{$css_url}' />\n";
+        echo "<script type='text/javascript' src='{$js_url}'></script>\n";
     }
-
+    
     /**
-     * Pre-display setup
+     * Add export buttons to the detail view
+     */
+    protected function addExportButtons()
+    {
+        $dealId = $this->bean->id;
+        $dealName = htmlspecialchars($this->bean->name ?? 'Deal');
+        
+        $exportButtonsHtml = $this->generateExportButtonsHTML($dealId, $dealName);
+        
+        // Inject the buttons via JavaScript to ensure they appear in the right place
+        echo "<script type='text/javascript'>
+            $(document).ready(function() {
+                // Find the best location to insert export buttons
+                var targetContainer = $('.detail-view .panel-content').first();
+                if (targetContainer.length === 0) {
+                    targetContainer = $('.detail-view').first();
+                }
+                if (targetContainer.length === 0) {
+                    targetContainer = $('#content').first();
+                }
+                
+                if (targetContainer.length > 0) {
+                    targetContainer.prepend('{$exportButtonsHtml}');
+                }
+            });
+        </script>";
+    }
+    
+    /**
+     * Generate HTML for export buttons
+     */
+    protected function generateExportButtonsHTML($dealId, $dealName)
+    {
+        $html = '<div class="export-buttons detailView" style="margin: 15px 0; padding: 15px; background: #f8f9fa; border-radius: 4px; border-top: 1px solid #dee2e6;">';
+        $html .= '<h4 style="margin: 0 0 15px 0; color: #007cba; font-size: 16px;">📊 Due Diligence Reports</h4>';
+        $html .= '<div style="display: flex; gap: 10px; flex-wrap: wrap;">';
+        
+        // PDF Export Button
+        $html .= '<button type="button" class="export-pdf-btn" data-deal-id="' . $dealId . '" ';
+        $html .= 'title="Export due diligence report as PDF">';
+        $html .= 'Export PDF Report</button>';
+        
+        // Excel Export Button  
+        $html .= '<button type="button" class="export-excel-btn" data-deal-id="' . $dealId . '" ';
+        $html .= 'title="Export due diligence data as Excel spreadsheet">';
+        $html .= 'Export Excel Data</button>';
+        
+        // Export History Button
+        $html .= '<button type="button" class="btn btn-secondary" onclick="DueDiligenceExportManager.showExportHistory(\'' . $dealId . '\')" ';
+        $html .= 'title="View export history for this deal">';
+        $html .= '📋 Export History</button>';
+        
+        $html .= '</div>';
+        $html .= '<p style="margin: 10px 0 0 0; font-size: 12px; color: #6c757d;">';
+        $html .= 'Export comprehensive due diligence reports including progress analysis, task details, and file request status.';
+        $html .= '</p>';
+        $html .= '</div>';
+        
+        // Escape for JavaScript insertion
+        return str_replace(["\n", "\r", "'", '"'], ['', '', "\\'", '\\"'], $html);
+    }
+    
+    /**
+     * Override to add export permissions check
      */
     public function preDisplay()
     {
         parent::preDisplay();
         
-        // Add custom metadata panels if needed
-        if (!isset($this->dv->defs['panels']['LBL_PANEL_ADVANCED'])) {
-            $this->dv->defs['panels']['LBL_PANEL_ADVANCED'] = array(
-                array(
-                    array(
-                        'name' => 'lead_source',
-                        'label' => 'LBL_LEAD_SOURCE',
-                    ),
-                    array(
-                        'name' => 'campaign_name',
-                        'label' => 'LBL_CAMPAIGN',
-                    ),
-                ),
-                array(
-                    array(
-                        'name' => 'created_by_name',
-                        'label' => 'LBL_CREATED',
-                    ),
-                    array(
-                        'name' => 'modified_by_name',
-                        'label' => 'LBL_MODIFIED',
-                    ),
-                ),
-            );
+        // Check if user has export permissions
+        if (!$this->checkExportPermissions()) {
+            // Hide export functionality for users without permissions
+            echo "<style>.export-buttons { display: none !important; }</style>";
         }
     }
+    
+    /**
+     * Check if current user has export permissions
+     */
+    protected function checkExportPermissions()
+    {
+        global $current_user, $sugar_config;
+        
+        // Check if exports are globally disabled
+        if (!empty($sugar_config['disable_export'])) {
+            return false;
+        }
+        
+        // Check admin-only restriction
+        if (!empty($sugar_config['admin_export_only']) && !is_admin($current_user)) {
+            return false;
+        }
+        
+        // Check module-specific permissions
+        if (!$this->bean->ACLAccess('export')) {
+            return false;
+        }
+        
+        return true;
+    }
 }
+?>

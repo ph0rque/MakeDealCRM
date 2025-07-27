@@ -82,43 +82,155 @@ function showDuplicateWarning(duplicates) {
     return true;
 }
 
-// Apply checklist template
-function applyChecklistTemplate(dealId) {
-    // Open popup to select template
-    var url = 'index.php?module=ChecklistTemplates&action=Popup&deal_id=' + dealId;
-    open_popup('ChecklistTemplates', 600, 400, '', true, false, {
-        'call_back_function': 'set_checklist_template',
-        'form_name': 'EditView',
-        'field_to_name_array': {
-            'id': 'template_id',
-            'name': 'template_name'
-        }
-    });
+// Show checklist template selection popup
+function showChecklistTemplatePopup(dealId) {
+    // Create modal overlay
+    var overlay = document.createElement('div');
+    overlay.id = 'checklist-template-overlay';
+    overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:9998;';
+    
+    // Create modal container
+    var modal = document.createElement('div');
+    modal.id = 'checklist-template-modal';
+    modal.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:white;padding:20px;border-radius:5px;z-index:9999;width:600px;max-height:80vh;overflow-y:auto;';
+    
+    modal.innerHTML = '<h2>Select Checklist Template</h2><div id="template-list">Loading templates...</div>';
+    
+    document.body.appendChild(overlay);
+    document.body.appendChild(modal);
+    
+    // Load templates via AJAX
+    loadChecklistTemplates(dealId);
+    
+    // Close on overlay click
+    overlay.onclick = function() {
+        closeChecklistTemplatePopup();
+    };
 }
 
-// Callback for checklist template selection
-function set_checklist_template(popup_reply_data) {
-    var template_id = popup_reply_data.name_to_value_array.template_id;
-    var deal_id = document.getElementById('record') ? document.getElementById('record').value : '';
+// Load checklist templates
+function loadChecklistTemplates(dealId) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'index.php?module=ChecklistTemplates&action=GetTemplateList&to_pdf=1', true);
     
-    if (template_id && deal_id) {
-        // Make AJAX call to apply template
-        var url = 'index.php?module=Deals&action=ApplyChecklistTemplate&to_pdf=1';
-        var data = 'template_id=' + template_id + '&deal_id=' + deal_id;
-        
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', url, true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // Refresh the page to show new checklist
-                window.location.reload();
-            }
-        };
-        
-        xhr.send(data);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+            displayTemplateList(response.templates, dealId);
+        }
+    };
+    
+    xhr.send();
+}
+
+// Display template list
+function displayTemplateList(templates, dealId) {
+    var listDiv = document.getElementById('template-list');
+    
+    if (!templates || templates.length === 0) {
+        listDiv.innerHTML = '<p>No templates available. <a href="index.php?module=ChecklistTemplates&action=EditView">Create a template</a></p>';
+        return;
     }
+    
+    var html = '<div style="max-height:400px;overflow-y:auto;">';
+    
+    // Group templates by category
+    var categories = {};
+    templates.forEach(function(template) {
+        var cat = template.category || 'general';
+        if (!categories[cat]) categories[cat] = [];
+        categories[cat].push(template);
+    });
+    
+    // Display templates by category
+    for (var category in categories) {
+        html += '<h3 style="margin-top:10px;">' + getCategoryLabel(category) + '</h3>';
+        html += '<div style="margin-left:20px;">';
+        
+        categories[category].forEach(function(template) {
+            html += '<div style="border:1px solid #ddd;padding:10px;margin-bottom:10px;cursor:pointer;" ';
+            html += 'onmouseover="this.style.backgroundColor=\'#f0f0f0\'" ';
+            html += 'onmouseout="this.style.backgroundColor=\'white\'" ';
+            html += 'onclick="applyChecklistTemplate(\'' + dealId + '\', \'' + template.id + '\')">';
+            html += '<strong>' + template.name + '</strong>';
+            html += '<span style="float:right;color:#666;">' + template.item_count + ' items</span>';
+            if (template.description) {
+                html += '<br><small style="color:#666;">' + template.description + '</small>';
+            }
+            html += '</div>';
+        });
+        
+        html += '</div>';
+    }
+    
+    html += '</div>';
+    html += '<div style="margin-top:20px;text-align:right;">';
+    html += '<button onclick="closeChecklistTemplatePopup()">Cancel</button>';
+    html += '</div>';
+    
+    listDiv.innerHTML = html;
+}
+
+// Get category label
+function getCategoryLabel(category) {
+    var labels = {
+        'general': 'General',
+        'due_diligence': 'Due Diligence',
+        'financial': 'Financial Due Diligence',
+        'legal': 'Legal Due Diligence',
+        'operational': 'Operational Review',
+        'compliance': 'Compliance',
+        'quick_screen': 'Quick Screen'
+    };
+    return labels[category] || category;
+}
+
+// Close checklist template popup
+function closeChecklistTemplatePopup() {
+    var overlay = document.getElementById('checklist-template-overlay');
+    var modal = document.getElementById('checklist-template-modal');
+    if (overlay) overlay.remove();
+    if (modal) modal.remove();
+}
+
+// Apply checklist template
+function applyChecklistTemplate(dealId, templateId) {
+    // Show loading
+    var modal = document.getElementById('checklist-template-modal');
+    if (modal) {
+        modal.innerHTML = '<h2>Applying Template...</h2><p>Please wait while the checklist is created.</p>';
+    }
+    
+    // Make AJAX call to apply template
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'index.php?module=Deals&action=ApplyChecklistTemplate&to_pdf=1', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    // Show success message
+                    if (modal) {
+                        modal.innerHTML = '<h2>Success!</h2><p>Checklist has been created successfully.</p>';
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 1500);
+                    }
+                } else {
+                    alert('Error: ' + (response.message || 'Failed to apply template'));
+                    closeChecklistTemplatePopup();
+                }
+            } else {
+                alert('Error applying template. Please try again.');
+                closeChecklistTemplatePopup();
+            }
+        }
+    };
+    
+    var data = 'template_id=' + encodeURIComponent(templateId) + '&deal_id=' + encodeURIComponent(dealId);
+    xhr.send(data);
 }
 
 // Initialize on page load

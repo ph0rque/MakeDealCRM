@@ -1,11 +1,31 @@
 <?php
 /**
- * WIP Limit Hook Class
+ * WIP (Work In Progress) Limit Hook Class - Pipeline Flow Control
  * 
- * Validates Work In Progress limits for pipeline stages
+ * This class implements Work In Progress (WIP) limits for pipeline stages,
+ * a key principle from Kanban methodology that helps teams maintain focus
+ * and quality by limiting concurrent work.
+ * 
+ * WIP Limits Benefits:
+ * - Prevents team overload and burnout
+ * - Improves deal quality through focused attention
+ * - Identifies bottlenecks in the pipeline
+ * - Encourages deal completion before starting new ones
+ * - Maintains sustainable workflow pace
+ * 
+ * How It Works:
+ * - Each pipeline stage has a configurable WIP limit
+ * - System prevents moving deals into stages at capacity
+ * - Administrators can override limits when necessary
+ * - Clear messaging guides users to complete existing deals
+ * 
+ * This implementation follows Lean principles to optimize deal flow
+ * and ensure teams can deliver quality outcomes consistently.
  * 
  * @package MakeDealCRM
  * @module Deals
+ * @author MakeDealCRM Development Team
+ * @version 1.0.0
  */
 
 if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
@@ -15,10 +35,41 @@ class WIPLimitHook
     /**
      * Validate WIP limits before saving deal
      * 
-     * @param SugarBean $bean The Deal bean instance
-     * @param string $event The event type
+     * Enforces Work In Progress limits to maintain pipeline health and team
+     * efficiency. This method is called before save to prevent stages from
+     * becoming overloaded with too many concurrent deals.
+     * 
+     * Validation Process:
+     * 1. Skip validation for:
+     *    - New records without stage
+     *    - No stage change on existing records
+     *    - Closed stages (no limits)
+     * 
+     * 2. Check WIP limit for target stage:
+     *    - Retrieve configured limit
+     *    - Count current deals in stage
+     *    - Compare against limit
+     * 
+     * 3. Handle limit exceeded:
+     *    - Check override permissions
+     *    - Provide clear error message
+     *    - Suggest alternative actions
+     *    - Revert stage if needed
+     * 
+     * Error Handling:
+     * - API calls: Throws SugarApiExceptionNotAuthorized
+     * - UI: Shows error message via SugarApplication
+     * - Preserves original stage to prevent invalid state
+     * 
+     * This validation helps teams work sustainably by preventing pipeline
+     * stages from becoming bottlenecks due to too many concurrent deals.
+     * 
+     * @param SugarBean $bean The Deal bean instance being saved
+     * @param string $event The event type (before_save)
      * @param array $arguments Additional arguments
-     * @throws SugarApiExceptionNotAuthorized When WIP limit would be exceeded
+     * 
+     * @throws SugarApiExceptionNotAuthorized When WIP limit exceeded and no override permission
+     * @return void
      */
     public function validateWIPLimit($bean, $event, $arguments)
     {
@@ -95,8 +146,23 @@ class WIPLimitHook
     /**
      * Get WIP limit for a specific stage
      * 
-     * @param string $stage Stage identifier
-     * @return int|null WIP limit or null if not set
+     * Retrieves the configured Work In Progress limit for a pipeline stage.
+     * Limits can be set through configuration or use defaults that reflect
+     * typical team capacity and stage complexity.
+     * 
+     * Configuration Sources (in priority order):
+     * 1. Custom configuration in config_override.php
+     * 2. Database configuration table
+     * 3. Default limits defined in this class
+     * 
+     * The method returns null for stages without limits, typically:
+     * - Closed/Won stages (no ongoing work)
+     * - Closed/Lost stages (no ongoing work)
+     * - Stages configured for unlimited capacity
+     * 
+     * @param string $stage Stage identifier (e.g., 'due_diligence')
+     * 
+     * @return int|null WIP limit or null if no limit set
      */
     protected function getStageWIPLimit($stage)
     {
@@ -105,10 +171,35 @@ class WIPLimitHook
     }
     
     /**
-     * Get stage configuration
+     * Get stage configuration including WIP limits and metadata
+     * 
+     * Retrieves comprehensive configuration for a pipeline stage, including
+     * WIP limits, display names, and other stage-specific settings. This
+     * centralizes stage configuration for consistency across the application.
+     * 
+     * Default WIP Limits by Stage:
+     * - Sourcing: 20 (high volume, low touch)
+     * - Screening: 15 (initial evaluation)
+     * - Analysis & Outreach: 10 (deeper investigation)
+     * - Due Diligence: 8 (intensive work required)
+     * - Valuation & Structuring: 6 (complex analysis)
+     * - LOI/Negotiation: 5 (active negotiations)
+     * - Financing: 5 (coordination intensive)
+     * - Closing: 5 (final push)
+     * - Closed stages: null (no limit)
+     * 
+     * These defaults reflect:
+     * - Decreasing limits as complexity increases
+     * - Resource requirements per stage
+     * - Typical team capacity
+     * - Need for focus in later stages
+     * 
+     * Configuration can be customized per deployment to match specific
+     * team sizes and business processes.
      * 
      * @param string $stage Stage identifier
-     * @return array Stage configuration
+     * 
+     * @return array Stage configuration with 'name' and 'wip_limit' keys
      */
     protected function getStageConfiguration($stage)
     {
@@ -139,11 +230,32 @@ class WIPLimitHook
     }
     
     /**
-     * Count deals in a specific stage
+     * Count active deals in a specific pipeline stage
      * 
-     * @param string $stage Stage identifier
-     * @param string $excludeId Deal ID to exclude from count
-     * @return int Number of deals in stage
+     * Accurately counts the number of deals currently in a pipeline stage
+     * for WIP limit comparison. The count excludes closed deals and can
+     * exclude a specific deal (useful when moving a deal between stages).
+     * 
+     * Count Criteria:
+     * 1. Deals in the specified pipeline stage
+     * 2. Not deleted (active records only)
+     * 3. Not in closed sales stages (Closed Won/Lost)
+     * 4. Optionally excludes a specific deal ID
+     * 
+     * Exclusions:
+     * - Closed deals don't count against WIP limits
+     * - Deleted deals are ignored
+     * - The deal being moved is excluded to prevent counting it twice
+     * 
+     * Performance Considerations:
+     * - Uses parameterized queries for security
+     * - Leverages database indexes on stage and deleted fields
+     * - Single query for efficiency
+     * 
+     * @param string $stage Stage identifier to count deals in
+     * @param string $excludeId Optional deal ID to exclude from count
+     * 
+     * @return int Number of active deals in the stage
      */
     protected function getStageCount($stage, $excludeId = null)
     {
@@ -175,7 +287,35 @@ class WIPLimitHook
     /**
      * Check if current user can override WIP limits
      * 
-     * @return bool True if user can override
+     * Determines whether the current user has permission to bypass WIP limits.
+     * This flexibility allows authorized users to handle exceptional cases
+     * while maintaining limits for general users.
+     * 
+     * Override Permission Hierarchy:
+     * 1. System Administrators:
+     *    - Always have override capability
+     *    - Can configure limits and permissions
+     * 
+     * 2. Role-based Permission:
+     *    - Specific ACL permission 'override_wip_limit'
+     *    - Can be granted to team leads or managers
+     *    - Configured through Role Management
+     * 
+     * 3. Future Extensions:
+     *    - Stage-specific override permissions
+     *    - Temporary override grants
+     *    - Override with approval workflow
+     * 
+     * Override Usage:
+     * - Should be exception, not rule
+     * - Logged for audit purposes
+     * - May trigger notifications
+     * - Can require justification
+     * 
+     * This permission structure balances flexibility with control,
+     * ensuring WIP limits are respected while allowing for business needs.
+     * 
+     * @return bool True if user can override WIP limits
      */
     protected function userCanOverrideWIPLimit()
     {

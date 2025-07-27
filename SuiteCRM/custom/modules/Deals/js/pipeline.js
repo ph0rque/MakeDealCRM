@@ -41,11 +41,6 @@ var PipelineView = {
     init: function(config) {
         this.config = jQuery.extend(this.config, config);
         
-        // Ensure updateUrl is set
-        if (!this.config.updateUrl) {
-            this.config.updateUrl = 'index.php?module=Deals&action=updatePipelineStage';
-        }
-        
         // Detect viewport and device type
         this.detectViewport();
         
@@ -878,13 +873,6 @@ var PipelineView = {
     moveCard: function(card, dropZone, targetStage) {
         var self = this;
         
-        console.log('moveCard called:', {
-            dealId: this.draggedData.dealId,
-            sourceStage: this.draggedData.sourceStage,
-            targetStage: targetStage,
-            updateUrl: this.config.updateUrl
-        });
-        
         // Show loading
         this.showLoading();
         
@@ -910,7 +898,6 @@ var PipelineView = {
                 old_stage: this.draggedData.sourceStage
             },
             success: function(response) {
-                console.log('AJAX success:', response);
                 self.hideLoading();
                 
                 if (response.success) {
@@ -926,31 +913,10 @@ var PipelineView = {
                     self.showNotification(response.message || 'Failed to move deal', 'error');
                 }
             },
-            error: function(xhr, status, error) {
-                console.error('AJAX error:', {xhr: xhr, status: status, error: error});
+            error: function() {
                 self.hideLoading();
                 self.revertMove(card, self.draggedData.sourceStage);
-                
-                // Check if there's a specific error message in the response
-                var errorMessage = 'Network error. Please try again.';
-                try {
-                    if (xhr.responseJSON && xhr.responseJSON.message) {
-                        errorMessage = xhr.responseJSON.message;
-                    } else if (xhr.responseText) {
-                        // Try to parse responseText
-                        var response = JSON.parse(xhr.responseText);
-                        if (response.message) {
-                            errorMessage = response.message;
-                        }
-                    }
-                } catch (e) {
-                    // If response is not JSON, check if it contains the error
-                    if (xhr.responseText && xhr.responseText.toLowerCase().includes('missing required params')) {
-                        errorMessage = 'Missing required parameters. Please refresh the page and try again.';
-                    }
-                }
-                
-                self.showNotification(errorMessage, 'error');
+                self.showNotification('Network error. Please try again.', 'error');
             }
         });
     },
@@ -1123,32 +1089,16 @@ var PipelineView = {
      * Show notification
      */
     showNotification: function(message, type) {
-        // Skip showing alerts for missing params - handle silently
-        if (message && message.toLowerCase().includes('missing required params')) {
-            console.error('Pipeline Error:', message);
-            // Try to reload the pipeline view to fix the issue
-            if (this.config.refreshUrl) {
-                setTimeout(function() {
-                    window.location.reload();
-                }, 1000);
-            }
-            return;
-        }
-        
         // Use SuiteCRM's notification system if available
-        if (typeof SUGAR !== 'undefined' && SUGAR.App && SUGAR.App.alert) {
+        if (typeof SUGAR !== 'undefined' && SUGAR.App) {
             SUGAR.App.alert.show('pipeline-notification', {
                 level: type === 'error' ? 'error' : 'success',
                 messages: message,
                 autoClose: true
             });
         } else {
-            // Use a toast notification instead of alert
-            var notification = jQuery('<div class="pipeline-toast-notification ' + type + '">' + message + '</div>');
-            jQuery('body').append(notification);
-            notification.fadeIn(300).delay(3000).fadeOut(300, function() {
-                jQuery(this).remove();
-            });
+            // Fallback to simple alert
+            alert(message);
         }
     },
     
@@ -1488,31 +1438,10 @@ var PipelineView = {
                     self.showNotification(response.message || 'Failed to move deal', 'error');
                 }
             },
-            error: function(xhr, status, error) {
-                console.error('AJAX error:', {xhr: xhr, status: status, error: error});
+            error: function() {
                 self.hideLoading();
                 self.revertMove(card, self.draggedData.sourceStage);
-                
-                // Check if there's a specific error message in the response
-                var errorMessage = 'Network error. Please try again.';
-                try {
-                    if (xhr.responseJSON && xhr.responseJSON.message) {
-                        errorMessage = xhr.responseJSON.message;
-                    } else if (xhr.responseText) {
-                        // Try to parse responseText
-                        var response = JSON.parse(xhr.responseText);
-                        if (response.message) {
-                            errorMessage = response.message;
-                        }
-                    }
-                } catch (e) {
-                    // If response is not JSON, check if it contains the error
-                    if (xhr.responseText && xhr.responseText.toLowerCase().includes('missing required params')) {
-                        errorMessage = 'Missing required parameters. Please refresh the page and try again.';
-                    }
-                }
-                
-                self.showNotification(errorMessage, 'error');
+                self.showNotification('Network error. Please try again.', 'error');
             }
         });
     }

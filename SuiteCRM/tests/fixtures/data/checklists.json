@@ -1,0 +1,276 @@
+{
+  "checklist_templates": [
+    {
+      "name": "Initial Contact Checklist",
+      "stage": "initial_contact",
+      "description": "Standard checklist for initial deal contact",
+      "items": [
+        {
+          "name": "Send introductory email",
+          "description": "Send initial outreach email to seller/broker",
+          "is_required": true,
+          "order_number": 1
+        },
+        {
+          "name": "Schedule initial call",
+          "description": "Schedule and conduct discovery call",
+          "is_required": true,
+          "order_number": 2
+        },
+        {
+          "name": "Request basic financials",
+          "description": "Request high-level P&L and revenue information",
+          "is_required": false,
+          "order_number": 3
+        },
+        {
+          "name": "Internal team discussion",
+          "description": "Discuss opportunity with investment committee",
+          "is_required": true,
+          "order_number": 4
+        }
+      ]
+    },
+    {
+      "name": "NDA Process Checklist",
+      "stage": "nda_signed",
+      "description": "Steps for NDA execution",
+      "items": [
+        {
+          "name": "Draft NDA",
+          "description": "Prepare non-disclosure agreement",
+          "is_required": true,
+          "order_number": 1
+        },
+        {
+          "name": "Legal review",
+          "description": "Have legal counsel review NDA terms",
+          "is_required": true,
+          "order_number": 2
+        },
+        {
+          "name": "Send NDA to counterparty",
+          "description": "Send NDA for review and signature",
+          "is_required": true,
+          "order_number": 3
+        },
+        {
+          "name": "Execute NDA",
+          "description": "Obtain fully executed NDA",
+          "is_required": true,
+          "order_number": 4
+        },
+        {
+          "name": "File executed NDA",
+          "description": "Store executed NDA in deal folder",
+          "is_required": true,
+          "order_number": 5
+        }
+      ]
+    },
+    {
+      "name": "Due Diligence Checklist",
+      "stage": "due_diligence",
+      "description": "Comprehensive due diligence checklist",
+      "items": [
+        {
+          "name": "Financial statements review",
+          "description": "Review 3 years of financial statements",
+          "is_required": true,
+          "order_number": 1
+        },
+        {
+          "name": "Tax returns analysis",
+          "description": "Review 3 years of federal and state tax returns",
+          "is_required": true,
+          "order_number": 2
+        },
+        {
+          "name": "Customer concentration analysis",
+          "description": "Analyze customer base and concentration risk",
+          "is_required": true,
+          "order_number": 3
+        },
+        {
+          "name": "Legal compliance review",
+          "description": "Review litigation history and compliance issues",
+          "is_required": true,
+          "order_number": 4
+        },
+        {
+          "name": "Employee/HR review",
+          "description": "Review employee agreements and HR policies",
+          "is_required": true,
+          "order_number": 5
+        },
+        {
+          "name": "Technology/IP assessment",
+          "description": "Assess technology stack and intellectual property",
+          "is_required": false,
+          "order_number": 6
+        },
+        {
+          "name": "Environmental assessment",
+          "description": "Conduct Phase I environmental assessment if applicable",
+          "is_required": false,
+          "order_number": 7
+        },
+        {
+          "name": "Quality of earnings report",
+          "description": "Engage third-party for QoE analysis",
+          "is_required": true,
+          "order_number": 8
+        },
+        {
+          "name": "Management meetings",
+          "description": "Conduct in-depth management interviews",
+          "is_required": true,
+          "order_number": 9
+        },
+        {
+          "name": "Site visits",
+          "description": "Visit all major business locations",
+          "is_required": true,
+          "order_number": 10
+        }
+      ]
+    },
+    {
+      "name": "LOI Preparation Checklist",
+      "stage": "loi_submitted",
+      "description": "Steps for LOI preparation and submission",
+      "items": [
+        {
+          "name": "Valuation analysis",
+          "description": "Complete detailed valuation model",
+          "is_required": true,
+          "order_number": 1
+        },
+        {
+          "name": "Deal structure design",
+          "description": "Design optimal deal structure",
+          "is_required": true,
+          "order_number": 2
+        },
+        {
+          "name": "Financing arrangement",
+          "description": "Secure financing commitments",
+          "is_required": true,
+          "order_number": 3
+        },
+        {
+          "name": "Internal approval",
+          "description": "Obtain investment committee approval",
+          "is_required": true,
+          "order_number": 4
+        },
+        {
+          "name": "LOI drafting",
+          "description": "Draft letter of intent",
+          "is_required": true,
+          "order_number": 5
+        },
+        {
+          "name": "Legal review of LOI",
+          "description": "Have counsel review LOI terms",
+          "is_required": true,
+          "order_number": 6
+        },
+        {
+          "name": "Submit LOI",
+          "description": "Submit LOI to seller",
+          "is_required": true,
+          "order_number": 7
+        }
+      ]
+    },
+    {
+      "name": "Closing Checklist",
+      "stage": "definitive_agreement",
+      "description": "Final steps to close the deal",
+      "items": [
+        {
+          "name": "Purchase agreement negotiation",
+          "description": "Negotiate definitive purchase agreement",
+          "is_required": true,
+          "order_number": 1
+        },
+        {
+          "name": "Financing documentation",
+          "description": "Finalize all financing documents",
+          "is_required": true,
+          "order_number": 2
+        },
+        {
+          "name": "Third-party consents",
+          "description": "Obtain required third-party consents",
+          "is_required": true,
+          "order_number": 3
+        },
+        {
+          "name": "Regulatory approvals",
+          "description": "Obtain necessary regulatory approvals",
+          "is_required": false,
+          "order_number": 4
+        },
+        {
+          "name": "Escrow setup",
+          "description": "Establish escrow arrangements",
+          "is_required": true,
+          "order_number": 5
+        },
+        {
+          "name": "Working capital adjustment",
+          "description": "Finalize working capital calculations",
+          "is_required": true,
+          "order_number": 6
+        },
+        {
+          "name": "Wire transfers",
+          "description": "Coordinate closing wire transfers",
+          "is_required": true,
+          "order_number": 7
+        },
+        {
+          "name": "Closing documents execution",
+          "description": "Execute all closing documents",
+          "is_required": true,
+          "order_number": 8
+        },
+        {
+          "name": "Post-closing items",
+          "description": "Complete post-closing requirements",
+          "is_required": true,
+          "order_number": 9
+        }
+      ]
+    }
+  ],
+  "checklist_categories": [
+    {
+      "name": "Financial",
+      "description": "Financial due diligence items",
+      "color": "#FF6B6B"
+    },
+    {
+      "name": "Legal",
+      "description": "Legal and compliance items",
+      "color": "#4ECDC4"
+    },
+    {
+      "name": "Operational",
+      "description": "Operational due diligence items",
+      "color": "#45B7D1"
+    },
+    {
+      "name": "Commercial",
+      "description": "Market and customer analysis",
+      "color": "#F7DC6F"
+    },
+    {
+      "name": "Administrative",
+      "description": "Process and documentation items",
+      "color": "#BB8FCE"
+    }
+  ]
+}

@@ -27,7 +27,10 @@ $viewdefs[$module_name]['DetailView'] = array(
                     'customCode' => '<input type="button" class="button" onClick="window.location=\'index.php?module=Deals&action=Pipeline&record={$fields.id.value}\';" value="{$MOD.LBL_PIPELINE_VIEW}">',
                 ),
                 array(
-                    'customCode' => '<input type="button" class="button" onClick="applyChecklistTemplate(\'{$fields.id.value}\');" value="{$MOD.LBL_APPLY_CHECKLIST_TEMPLATE}">',
+                    'customCode' => '<input type="button" class="button" id="apply_checklist_btn" onClick="showChecklistTemplatePopup(\'{$fields.id.value}\');" value="{$MOD.LBL_APPLY_CHECKLIST_TEMPLATE}">',
+                ),
+                array(
+                    'customCode' => '<input type="button" class="button" onClick="window.location=\'index.php?module=ChecklistTemplates&action=index\';" value="{$MOD.LBL_MANAGE_TEMPLATES}">',
                 ),
             ),
         ),
