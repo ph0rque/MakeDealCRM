@@ -195,6 +195,14 @@ get_outputs() {
     BACKUP_BUCKET=$(aws cloudformation describe-stacks --stack-name $STACK_NAME --region $REGION --query 'Stacks[0].Outputs[?OutputKey==`BackupBucket`].OutputValue' --output text)
     SSH_COMMAND=$(aws cloudformation describe-stacks --stack-name $STACK_NAME --region $REGION --query 'Stacks[0].Outputs[?OutputKey==`SSHCommand`].OutputValue' --output text)
     
+    # Get instance public IP
+    INSTANCE_PUBLIC_IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --region $REGION --query 'Reservations[0].Instances[0].PublicIpAddress' --output text)
+    
+    # If APP_URL contains "AWS Default", replace it with actual IP
+    if [[ "$APP_URL" == *"AWS Default"* ]]; then
+        APP_URL="http://$INSTANCE_PUBLIC_IP"
+    fi
+    
     # Save outputs to file
     # Save to deployment directory if set, otherwise current directory
     OUTPUT_DIR="${DEPLOYMENT_DIR:-.}"
@@ -206,6 +214,7 @@ get_outputs() {
     "region": "$REGION",
     "applicationUrl": "$APP_URL",
     "instanceId": "$INSTANCE_ID",
+    "instancePublicIp": "$INSTANCE_PUBLIC_IP",
     "databaseEndpoint": "$DB_ENDPOINT",
     "backupBucket": "$BACKUP_BUCKET",
     "sshCommand": "$SSH_COMMAND",

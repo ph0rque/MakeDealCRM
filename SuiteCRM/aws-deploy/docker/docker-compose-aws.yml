@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  # MakeDealCRM Application (AWS deployment - uses external RDS database)
+  app:
+    build:
+      context: ../..
+      dockerfile: aws-deploy/docker/Dockerfile
+    container_name: makedealcrm-app
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT:-3306}
+      - DB_NAME=${DB_NAME:-makedealcrm}
+      - DB_USER=${DB_USER:-makedealcrm}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - SITE_URL=${SITE_URL:-http://localhost}
+      - ADMIN_USER=${ADMIN_USER:-admin}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+    volumes:
+      - app_data:/var/www/html/upload
+      - app_cache:/var/www/html/cache
+      - app_custom:/var/www/html/custom
+    networks:
+      - makedealcrm-network
+
+  # Redis Cache
+  redis:
+    image: redis:6-alpine
+    container_name: makedealcrm-redis
+    restart: unless-stopped
+    networks:
+      - makedealcrm-network
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+
+volumes:
+  app_data:
+    driver: local
+  app_cache:
+    driver: local
+  app_custom:
+    driver: local
+
+networks:
+  makedealcrm-network:
+    driver: bridge

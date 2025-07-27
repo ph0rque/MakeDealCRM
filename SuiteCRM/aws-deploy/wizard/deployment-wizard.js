@@ -463,10 +463,12 @@ function generateAccessDetails() {
     // Use real deployment info if available
     if (deploymentConfig.deploymentInfo) {
         const info = deploymentConfig.deploymentInfo;
-        const url = info.applicationUrl || '#';
+        // Get the actual EC2 public IP from the deployment
+        const url = info.applicationUrl || 'http://pending-deployment';
+        const actualUrl = url.replace('https://AWS Default', 'http://' + (info.instancePublicIp || 'pending'));
         
-        document.getElementById('appUrl').href = url;
-        document.getElementById('appUrl').textContent = url;
+        document.getElementById('appUrl').href = actualUrl;
+        document.getElementById('appUrl').textContent = actualUrl;
         
         // Use real admin password
         const password = deploymentConfig.adminPassword || generatePassword();

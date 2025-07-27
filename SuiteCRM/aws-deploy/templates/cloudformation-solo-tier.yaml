@@ -258,38 +258,50 @@ Resources:
           # Clone repository
           git clone https://github.com/ph0rque/MakeDealCRM.git .
           
+          # Get the secret JSON and extract password field
+          SECRET_JSON=$(aws secretsmanager get-secret-value --secret-id ${DBPasswordSecret} --query SecretString --output text --region ${AWS::Region})
+          DB_PASSWORD=$(echo "$SECRET_JSON" | python -c "import sys, json; print(json.load(sys.stdin)['password'])")
+          
+          # Generate admin password
+          ADMIN_PASSWORD=$(openssl rand -base64 12)
+          
           # Create environment file
           cat > .env <<EOF
           DB_HOST=${DBInstance.Endpoint.Address}
           DB_PORT=3306
           DB_NAME=makedealcrm
           DB_USER=makedealcrm
-          # Get the secret JSON and extract password field
-          SECRET_JSON=$(aws secretsmanager get-secret-value --secret-id ${DBPasswordSecret} --query SecretString --output text --region ${AWS::Region})
-          DB_PASSWORD=$(echo $SECRET_JSON | grep -o '"password":"[^"]*' | grep -o '[^"]*$')
-          # Use HTTP initially until SSL is configured
-          # We'll update this after EIP association
-          SITE_URL=http://$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)
+          DB_PASSWORD=$DB_PASSWORD
+          SITE_URL=http://localhost
           ADMIN_EMAIL=${AdminEmail}
           ADMIN_USER=admin
-          ADMIN_PASSWORD=$(openssl rand -base64 12)
+          ADMIN_PASSWORD=$ADMIN_PASSWORD
           BACKUP_S3_BUCKET=${BackupBucket}
           AWS_REGION=${AWS::Region}
           EOF
+          
+          # Save admin password for later retrieval
+          echo "$ADMIN_PASSWORD" > /opt/makedealcrm/admin_password.txt
+          chmod 600 /opt/makedealcrm/admin_password.txt
           
           # Wait for database to be ready
           echo "Waiting for database to be ready..."
           sleep 60
           
           # Start application
-          cd aws-deploy/docker
-          docker-compose up -d
+          cd /opt/makedealcrm/SuiteCRM/aws-deploy/docker
           
-          # Update SITE_URL after EIP is associated (wait a bit for association)
+          # Use the AWS-specific docker-compose file
+          docker-compose -f docker-compose-aws.yml up -d
+          
+          # Wait for EIP association and update SITE_URL
           sleep 30
           EIP=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)
           sed -i "s|SITE_URL=.*|SITE_URL=http://$EIP|" /opt/makedealcrm/.env
-          docker-compose restart
+          
+          # Restart with updated URL
+          docker-compose -f docker-compose-aws.yml down
+          docker-compose -f docker-compose-aws.yml up -d
           
           # Save deployment status
           echo "Application started at $(date)" > /var/log/makedealcrm-deploy.log
@@ -500,7 +512,7 @@ Outputs:
     Value: !If 
       - HasDomainName
       - !Sub 'https://${DomainName}'
-      - !Sub 'https://${ElasticIP}'
+      - !Sub 'http://${ElasticIP}'
   
   EC2InstanceId:
     Description: EC2 Instance ID
