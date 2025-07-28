@@ -644,10 +644,9 @@
          * Get WebSocket URL
          */
         getWebSocketUrl: function() {
-            // Construct WebSocket URL based on current location
-            const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const host = location.host;
-            return `${protocol}//${host}/ws/pipeline`;
+            // WebSocket disabled - no WebSocket server available in this SuiteCRM installation
+            // Return null to prevent connection attempts
+            return null;
         },
 
         /**

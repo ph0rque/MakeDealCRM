@@ -11,11 +11,19 @@ var StakeholderIntegration = (function() {
     var module = {
         stakeholderCache: {},
         communicationCache: {},
+        errorLogged: false,
+        enabled: false, // Disabled by default until backend is ready
         
         /**
          * Initialize stakeholder integration
          */
         init: function() {
+            // Check if stakeholder integration is enabled
+            if (!this.enabled) {
+                console.log('Stakeholder integration is disabled');
+                return;
+            }
+            
             console.log('Initializing Stakeholder Integration');
             
             // Load stakeholders for all visible deals
@@ -32,6 +40,11 @@ var StakeholderIntegration = (function() {
          * Load stakeholders for all visible deals
          */
         loadAllStakeholders: function() {
+            // Skip if disabled
+            if (!this.enabled) {
+                return;
+            }
+            
             var self = this;
             var dealCards = $('.deal-card');
             
@@ -47,11 +60,24 @@ var StakeholderIntegration = (function() {
          * Load stakeholders for a specific deal
          */
         loadStakeholders: function(dealId) {
+            // Skip if disabled
+            if (!this.enabled) {
+                return;
+            }
+            
             var self = this;
             
-            // Check cache first
-            if (this.stakeholderCache[dealId]) {
-                this.renderStakeholderBadges(dealId, this.stakeholderCache[dealId]);
+            // Check cache first (including empty arrays from failed attempts)
+            if (this.stakeholderCache.hasOwnProperty(dealId)) {
+                if (this.stakeholderCache[dealId].length > 0) {
+                    this.renderStakeholderBadges(dealId, this.stakeholderCache[dealId]);
+                }
+                return;
+            }
+            
+            // Skip if we've already encountered an error
+            if (this.errorLogged) {
+                this.stakeholderCache[dealId] = [];
                 return;
             }
             
@@ -65,8 +91,15 @@ var StakeholderIntegration = (function() {
                         self.renderStakeholderBadges(dealId, response.stakeholders);
                     }
                 },
-                error: function() {
-                    console.error('Failed to load stakeholders for deal: ' + dealId);
+                error: function(xhr, status, error) {
+                    // Log error only once to avoid console spam
+                    if (!self.errorLogged) {
+                        console.warn('Stakeholder feature is being configured. Badges will be hidden.');
+                        self.errorLogged = true;
+                    }
+                    // Cache empty array to prevent repeated requests
+                    self.stakeholderCache[dealId] = [];
+                    // Don't render badges if there's an error
                 }
             });
         },
@@ -643,7 +676,9 @@ var StakeholderIntegration = (function() {
 
 // Initialize when document is ready
 $(document).ready(function() {
-    if ($('#pipeline-container').length > 0) {
-        StakeholderIntegration.init();
-    }
+    // DISABLED - Stakeholder integration is disabled until backend is ready
+    // if ($('#pipeline-container').length > 0) {
+    //     StakeholderIntegration.init();
+    // }
+    console.log('Stakeholder integration is disabled - no stakeholder loading will occur');
 });

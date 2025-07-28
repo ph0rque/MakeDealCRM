@@ -11,6 +11,12 @@
 
 class PipelineStateManager {
     constructor(config = {}) {
+        // Force disable WebSocket
+        if (config.websocketUrl) {
+            console.warn('WebSocket support is not available in this environment. Disabling WebSocket connection.');
+            config.websocketUrl = null;
+        }
+        
         this.config = {
             autoSave: true,
             autoSaveInterval: 5000, // 5 seconds
@@ -18,11 +24,14 @@ class PipelineStateManager {
             syncInterval: 30000, // 30 seconds for multi-user sync
             enableDebug: false,
             storageKey: 'pipeline_state',
-            websocketUrl: config.websocketUrl || null,
+            websocketUrl: null, // Force null to prevent WebSocket connections
             userId: config.userId || 'anonymous',
             sessionId: config.sessionId || this.generateSessionId(),
             ...config
         };
+        
+        // Ensure websocketUrl is always null
+        this.config.websocketUrl = null;
 
         // State containers
         this.state = {
@@ -588,6 +597,16 @@ class PipelineStateManager {
      * WebSocket for real-time updates
      */
     initializeWebSocket() {
+        // Double-check WebSocket is disabled
+        this.config.websocketUrl = null;
+        
+        // Check if WebSocket URL is provided and valid
+        console.log('WebSocket URL received:', this.config.websocketUrl);
+        if (!this.config.websocketUrl || this.config.websocketUrl === null || this.config.websocketUrl === '') {
+            this.debug('WebSocket URL not provided - skipping WebSocket initialization');
+            return;
+        }
+
         try {
             this.syncState.websocket = new WebSocket(this.config.websocketUrl);
 
