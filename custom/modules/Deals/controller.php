@@ -1021,6 +1021,90 @@ class DealsController extends SugarController
     }
 
     /**
+     * Checklist API action handler
+     * Routes checklist-related API calls to the ChecklistApi class
+     */
+    public function action_checklistApi()
+    {
+        global $current_user;
+        
+        // Check permissions
+        if (!$current_user->id) {
+            $this->sendJsonResponse(['success' => false, 'message' => 'Unauthorized']);
+            return;
+        }
+        
+        // Include the ChecklistApi class
+        $apiPath = dirname(__FILE__) . '/api/ChecklistApi.php';
+        if (!file_exists($apiPath)) {
+            $this->sendJsonResponse(['success' => false, 'message' => 'Checklist API not found']);
+            return;
+        }
+        
+        require_once($apiPath);
+        
+        // Initialize the ChecklistApi
+        $checklistApi = new ChecklistApi();
+        
+        // Get the action from request
+        $action = $_REQUEST['checklist_action'] ?? $_REQUEST['action'] ?? '';
+        $dealId = $_REQUEST['deal_id'] ?? '';
+        
+        try {
+            switch ($action) {
+                case 'load':
+                case 'get':
+                    $response = $checklistApi->getChecklist($dealId);
+                    break;
+                    
+                case 'create_task':
+                    $taskData = json_decode($_REQUEST['task_data'] ?? '{}', true);
+                    $response = $checklistApi->createTask($dealId, $taskData);
+                    break;
+                    
+                case 'update_task':
+                    $taskData = json_decode($_REQUEST['task_data'] ?? '{}', true);
+                    $response = $checklistApi->updateTask($taskData);
+                    break;
+                    
+                case 'delete_task':
+                    $taskId = $_REQUEST['task_id'] ?? '';
+                    $response = $checklistApi->deleteTask($taskId);
+                    break;
+                    
+                case 'update_task_status':
+                    $taskId = $_REQUEST['task_id'] ?? '';
+                    $status = $_REQUEST['status'] ?? '';
+                    $response = $checklistApi->updateTaskStatus($taskId, $status);
+                    break;
+                    
+                case 'create_category':
+                    $categoryData = json_decode($_REQUEST['category_data'] ?? '{}', true);
+                    $response = $checklistApi->createCategory($categoryData);
+                    break;
+                    
+                case 'get_templates':
+                    $response = $checklistApi->getTemplates();
+                    break;
+                    
+                case 'apply_template':
+                    $templateId = $_REQUEST['template_id'] ?? '';
+                    $response = $checklistApi->applyTemplate($dealId, $templateId);
+                    break;
+                    
+                default:
+                    $response = ['success' => false, 'error' => 'Invalid action: ' . $action];
+            }
+            
+            $this->sendJsonResponse($response);
+            
+        } catch (Exception $e) {
+            $GLOBALS['log']->error('Checklist API error: ' . $e->getMessage());
+            $this->sendJsonResponse(['success' => false, 'error' => $e->getMessage()]);
+        }
+    }
+
+    /**
      * Display bulk stakeholder management view
      */
     public function action_stakeholder_bulk()

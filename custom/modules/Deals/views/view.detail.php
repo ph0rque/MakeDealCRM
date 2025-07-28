@@ -25,11 +25,17 @@ class DealsViewDetail extends OpportunitiesViewDetail
         // Add export CSS and JavaScript
         $this->includeExportAssets();
         
+        // Add checklist CSS and JavaScript
+        $this->includeChecklistAssets();
+        
         // Call parent display
         parent::display();
         
         // Add export buttons to the detail view
         $this->addExportButtons();
+        
+        // Add checklist section to the detail view
+        $this->addChecklistSection();
     }
     
     /**
@@ -146,6 +152,68 @@ class DealsViewDetail extends OpportunitiesViewDetail
         }
         
         return true;
+    }
+    
+    /**
+     * Include CSS and JavaScript for checklist functionality
+     */
+    protected function includeChecklistAssets()
+    {
+        global $sugar_config;
+        
+        $js_url = $sugar_config['site_url'] . '/custom/modules/Deals/js/checklist-manager.js';
+        
+        echo "<script type='text/javascript' src='{$js_url}'></script>\n";
+    }
+    
+    /**
+     * Add checklist section to the detail view
+     */
+    protected function addChecklistSection()
+    {
+        // Load the checklist template
+        $checklistTemplate = 'custom/modules/Deals/tpls/checklist.tpl';
+        
+        if (file_exists($checklistTemplate)) {
+            $ss = new Sugar_Smarty();
+            $ss->assign('fields', $this->bean->field_defs);
+            $ss->assign('bean', $this->bean);
+            
+            // Set field values
+            foreach ($this->bean->field_defs as $fieldName => $fieldDef) {
+                $ss->assign($fieldName, array(
+                    'value' => $this->bean->$fieldName,
+                    'name' => $fieldName,
+                    'label' => translate($fieldDef['vname'] ?? '', $this->bean->module_dir)
+                ));
+            }
+            
+            $checklistHtml = $ss->fetch($checklistTemplate);
+            
+            // Inject the checklist section after the detail view content
+            echo "<script type='text/javascript'>
+                $(document).ready(function() {
+                    var checklistHtml = " . json_encode($checklistHtml) . ";
+                    
+                    // Find a suitable location to insert the checklist
+                    var targetLocation = $('.detail-view-row:last');
+                    if (targetLocation.length === 0) {
+                        targetLocation = $('.detail.view').first();
+                    }
+                    if (targetLocation.length === 0) {
+                        targetLocation = $('#pagecontent .moduleTitle').first().parent();
+                    }
+                    
+                    // Insert the checklist section
+                    if (targetLocation.length > 0) {
+                        $(checklistHtml).insertAfter(targetLocation);
+                    } else {
+                        // Fallback: append to the main content area
+                        $('#pagecontent').append(checklistHtml);
+                    }
+                });
+            </script>";
+        }
     }
 }
 ?>
